@@ -1,5 +1,6 @@
 import csv
 import random
+# turn classpects into an object
 
 def getcsv(filename:str = "aspects.csv"):
     with open(filename, newline='') as csvfile:
