@@ -1,4 +1,4 @@
-#!/Users/hjtfir/Documents/development/silliness/classpect-flask-app/venv/bin/python3
+#!/Users/hjtfir/Documents/development/silliness/classpect-flask-app/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
