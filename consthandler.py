@@ -15,6 +15,16 @@ def getClasspect(classpects: list, duals:bool = False):
         for i in classpects.values(): rolls.append(random.choice(list(i.keys())))
     return rolls
     
+def getClassDef(classname):
+    defs = []
+    with open("classdefs.csv", newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        defs = list(reader) 
+
+    for i in defs:
+        print(classname," ",i["base"],": ",i[classname], sep="")
+    return 
+    
 def main():
     classpects = {"classes": getcsv("classes.csv"), "aspects": getcsv("aspects.csv")}
 
@@ -27,5 +37,6 @@ def main():
     for i in range(12):
         roll = getClasspect(classpects, duals=True)
         print(roll[0],"of",roll[1])
-            
+    print("\nDefinitions Experiment:")
+    getClassDef("Sylph")
 main()
