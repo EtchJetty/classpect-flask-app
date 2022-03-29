@@ -28,9 +28,9 @@ class ClasspectComponent:
     def __sub__(self, other):
         if self.type == other.type:
             if self.type == "class":
-                return ClasspectComponent(next((k for k, v in CLASSPECTS["classes"][other.name].items() if v == self.name), None))
+                return ClasspectComponent(next((k for k, v in CLASSPECTS["classes"][other.name].items() if v == self.name), "base"))
             else:
-                return ClasspectComponent(next((k for k, v in CLASSPECTS["aspects"][other.name].items() if v == self.name), None))
+                return ClasspectComponent(next((k for k, v in CLASSPECTS["aspects"][other.name].items() if v == self.name), "base"))
         else: 
             raise Exception("Subtraction between different types not yet implimented!")
         
