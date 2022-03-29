@@ -52,7 +52,21 @@
 
 # BEGIN PROGRAM
 
+import sys, contextlib
+from io import StringIO
 
+class Data(object):
+    pass
+
+@contextlib.contextmanager
+def capture_stdout():
+    old = sys.stdout
+    capturer = StringIO()
+    sys.stdout = capturer
+    data = Data()
+    yield data
+    sys.stdout = old
+    data.result = capturer.getvalue()
 
 # begin imports
 
@@ -243,7 +257,10 @@ spell checking, display management and keyboard processing.'''
 # begin program body
 
 # "I am typing" example
-# main(FILE,40)
+# with capture_stdout() as capture:
+#     main(FILE,40)
+# print(capture.result)
+
 # print("\n")
 # main(FILE,60)
 # print("\n\n")

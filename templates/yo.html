@@ -1,13 +1,23 @@
 {% extends "layout.html" %}
 
-{% block title %}Yo{% endblock %}
+{% block title %}{{ sitetitle }}{% endblock %}
 
 {% block head %}
   {{ super() }}
 {% endblock %}
 
 {% block content %}
-  <p><strong>test</strong></br>
-        {{ display }}
-        </p>
+  <div class="container">
+  {% if "list" in display.__class__.__name__ %}
+    {% for para in display %}
+      <p>
+    {% for line in para %}
+    {{ line }}</br>
+    {% endfor %}
+      </p>
+    {% endfor %}
+  {% else %}
+    {{ display }}
+  {% endif %}
+</div>
 {% endblock %}

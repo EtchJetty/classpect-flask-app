@@ -7,5 +7,11 @@
 {% endblock %}
 
 {% block content %}
-        {{ display }}
+  {% if "list" in display.__class__.__name__ %}
+    {% for line in display %}
+      {{ line }}</br>
+    {% endfor %}
+  {% else %}
+    {{ display }}
+  {% endif %}
 {% endblock %}

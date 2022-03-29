@@ -34,11 +34,21 @@ def home():
 
 @app.route("/pa4")
 def funky():
+    display = []
+    
+    with pa4.capture_stdout() as capture:
+        pa4.main(pa4.FILE,40)
+    
+    for i in capture.result.split("\n\n"):
+        para = []
+        for x in i.split("\n"):
+            para.append(x)
+        display.append(para)
     
     return render_template(
         "yo.html",
-        display="words",
-        sitetitle="Yo"
+        display=display,
+        sitetitle="Yo",
         )
 
 
