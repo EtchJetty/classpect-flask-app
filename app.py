@@ -26,14 +26,19 @@ def get_timezone():
     
 @app.route("/")
 def home():
-    return "Hello, Flask!"
+    return render_template(
+        "base.html",
+        display="words",
+        sitetitle="Yo"
+        )
 
 @app.route("/pa4")
 def funky():
     
     return render_template(
         "yo.html",
-        display="words"
+        display="words",
+        sitetitle="Yo"
         )
 
 
