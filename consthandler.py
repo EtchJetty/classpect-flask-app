@@ -34,7 +34,7 @@ class ClasspectComponent:
         else: 
             raise Exception("Subtraction between different types not yet implimented!")
         
-    def __mul__(self, other: int | float):
+    def __mul__(self, other):
         if other == -1:
             return self.inverse()
         elif other == 1:
