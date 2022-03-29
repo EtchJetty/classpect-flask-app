@@ -178,10 +178,12 @@ def main():
     
 # end function definitions
 
-CLASSES_CSV_PATH = "classes.csv"
-ASPECTS_CSV_PATH = "aspects.csv"
-CLASSDEFS_CSV_PATH = "classdefs.csv"
-ASPECTDEFS_CSV_PATH = "aspectdefs.csv"
+import os
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+CLASSES_CSV_PATH  = os.path.join(THIS_FOLDER, "classes.csv")
+ASPECTS_CSV_PATH  = os.path.join(THIS_FOLDER, "aspects.csv")
+CLASSDEFS_CSV_PATH  = os.path.join(THIS_FOLDER, "classdefs.csv")
+ASPECTDEFS_CSV_PATH  = os.path.join(THIS_FOLDER, "aspectdefs.csv")
 
 CLASSPECTS = {"classes": getcsv(CLASSES_CSV_PATH), "aspects": getcsv(ASPECTS_CSV_PATH)}
 
