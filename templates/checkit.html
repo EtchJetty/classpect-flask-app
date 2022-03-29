@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Check it</title>
-    </head>
-    <body><p><strong>Normals: </strong></br>
+{% extends "layout.html" %}
+
+{% block title %}Check it{% endblock %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+  <p><strong>Normals: </strong></br>
         {% for i in normals %}
             {{ i | e }}</br>
         {% endfor %}
@@ -13,5 +16,4 @@
             {{ i | e }}</br>
         {% endfor %}
         </p>
-    </body>
-</html>
+{% endblock %}

@@ -2,6 +2,7 @@ from flask import Flask, render_template, g, request
 from datetime import datetime
 from flask_babel import Babel, format_datetime
 from consthandler import *
+import pa4
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -26,6 +27,15 @@ def get_timezone():
 @app.route("/")
 def home():
     return "Hello, Flask!"
+
+@app.route("/pa4")
+def funky():
+    
+    return render_template(
+        "yo.html",
+        display="words"
+        )
+
 
 @app.route("/classpect")
 def fresh():
