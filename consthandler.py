@@ -185,4 +185,4 @@ ASPECTDEFS_CSV_PATH = "aspectdefs.csv"
 
 CLASSPECTS = {"classes": getcsv(CLASSES_CSV_PATH), "aspects": getcsv(ASPECTS_CSV_PATH)}
 
-main()
+# main()

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, g, request
 from datetime import datetime
 from flask_babel import Babel, format_datetime
+from consthandler import *
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -25,6 +26,24 @@ def get_timezone():
 @app.route("/")
 def home():
     return "Hello, Flask!"
+
+@app.route("/classpect")
+def fresh():
+    normals = []
+    # printit.append("Normals:\n")
+    for i in range(12):
+        roll = getRandomClasspect()
+        normals.append(roll[0].name + " of " + roll[1].name + "\n")
+    
+    duals = []
+    # printit.append("\nDuals:\n")
+    for i in range(12):
+        roll = getRandomClasspect(duals=True)
+        duals.append(roll[0].name + " of " + roll[1].name + "\n")
+    return render_template(
+        "checkit.html",
+        normals=normals, duals=duals
+        )
 
 @app.route("/hello/")
 @app.route("/hello/<name>")
