@@ -37,7 +37,7 @@ def funky():
     display = []
     
     with pa4.capture_stdout() as capture:
-        pa4.main(pa4.FILE,40)
+        pa4.main(pa4.GETTY,30)
     
     for i in capture.result.split("\n\n"):
         para = []

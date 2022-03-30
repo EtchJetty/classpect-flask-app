@@ -7,9 +7,11 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
   {%if name %}
             <strong>Hello there, {{ name }}!</strong> It's {{ date }}
         {% else %}
             What's your name? Provide it after /hello/ in the URL.
         {% endif %}
+</div>
 {% endblock %}

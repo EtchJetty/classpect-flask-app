@@ -7,13 +7,21 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
+<div class="row">
+<div class="col">
   <p><strong>Normals: </strong></br>
         {% for i in normals %}
             {{ i | e }}</br>
         {% endfor %}
-        </p><p><strong>Duals: </strong></br>
+        </p>
+</div>
+<div class="col">
+<p><strong>Duals: </strong></br>
         {% for i in duals %}
             {{ i | e }}</br>
         {% endfor %}
         </p>
+</div>
+</div>
 {% endblock %}

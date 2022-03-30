@@ -9,13 +9,16 @@
 {% block content %}
   <div class="container">
   {% if "list" in display.__class__.__name__ %}
-    {% for para in display %}
-      <p>
-    {% for line in para %}
-    {{ line }}</br>
-    {% endfor %}
-      </p>
-    {% endfor %}
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Getty Formatted</h5>
+    {% for para in display -%}
+      <p class="font-monospace fs-6 lh-1" style="white-space: pre-wrap;">{% for line in para -%}{{ line  -}}<br>{%- endfor %}</p>
+    {%- endfor %}
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+    
   {% else %}
     {{ display }}
   {% endif %}

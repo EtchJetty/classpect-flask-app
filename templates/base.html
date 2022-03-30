@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
   {% if "list" in display.__class__.__name__ %}
     {% for line in display %}
       {{ line }}</br>
@@ -14,4 +15,5 @@
   {% else %}
     {{ display }}
   {% endif %}
+</div>
 {% endblock %}
