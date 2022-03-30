@@ -8,10 +8,15 @@
 
 {% block content %}
   <div class="container">
+<form method="POST" id="formy">
+  <div class="form-group"><label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+  <textarea name="textmisc" class="form-control" id="exampleFormControlTextarea1" rows="3" form="formy"></textarea>    </div>
+<button type="submit" class="btn btn-primary mb-3">Format this!</button>
+</form>
   {% if "list" in display.__class__.__name__ %}
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title">Getty Formatted</h5>
+    <h5 class="card-title">Formatted Text</h5>
     {% for para in display -%}
       <p class="font-monospace fs-6 lh-1" style="white-space: pre-wrap;">{% for line in para -%}{{ line  -}}<br>{%- endfor %}</p>
     {%- endfor %}

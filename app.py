@@ -32,24 +32,42 @@ def home():
         sitetitle="Yo"
         )
 
-@app.route("/pa4")
+@app.route("/pa4", methods=['GET', 'POST'])
 def funky():
-    display = []
-    
-    with pa4.capture_stdout() as capture:
-        pa4.main(pa4.GETTY,30)
-    
-    for i in capture.result.split("\n\n"):
-        para = []
-        for x in i.split("\n"):
-            para.append(x)
-        display.append(para)
-    
-    return render_template(
-        "yo.html",
-        display=display,
-        sitetitle="Yo",
-        )
+    if request.method == 'GET':
+        display = []
+        
+        with pa4.capture_stdout() as capture:
+            pa4.main(pa4.GETTY,30)
+        
+        for i in capture.result.split("\n\n"):
+            para = []
+            for x in i.split("\n"):
+                para.append(x)
+            display.append(para)
+        
+        return render_template(
+            "yo.html",
+            display=display,
+            sitetitle="Yo",
+            )
+    if request.method == "POST":        
+        display = []
+        
+        with pa4.capture_stdout() as capture:
+            pa4.main(request.form["textmisc"].replace("\r","\n"),30)
+        
+        for i in capture.result.split("\n\n"):
+            para = []
+            for x in i.split("\n"):
+                para.append(x)
+            display.append(para)
+        
+        return render_template(
+            "yo.html",
+            display=display,
+            sitetitle="Yo",
+            )
 
 
 @app.route("/classpect")
