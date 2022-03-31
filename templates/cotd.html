@@ -22,15 +22,14 @@ block head %} {{ super() }} {% endblock %} {% block content %}
           >
             <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
               <h2 class="display-6 card-title lh-1 fw-bold">
-
-<span id="rolledCspect"
-            ><div class="spinner-border" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div> Loading...
-</span
-          >
+                <span id="rolledCspect"
+                  ><div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  Loading...
+                </span>
               </h2>
-<em><span id="desc"></span></em>
+              <em><span id="desc"></span></em>
             </div>
           </div>
         </div>
@@ -55,75 +54,74 @@ block head %} {{ super() }} {% endblock %} {% block content %}
 </div>
 
 <script>
-  // Set the date we're counting down to
-  var countDownDate = new Date();
-  countDownDate.setHours(24, 0, 0, 0);
+    // Set the date we're counting down to
+    var countDownDate = new Date();
+    countDownDate.setHours(24, 0, 0, 0);
 
-  // Update the count down every 1 second
-  var x = setInterval(function () {
-    // Get today's date and time
-    var now = new Date().getTime();
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+      // Get today's date and time
+      var now = new Date().getTime();
 
-    // Find the distance between now and the count down date
-    var distance = countDownDate - now;
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
 
-    // Time calculations for days, hours, minutes and seconds
-    var hours = String(
-      Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-    ).padStart(2, "0");
-    var minutes = String(
-      Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-    ).padStart(2, "0");
-    var seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(
-      2,
-      "0"
-    );
+      // Time calculations for days, hours, minutes and seconds
+      var hours = String(
+        Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      ).padStart(2, "0");
+      var minutes = String(
+        Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+      ).padStart(2, "0");
+      var seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(
+        2,
+        "0"
+      );
 
-    // Display the result in the element with id="demo"
-    document.getElementById("cdown").innerHTML =
-      "<strong>" + hours + ":" + minutes + ":" + seconds + "</strong>";
+      // Display the result in the element with id="demo"
+      document.getElementById("cdown").innerHTML =
+        "<strong>" + hours + ":" + minutes + ":" + seconds + "</strong>";
 
-    // If the count down is finished, write some text
-    if (distance < 0) {
-      clearInterval(x);
-      document.getElementById("cdown").innerHTML = "Refresh the page!";
-    }
-  }, 1000);
-    var today = new Date().toDateString()
-  document.getElementById("now").innerHTML = today;
-var classpects = [];
-{% for type in display.classpects -%}
-var temparray = [];
+      // If the count down is finished, write some text
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("cdown").innerHTML = "Refresh the page!";
+      }
+    }, 1000);
+      var today = new Date().toDateString()
+    document.getElementById("now").innerHTML = today;
+  var classpects = [];
+  {% for type in display.classpects -%}
+  var temparray = [];
 
-{% for item in display.classpects[type] -%}
-   
-temparray.push(JSON.parse('{{ item|safe }}'));
-{%- endfor %}
+  {% for item in display.classpects[type] -%}
 
-classpects.push(temparray);
-{%- endfor %}
-   console.log(classpects);
-var seed = String(new Date().getDate()).padStart(2, '0')+ String(new Date().getMonth() + 1).padStart(2, '0')+ String(new Date().getFullYear());
-console.log(seed)
-function random() {
-    var x = Math.sin(seed++) * 10000;
-    
-    return x - Math.floor(x);
-}
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(random() * (max - min + 1) + min); //The maximum is exclusive and the minimum is inclusive
-}
-var roll1 = getRandomInt(0,11)
-var roll2 = getRandomInt(0,11)
-   console.log(roll1);
-   console.log(roll2);
-var todayscspect = [classpects[0][roll1],classpects[1][roll2]]
-   console.log(todayscspect);
- 
- document.getElementById("rolledCspect").innerHTML = todayscspect[0].name + ' of ' + todayscspect[1].name;
- document.getElementById("desc").innerHTML = "One who " + todayscspect[0].activity + "ly " + todayscspect[0].verb + 's and is '+ todayscspect[0].verb +'ed through ' + todayscspect[1].name + ".";
+  temparray.push(JSON.parse('{{ item|safe }}'));
+  {%- endfor %}
 
+  classpects.push(temparray);
+  {%- endfor %}
+     console.log(classpects);
+  var seed = String(new Date().getDate()).padStart(2, '0')+ String(new Date().getMonth() + 1).padStart(2, '0')+ String(new Date().getFullYear());
+  console.log(seed)
+  function random() {
+      var x = Math.sin(seed++) * 10000;
+
+      return x - Math.floor(x);
+  }
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(random() * (max - min + 1) + min); //The maximum is exclusive and the minimum is inclusive
+  }
+  var roll1 = getRandomInt(0,11)
+  var roll2 = getRandomInt(0,11)
+     console.log(roll1);
+     console.log(roll2);
+  var todayscspect = [classpects[0][roll1],classpects[1][roll2]]
+     console.log(todayscspect);
+
+   document.getElementById("rolledCspect").innerHTML = todayscspect[0].name + ' of ' + todayscspect[1].name;
+   document.getElementById("desc").innerHTML = "One who " + todayscspect[0].activity + "ly " + todayscspect[0].verb + 's and is '+ todayscspect[0].verb +'ed through ' + todayscspect[1].name + ".";
 </script>
 {% endblock %}
