@@ -1,40 +1,57 @@
 {% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
 block head %} {{ super() }} {% endblock %} {% block content %}
 <div class="container">
-<div class="row">
+  <div class="row">
     <div class="col-md-3"></div>
-      <div class="col-md-6">
-          <div class="row">
-            <h1>ERIJAN CENTRAL</h1>
-            <h4>Classpect of the Day for {{ display.date }}</h4>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div
-                class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
-              >
-                <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
-                  <h2 class="display-6 lh-1 fw-bold">
-                    {{display.classpect.0.name}} of {{display.classpect.1.name}}
-                  </h2>
-                </div>
-              </div>
+    <div class="col-md-6">
+      <div class="row">
+        <h1>ERIJAN CENTRAL</h1>
+        <h4>
+          Classpect of the Day for
+          <span id="now"
+            ><div class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div></span
+          >
+        </h4>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div
+            class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
+          >
+            <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+              <h2 class="display-6 card-title lh-1 fw-bold">
+
+<span id="rolledCspect"
+            ><div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div> Loading...
+</span
+          >
+              </h2>
+<em><span id="desc"></span></em>
             </div>
           </div>
-              <div class="alert alert-primary alert-dismissible fade show" role="alert">
-                New Classpect in <span id="cdown"><div class="spinner-border spinner-border-sm" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div></span>!
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="alert"
-                  aria-label="Close"
-                ></button>
-              </div>
+        </div>
       </div>
+      <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        New Classpect in
+        <span id="cdown"
+          ><div class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div></span
+        >!
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
     <div class="col-md-3"></div>
-</div>
+  </div>
 </div>
 
 <script>
@@ -63,8 +80,8 @@ block head %} {{ super() }} {% endblock %} {% block content %}
     );
 
     // Display the result in the element with id="demo"
-    document.getElementById("cdown").innerHTML ="<strong>" + 
-      hours + ":" + minutes + ":" + seconds + "</strong>";
+    document.getElementById("cdown").innerHTML =
+      "<strong>" + hours + ":" + minutes + ":" + seconds + "</strong>";
 
     // If the count down is finished, write some text
     if (distance < 0) {
@@ -72,5 +89,38 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       document.getElementById("cdown").innerHTML = "Refresh the page!";
     }
   }, 1000);
+    var today = new Date().toDateString()
+  document.getElementById("now").innerHTML = today;
+var classpects = [];
+{% for type in display.classpects %}
+var temparray = [];
+{% for item in display.classpects[type] %}
+   temparray.push(JSON.parse('{{ item|safe }}'));
+{% endfor %}
+classpects.push(temparray);
+{% endfor %}
+   console.log(classpects);
+var seed = String(new Date().getDate()).padStart(2, '0')+ String(new Date().getMonth() + 1).padStart(2, '0')+ String(new Date().getFullYear());
+console.log(seed)
+function random() {
+    var x = Math.sin(seed++) * 10000;
+    
+    return x - Math.floor(x);
+}
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(random() * (max - min + 1) + min); //The maximum is exclusive and the minimum is inclusive
+}
+var roll1 = getRandomInt(1,12)
+var roll2 = getRandomInt(1,12)
+   console.log(roll1);
+   console.log(roll2);
+var todayscspect = [classpects[0][roll1],classpects[1][roll2]]
+   console.log(todayscspect);
+ 
+ document.getElementById("rolledCspect").innerHTML = todayscspect[0].name + ' of ' + todayscspect[1].name;
+ document.getElementById("desc").innerHTML = "One who " + todayscspect[0].activity + "ly " + todayscspect[0].verb + 's through ' + todayscspect[1].name + ".";
+
 </script>
 {% endblock %}

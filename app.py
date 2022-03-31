@@ -1,3 +1,4 @@
+import json
 import random
 from flask import Flask, render_template, g, request
 from datetime import datetime
@@ -32,10 +33,15 @@ def home():
     display["date"] = format_datetime(datetime.now(), "EEE, MMM d, yyyy")
     
     random.seed(format_datetime(datetime.now(), "EEE, MMM d, yyyy"))
-    classpect = cspect.getRandomClasspect()
+    classes = cspect.getAllClasspects()
+    aspects = cspect.getAllClasspects("aspect")
     random.seed()
-
-    display["classpect"] = (classpect)
+    for i in range(len(classes)):
+        classes[i] = json.dumps(classes[i].__dict__)
+    for i in range(len(aspects)):
+        aspects[i] = json.dumps(aspects[i].__dict__)
+    classpects = {"classes":classes,"aspects":aspects}
+    display["classpects"] = (classpects)
     return render_template(
         "cotd.html",sitetitle="ERIJAN CENTRAL",
         display=display

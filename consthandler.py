@@ -119,7 +119,7 @@ def getAllClasspects(type = "class"):
             vgroup.append(ClasspectComponent(k[0]))
     else: 
          for k in getDefs(ASPECTDEFS_CSV_PATH)[0].items():
-            vgroup.append(ClasspectComponent(k[0]))
+            vgroup.append(ClasspectComponent(k[0],"aspect"))
     vgroup.pop(0)
     return vgroup
 
