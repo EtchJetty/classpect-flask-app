@@ -1,0 +1,176 @@
+{% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
+block head %} {{ super() }} {% endblock %} {% block content %}
+<div class="container">
+  <form method="POST" id="formy" name="mathform">
+    <div class="form-group">
+      <div class="row g-3 align-items-center">
+        <div class="input-group p-5">
+          <input
+            name="class"
+            id="firstclass"
+            form="formy"
+            placeholder="Class"
+            type="text"
+            aria-label="Class"
+            class="form-control"
+            value="{% if results %}{{ results['class'].name | e }}{% else %}{% endif %}"
+            required
+          /><span class="input-group-text">of</span>
+          <input
+            name="aspect"
+            required
+            id="firstaspect"
+            form="formy"
+            placeholder="Aspect"
+            type="text"
+            aria-label="Aspect"
+            class="form-control"
+            value="{% if results %}{{ results['aspect'].name | e }}{% else %}{% endif %}"
+          />
+          <button type="submit" class="btn btn-primary">Get info!</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  {% if results %}
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Classpect</h5>
+      <p>
+        {{ results["class"].name | e }} of {{ results["aspect"].name | e }} {%
+        if results["aspect"].isCanon() %}<img
+          src="{{ url_for('static', filename='images/') }}{{ results['aspect'].name }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        />{% endif %}
+      </p>
+      {% if results["class"].inverse().name != "base" or
+      results["aspect"].inverse().name != "base" %}
+      <li>
+        Inverse: {% if results["class"].inverse().name != "base" %}{{
+        results["class"].inverse().name | e }}{% endif %}{% if
+        results["class"].inverse().name != "base" and
+        results["aspect"].inverse().name != "base" %} of {% endif %}{% if
+        results["aspect"].inverse().name != "base" %}{{
+        results["aspect"].inverse().name | e }}{% endif %} {% if
+        results["aspect"].inverse().isCanon() %}<img
+          src="{{ url_for('static', filename='images/') }}{{ results['aspect'].inverse().name }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        />{% endif %}
+      </li>
+      {% endif %} {% if results["mathclass"] %} Sum:
+      <li>
+        {{ results["class"].name | e }} of {{ results["aspect"].name | e }}{% if
+        results["aspect"].isCanon() %}
+        <img
+          src="{{ url_for('static', filename='images/') }}{{ results['aspect'].name }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        />{% endif %} + {{ results["mathclass"].name | e }} of {{
+        results["mathaspect"].name | e }}{% if results["mathaspect"].isCanon()
+        %}
+        <img
+          src="{{ url_for('static', filename='images/') }}{{ results['mathaspect'].name | e }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        />{% endif %} = {% if (results["class"]+results["mathclass"]).name != "base" and
+        (results["aspect"]+results["mathaspect"]).name != "base" %} {{
+        (results["class"]+results["mathclass"]).name | e }} of {{
+        (results["aspect"]+results["mathaspect"]).name | e }}{%if
+        results["aspect"].isCanon() %}
+        <img
+          src="{{ url_for('static', filename='images/') }}{{ results['aspect'].name }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        />{% endif %}{%if results["mathaspect"].isCanon() %} <img
+          src="{{ url_for('static', filename='images/') }}{{ results['mathaspect'].name | e }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        />{% endif %}{% else %}+ERROR!{% endif %}
+      </li>
+Difference:
+      <li>
+        {{ results["class"].name | e }} of {{ results["aspect"].name | e }}{% if
+        results["aspect"].isCanon() %}
+        <img
+          src="{{ url_for('static', filename='images/') }}{{ results['aspect'].name }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        />{% endif %} - {{ results["mathclass"].name | e }} of {{
+        results["mathaspect"].name | e }}{% if results["mathaspect"].isCanon()
+        %}
+        <img
+          src="{{ url_for('static', filename='images/') }}{{ results['mathaspect'].name | e }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        />{% endif %} = {% if (results["class"]-results["mathclass"]).name != "base" and
+        (results["aspect"]-results["mathaspect"]).name != "base" %} {{
+        (results["class"]-results["mathclass"]).name | e }} of {{
+        (results["aspect"]-results["mathaspect"]).name | e }}{%if
+        (results["aspect"] - results["mathaspect"]).isCanon() %} <img
+          src="{{ url_for('static', filename='images/') }}{{ (results['aspect']-results['mathaspect']).name | e }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        />{% endif %}{% else %}-ERROR!{% endif %}
+      </li>
+      {% endif %}
+      <form method="POST" id="mathform" name="mathform">
+        <div class="form-group">
+          <input
+            type="hidden"
+            id="hiddenClass"
+            form="mathform"
+            name="class"
+            value='{{ results["class"].name | e }}'
+          />
+          <input
+            type="hidden"
+            form="mathform"
+            id="hiddenAspect"
+            name="aspect"
+            value='{{ results["aspect"].name | e }}'
+          />
+          <div class="row g-3 align-items-center">
+            <div class="input-group p-5">
+              <input
+                name="mathclass"
+                id="mathclass"
+                form="mathform"
+                placeholder="Class"
+                type="text"
+                required
+                aria-label="Class"
+                class="form-control"
+                value="{% if results['mathclass'] %}{{ results['mathclass'].name | e }}{% else %}{% endif %}"
+              /><span class="input-group-text">of</span>
+              <input
+                name="mathaspect"
+                id="mathaspect"
+                form="mathform"
+                placeholder="Aspect"
+                type="text"
+                required
+                aria-label="Aspect"
+                class="form-control"
+                value="{% if results['mathaspect'] %}{{ results['mathaspect'].name | e }}{% else %}{% endif %}"
+              />
+              <button type="submit" onclick="makesmooth()" class="btn btn-primary">Do math!</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div><script>
+      function makesmooth() {
+        let classclass = document.getElementById("firstclass").value;
+        let aspectclass = document.getElementById("firstaspect").value;
+
+        var hiddenClass = document.getElementById("hiddenClass");
+        var hiddenAspect = document.getElementById("hiddenAspect");
+        hiddenClass.setAttribute('value',classclass);
+        hiddenAspect.setAttribute('value',aspectclass);
+      }
+    </script>
+    {% endif %} {% endblock %}
+  </div>
+</div>

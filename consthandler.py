@@ -6,6 +6,7 @@ import random
 class ClasspectComponent:
     'Generic classpect component. Used for classes and aspects.'
     def __init__(self, name="base", type="class"):
+        type = type.lower()
         self.name = name
         self.type = type
         if type == "class":
@@ -18,9 +19,15 @@ class ClasspectComponent:
     def __add__(self, other):
         if self.type == other.type:
             if self.type == "class":
-                return ClasspectComponent(CLASSPECTS["classes"][self.name][other.name])
+                try:
+                    return ClasspectComponent(CLASSPECTS["classes"][self.name][other.name])
+                except:
+                    return ClasspectComponent()
             else:
-                return ClasspectComponent(CLASSPECTS["aspects"][self.name][other.name])
+                try:
+                    return ClasspectComponent(CLASSPECTS["aspects"][self.name][other.name])
+                except:
+                    return ClasspectComponent()
         else: 
             raise Exception("Addition between different types not yet implimented!")
         
@@ -28,9 +35,15 @@ class ClasspectComponent:
     def __sub__(self, other):
         if self.type == other.type:
             if self.type == "class":
-                return ClasspectComponent(next((k for k, v in CLASSPECTS["classes"][other.name].items() if v == self.name), "base"))
+                try:
+                    return ClasspectComponent(next((k for k, v in CLASSPECTS["classes"][other.name].items() if v == self.name), "base"),"aspect")
+                except:
+                    return ClasspectComponent()
             else:
-                return ClasspectComponent(next((k for k, v in CLASSPECTS["aspects"][other.name].items() if v == self.name), "base"))
+                try: 
+                    return ClasspectComponent(next((k for k, v in CLASSPECTS["aspects"][other.name].items() if v == self.name), "base"),"aspect")
+                except:
+                    return ClasspectComponent()
         else: 
             raise Exception("Subtraction between different types not yet implimented!")
         
@@ -61,6 +74,12 @@ class ClasspectComponent:
             if classpect.vgroup == self.vgroup:
                 fullgroup.append(classpect)
         return fullgroup
+    
+    def isCanon(self):
+        for classpect in getAllClasspects(self.type):
+            if classpect.name == self.name:
+                return True
+        return False
     
     def inverse(self):    
         if self.type == "class":

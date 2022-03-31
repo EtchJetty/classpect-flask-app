@@ -26,13 +26,7 @@ def get_timezone():
     if user is not None:
         return user.timezone
     
-@app.route("/")
-def home():
-    display = {}
-    
-    display["date"] = format_datetime(datetime.now(), "EEE, MMM d, yyyy")
-    
-    random.seed(format_datetime(datetime.now(), "EEE, MMM d, yyyy"))
+def fetchAllClasspects():
     classes = cspect.getAllClasspects()
     aspects = cspect.getAllClasspects("aspect")
     random.seed()
@@ -40,24 +34,57 @@ def home():
         classes[i] = json.dumps(classes[i].__dict__)
     for i in range(len(aspects)):
         aspects[i] = json.dumps(aspects[i].__dict__)
-    classpects = {"classes":classes,"aspects":aspects}
-    display["classpects"] = (classpects)
+    return {"classes":classes,"aspects":aspects}
+    
+@app.route("/")
+def home():
+    display = {}
+    
+    display["date"] = format_datetime(datetime.now(), "EEE, MMM d, yyyy")
+    
+    random.seed(format_datetime(datetime.now(), "EEE, MMM d, yyyy"))
+    
+    display["classpects"] = fetchAllClasspects()
+    
     return render_template(
         "cotd.html",sitetitle="ERIJAN CENTRAL",
         display=display
     )
 
+@app.route("/classpects/search", methods=['GET', 'POST'])
+def lookupclspect():
+    if request.method == 'GET':
+        display = []
+        
+        return render_template(
+            "lazysearch.html",
+            display=display,
+            sitetitle="Lookup",
+            )
+    if request.method == "POST":        
+        form = dict(request.form)
+        results = {}
+        
+        for i in form:
+            results[i] = cspect.ClasspectComponent(name=form[i].capitalize(),type=i.capitalize().replace("Math","")) 
+        
+        return render_template(
+            "lazysearch.html",
+            results=results,classpects=fetchAllClasspects(),
+            sitetitle="Lookup",
+            )
 
-@app.route("/classpect")
+    
+@app.route("/classpects/random")
 def rclspect():
     normals = []
-    # printit.append("Normals:\n")
+
     for i in range(12):
         roll = cspect.getRandomClasspect()
         normals.append(roll[0].name + " of " + roll[1].name + "\n")
     
     duals = []
-    # printit.append("\nDuals:\n")
+
     for i in range(12):
         roll = cspect.getRandomClasspect(duals=True)
         duals.append(roll[0].name + " of " + roll[1].name + "\n")
@@ -75,4 +102,6 @@ def arbitraryHtml(name = None):
 def homesturdle():
     return render_template(
         "homesturdle.html")
+
+
     
