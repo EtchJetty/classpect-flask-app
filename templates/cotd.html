@@ -1,5 +1,11 @@
-{% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
-block head %} {{ super() }} {% endblock %} {% block content %}
+{% extends "layout.html" %} {% block title %} {{ sitetitle }} {% endblock %} {%
+block head %} {{ super() }}
+<meta content="Embed Title" property="og:title" />
+<meta content="Site Description" property="og:description" />
+<meta content="https://embed.com/this-is-the-site-url" property="og:url" />
+<meta content="https://embed.com/embedimage.png" property="og:image" />
+<meta content="#43B581" data-react-helmet="true" name="theme-color" />
+{% endblock %} {% block content %}
 <div class="container">
   <div class="row">
     <div class="col-md-3"></div>
@@ -49,7 +55,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
         ></button>
       </div>
       <div class="row">
-          <p><em>More features coming soon!</em></p>
+        <p><em>More features coming soon!</em></p>
       </div>
     </div>
     <div class="col-md-3"></div>
@@ -75,76 +81,96 @@ block head %} {{ super() }} {% endblock %} {% block content %}
 ></script>
 
 <script>
-  const EnglishVerbs = exports
+  const EnglishVerbs = exports;
   const VerbsData = EnglishVerbs.mergeVerbsData(Irregular, Gerunds);
-      // Set the date we're counting down to
-      var countDownDate = new Date();
-      countDownDate.setHours(24, 0, 0, 0);
+  // Set the date we're counting down to
+  var countDownDate = new Date();
+  countDownDate.setHours(24, 0, 0, 0);
 
-      // Update the count down every 1 second
-      var x = setInterval(function () {
-        // Get today's date and time
-        var now = new Date().getTime();
+  // Update the count down every 1 second
+  var x = setInterval(function () {
+    // Get today's date and time
+    var now = new Date().getTime();
 
-        // Find the distance between now and the count down date
-        var distance = countDownDate - now;
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
 
-        // Time calculations for days, hours, minutes and seconds
-        var hours = String(
-          Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-        ).padStart(2, "0");
-        var minutes = String(
-          Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
-        ).padStart(2, "0");
-        var seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(
-          2,
-          "0"
-        );
+    // Time calculations for days, hours, minutes and seconds
+    var hours = String(
+      Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+    ).padStart(2, "0");
+    var minutes = String(
+      Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+    ).padStart(2, "0");
+    var seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(
+      2,
+      "0"
+    );
 
-        // Display the result in the element with id="demo"
-        document.getElementById("cdown").innerHTML =
-          "<strong>" + hours + ":" + minutes + ":" + seconds + "</strong>";
+    // Display the result in the element with id="demo"
+    document.getElementById("cdown").innerHTML =
+      "<strong>" + hours + ":" + minutes + ":" + seconds + "</strong>";
 
-        // If the count down is finished, write some text
-        if (distance < 0) {
-          clearInterval(x);
-          document.getElementById("cdown").innerHTML = "Refresh the page!";
-        }
-      }, 1000);
-        var today = new Date().toDateString()
-      document.getElementById("now").innerHTML = today;
-    var classpects = [];
-    {% for type in display.classpects -%}
+    // If the count down is finished, write some text
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("cdown").innerHTML = "Refresh the page!";
+    }
+  }, 1000);
+  var today = new Date().toDateString();
+  document.getElementById("now").innerHTML = today;
+  var classpects = [];
+  {% for type in display.classpects -%}
     var temparray = [];
-
     {% for item in display.classpects[type] -%}
-
-    temparray.push(JSON.parse('{{ item|safe }}'));
+      temparray.push(JSON.parse('{{ item|safe }}'));
     {%- endfor %}
-
     classpects.push(temparray);
-    {%- endfor %}
-       console.log(classpects);
-    var seed = String(new Date().getDate()).padStart(2, '0')+ String(new Date().getMonth() + 1).padStart(2, '0')+ String(new Date().getFullYear());
-    console.log(seed)
-    function random() {
-        var x = Math.sin(seed++) * 10000;
+  {%- endfor %}
 
-        return x - Math.floor(x);
-    }
-    function getRandomInt(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(random() * (max - min + 1) + min); //The maximum is exclusive and the minimum is inclusive
-    }
-    var roll1 = getRandomInt(0,11)
-    var roll2 = getRandomInt(0,11)
-       console.log(roll1);
-       console.log(roll2);
-    var todayscspect = [classpects[0][roll1],classpects[1][roll2]]
-       console.log(todayscspect);
+  console.log(classpects);
+  var seed =
+    String(new Date().getDate()).padStart(2, "0") +
+    String(new Date().getMonth() + 1).padStart(2, "0") +
+    String(new Date().getFullYear());
+  console.log(seed);
+  function random() {
+    var x = Math.sin(seed++) * 10000;
 
-     document.getElementById("rolledCspect").innerHTML = todayscspect[0].name + ' of ' + todayscspect[1].name + ' <img src="{{ url_for("static", filename="images/") }}'+ todayscspect[1].name +'.png" style="height: 36px; position: relative; bottom: 1px" class="img-fluid" />';
-     document.getElementById("desc").innerHTML = "One who " + todayscspect[0].activity + "ly " + EnglishVerbs.getConjugation(null, todayscspect[0].verb, 'PRESENT', 'S') + ' and is '+ todayscspect[0].activity + "ly " + EnglishVerbs.getConjugation(VerbsData, todayscspect[0].verb, 'PAST', 'S') +' through ' + todayscspect[1].name + ' <img src="{{ url_for("static", filename="images/") }}'+ todayscspect[1].name +'.png" style="height: 24px; position: relative; bottom: 1px" class="img-fluid" />.';
+    return x - Math.floor(x);
+  }
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(random() * (max - min + 1) + min); //The maximum is exclusive and the minimum is inclusive
+  }
+  var roll1 = getRandomInt(0, 11);
+  var roll2 = getRandomInt(0, 11);
+  console.log(roll1);
+  console.log(roll2);
+  var todayscspect = [classpects[0][roll1], classpects[1][roll2]];
+  console.log(todayscspect);
+
+  document.getElementById("rolledCspect").innerHTML =
+    todayscspect[0].name +
+    " of " +
+    todayscspect[1].name +
+    ' <img src="{{ url_for("static", filename="images/") }}' +
+    todayscspect[1].name +
+    '.png" style="height: 36px; position: relative; bottom: 1px" class="img-fluid" />';
+  document.getElementById("desc").innerHTML =
+    "One who " +
+    todayscspect[0].activity +
+    "ly " +
+    EnglishVerbs.getConjugation(null, todayscspect[0].verb, "PRESENT", "S") +
+    " and is " +
+    todayscspect[0].activity +
+    "ly " +
+    EnglishVerbs.getConjugation(VerbsData, todayscspect[0].verb, "PAST", "S") +
+    " through " +
+    todayscspect[1].name +
+    ' <img src="{{ url_for("static", filename="images/") }}' +
+    todayscspect[1].name +
+    '.png" style="height: 24px; position: relative; bottom: 1px" class="img-fluid" />.';
 </script>
 {% endblock %}
