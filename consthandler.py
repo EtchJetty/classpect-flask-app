@@ -180,10 +180,10 @@ def main():
 
 import os
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
-CLASSES_CSV_PATH  = os.path.join(THIS_FOLDER, "classes.csv")
-ASPECTS_CSV_PATH  = os.path.join(THIS_FOLDER, "aspects.csv")
-CLASSDEFS_CSV_PATH  = os.path.join(THIS_FOLDER, "classdefs.csv")
-ASPECTDEFS_CSV_PATH  = os.path.join(THIS_FOLDER, "aspectdefs.csv")
+CLASSES_CSV_PATH  = os.path.join(THIS_FOLDER, "static/classes.csv")
+ASPECTS_CSV_PATH  = os.path.join(THIS_FOLDER, "static/aspects.csv")
+CLASSDEFS_CSV_PATH  = os.path.join(THIS_FOLDER, "static/classdefs.csv")
+ASPECTDEFS_CSV_PATH  = os.path.join(THIS_FOLDER, "static/aspectdefs.csv")
 
 CLASSPECTS = {"classes": getcsv(CLASSES_CSV_PATH), "aspects": getcsv(ASPECTS_CSV_PATH)}
 

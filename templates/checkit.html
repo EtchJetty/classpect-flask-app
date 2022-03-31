@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}Check it{% endblock %}
+{% block title %}{{ sitetitle }}{% endblock %}
 
 {% block head %}
   {{ super() }}
@@ -8,7 +8,9 @@
 
 {% block content %}
 <div class="container">
-<div class="row">
+
+<div class="row  p-3">
+
 <div class="col">
   <p><strong>Normals: </strong></br>
         {% for i in normals %}
@@ -22,6 +24,8 @@
             {{ i | e }}</br>
         {% endfor %}
         </p>
+</div>
+<div class="row p-3 pb-1">        <a href="javascript:window.location.reload(true/false);"><button type="button" class="btn btn-primary btn-lg">Reroll<i class="bi bi-dice-5"></i></button></a>
 </div>
 </div>
 {% endblock %}

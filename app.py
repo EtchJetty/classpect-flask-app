@@ -1,8 +1,9 @@
+import random
 from flask import Flask, render_template, g, request
 from datetime import datetime
 from flask_babel import Babel, format_datetime
-from consthandler import *
-import pa4
+import consthandler as cspect
+
 
 app = Flask(__name__)
 babel = Babel(app)
@@ -26,74 +27,42 @@ def get_timezone():
     
 @app.route("/")
 def home():
-    return render_template(
-        "base.html",
-        display="words",
-        sitetitle="Yo"
-        )
+    display = {}
+    
+    display["date"] = format_datetime(datetime.now(), "EEE, MMM d, yyyy")
+    
+    random.seed(format_datetime(datetime.now(), "EEE, MMM d, yyyy"))
+    classpect = cspect.getRandomClasspect()
+    random.seed()
 
-@app.route("/pa4", methods=['GET', 'POST'])
-def funky():
-    if request.method == 'GET':
-        display = []
-        
-        with pa4.capture_stdout() as capture:
-            pa4.main(pa4.GETTY,30)
-        
-        for i in capture.result.split("\n\n"):
-            para = []
-            for x in i.split("\n"):
-                para.append(x)
-            display.append(para)
-        
-        return render_template(
-            "yo.html",
-            display=display,
-            sitetitle="Yo",
-            )
-    if request.method == "POST":        
-        display = []
-        
-        with pa4.capture_stdout() as capture:
-            pa4.main(request.form["textmisc"].replace("\r","\n"),30)
-        
-        for i in capture.result.split("\n\n"):
-            para = []
-            for x in i.split("\n"):
-                para.append(x)
-            display.append(para)
-        
-        return render_template(
-            "yo.html",
-            display=display,
-            sitetitle="Yo",
-            )
+    display["classpect"] = (classpect)
+    return render_template(
+        "cotd.html",sitetitle="ERIJAN CENTRAL",
+        display=display
+    )
 
 
 @app.route("/classpect")
-def fresh():
+def rclspect():
     normals = []
     # printit.append("Normals:\n")
     for i in range(12):
-        roll = getRandomClasspect()
+        roll = cspect.getRandomClasspect()
         normals.append(roll[0].name + " of " + roll[1].name + "\n")
     
     duals = []
     # printit.append("\nDuals:\n")
     for i in range(12):
-        roll = getRandomClasspect(duals=True)
+        roll = cspect.getRandomClasspect(duals=True)
         duals.append(roll[0].name + " of " + roll[1].name + "\n")
     return render_template(
         "checkit.html",
         normals=normals, duals=duals
         )
 
-@app.route("/hello/")
-@app.route("/hello/<name>")
-def hello_there(name = None):
+@app.route("/src/<name>")
+def arbitraryHtml(name = None):
     return render_template(
-        "hello_there.html",
-        name=name,
-        date=format_datetime(datetime.now(), "EEEE, MMMM dd, yyyy 'at' h:m.")
-    )
-
+        name)
+    
+    
