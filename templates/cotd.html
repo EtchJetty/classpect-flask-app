@@ -92,13 +92,16 @@ block head %} {{ super() }} {% endblock %} {% block content %}
     var today = new Date().toDateString()
   document.getElementById("now").innerHTML = today;
 var classpects = [];
-{% for type in display.classpects %}
+{% for type in display.classpects -%}
 var temparray = [];
-{% for item in display.classpects[type] %}
-   temparray.push(JSON.parse('{{ item|safe }}'));
-{% endfor %}
+
+{% for item in display.classpects[type] -%}
+   
+temparray.push(JSON.parse('{{ item|safe }}'));
+{%- endfor %}
+
 classpects.push(temparray);
-{% endfor %}
+{%- endfor %}
    console.log(classpects);
 var seed = String(new Date().getDate()).padStart(2, '0')+ String(new Date().getMonth() + 1).padStart(2, '0')+ String(new Date().getFullYear());
 console.log(seed)
@@ -112,15 +115,15 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(random() * (max - min + 1) + min); //The maximum is exclusive and the minimum is inclusive
 }
-var roll1 = getRandomInt(1,12)
-var roll2 = getRandomInt(1,12)
+var roll1 = getRandomInt(0,11)
+var roll2 = getRandomInt(0,11)
    console.log(roll1);
    console.log(roll2);
 var todayscspect = [classpects[0][roll1],classpects[1][roll2]]
    console.log(todayscspect);
  
  document.getElementById("rolledCspect").innerHTML = todayscspect[0].name + ' of ' + todayscspect[1].name;
- document.getElementById("desc").innerHTML = "One who " + todayscspect[0].activity + "ly " + todayscspect[0].verb + 's through ' + todayscspect[1].name + ".";
+ document.getElementById("desc").innerHTML = "One who " + todayscspect[0].activity + "ly " + todayscspect[0].verb + 's and is '+ todayscspect[0].verb +'ed through ' + todayscspect[1].name + ".";
 
 </script>
 {% endblock %}
