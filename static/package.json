@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "english-verbs-gerunds": "^2.2.1",
+    "english-verbs-helper": "^2.2.1",
+    "english-verbs-irregular": "^2.2.1"
+  }
+}
