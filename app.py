@@ -71,4 +71,8 @@ def arbitraryHtml(name = None):
     return render_template(
         name)
     
+@app.route("/games/homesturdle")
+def homesturdle():
+    return render_template(
+        "homesturdle.html")
     

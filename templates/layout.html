@@ -47,23 +47,103 @@
                 >Home</a
               >
             </li>
-            <li class="nav-item">
+            <li class="nav-item dropdown">
               <a
-                class="nav-link {% if url_for(request.endpoint) == url_for('rclspect') %}active{% endif %}"
-                href="{{url_for('rclspect')}}"
-                >Random Classpects</a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="dropdown01"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >Classpecting</a
               >
+              <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                <li>
+                  <a
+                    class="dropdown-item {% if url_for(request.endpoint) == url_for('rclspect') %}active{% endif %}"
+                    href="{{url_for('rclspect')}}"
+                    >Random Classpects</a
+                  >
+                </li>
+<li>
+                  <a
+                    class="dropdown-item"
+                    href="https://housetrapped-faq-archive.glitch.me/"
+                    >Housetrapped FAQ <i class="bi bi-box-arrow-up-right"></i></a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item disabled" href="#"
+                    >Theories <sup>Coming soon!</sup></a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item disabled" href="#"
+                    >Archive <sup>Coming soon!</sup></a
+                  >
+                </li>
+              </ul>
             </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Theories<sup>Coming soon!</sup></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Archive<sup>Coming soon!</sup></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled"
-                >READ ERIJAN<sup>Coming soon!</sup></a
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="dropdown01"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >Games</a
               >
+              <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                <li>
+                  <a
+                    class="dropdown-item {% if url_for(request.endpoint) == url_for('homesturdle') %}active{% endif %}"
+                    href="{{url_for('homesturdle')}}"
+                    >Homesturdle</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item disabled" href="#"
+                    >MEGIDO <sup>Coming never!</sup></a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item disabled" href="#"
+                    >ERIJAN THE MMORPG <sup>Coming never!</sup></a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="dropdown01"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                >READ ERIJAN</a
+              >
+              <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                <li>
+                  <a class="dropdown-item disabled" href="#"
+                    >Tree</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item disabled" href="#"
+                    >Night</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item disabled" href="#"
+                    >Death</a
+                  >
+                </li>
+
+                <li><hr class="dropdown-divider"></li>
+<li><h6 class="dropdown-header">Smith</h6></li>
+              <li><a class="dropdown-item" href="https://mspfa.com/?s=44691&p=1">Invite Link <i class="bi bi-box-arrow-up-right"></i></a></li>
+              <li><a class="dropdown-item" href="https://mspfa.com/?s=44768&p=1">Escal8 <i class="bi bi-box-arrow-up-right"></i></a></li>
+
+              </ul>
             </li>
           </ul>
           <form class="d-flex">
