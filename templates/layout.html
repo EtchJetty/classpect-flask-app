@@ -76,7 +76,13 @@
                 aria-expanded="false"
                 >Classpecting</a
               >
-              <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <ul class="dropdown-menu" aria-labelledby="dropdown01"><li>
+                  <a
+                    class="dropdown-item {% if url_for(request.endpoint) == url_for('lookupclspect') %}active{% endif %}"
+                    href="{{url_for('lookupclspect')}}"
+                    >Search Classpect</a
+                  >
+                </li>
                 <li>
                   <a
                     class="dropdown-item {% if url_for(request.endpoint) == url_for('rclspect') %}active{% endif %}"
@@ -84,13 +90,7 @@
                     >Random Classpects</a
                   >
                 </li>
-<li>
-                  <a
-                    class="dropdown-item {% if url_for(request.endpoint) == url_for('lookupclspect') %}active{% endif %}"
-                    href="{{url_for('lookupclspect')}}"
-                    >Lookup Classpect</a
-                  >
-                </li>
+
                 <li>
                   <a
                     class="dropdown-item"

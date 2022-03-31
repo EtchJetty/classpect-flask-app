@@ -7,7 +7,7 @@ block head %} {{ super() }}
     <div class="col-md-3"></div>
     <div class="col-md-6">
       <div class="row">
-        <h1>CLASSPECT OF THE DAY:</h1>
+        <h1 class="pt-2">CLASSPECT OF THE DAY</h1>
         <h4>
           Classpect of the Day for
           <span id="now"
@@ -197,5 +197,10 @@ block head %} {{ super() }}
     ' <img src="{{ url_for("static", filename="images/") }}' +
     todayscspect[1].name +
     '.png" style="height: 24px; position: relative; bottom: 1px" class="img-fluid" />.';
+    var hiddenClass = document.getElementById("firstclass");
+    var hiddenAspect = document.getElementById("firstaspect");
+    hiddenClass.setAttribute('value',todayscspect[0].name);
+    hiddenAspect.setAttribute('value',todayscspect[1].name);
+      
 </script>
 {% endblock %}

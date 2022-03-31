@@ -1,10 +1,11 @@
 {% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
 block head %} {{ super() }} {% endblock %} {% block content %}
 <div class="container">
+<h1 class="p-3 pt-4">Search Classpect:</h1>
   <form method="POST" id="formy" name="mathform">
     <div class="form-group">
       <div class="row g-3 align-items-center">
-        <div class="input-group p-5">
+        <div class="input-group p-5 pt-2">
           <input
             name="class"
             id="firstclass"
@@ -76,7 +77,15 @@ block head %} {{ super() }} {% endblock %} {% block content %}
           class="img-fluid"
         />{% endif %}
       </li>
-      {% endif %} {% if results["mathclass"] %}{% if
+      {% endif %} 
+{% if results["class"].paired().name != "base" %}
+      <li>
+        Paired Class: {% if results["class"].paired().name != "base" %}{{
+        results["class"].paired().name | e }}{% endif %}{% if results["class"].isDual() %} <ul><li style="color: transparent"><small class="text-muted">or: {{ results["class"].dualComponents()[0].paired().name | e }}{{ results["class"].dualComponents()[1].paired().name | e }}</small></li></ul>{% endif %}
+      </li>
+      {% endif %}
+
+{% if results["mathclass"] %}{% if
         (results["aspect"].isCanon() and results["mathaspect"].isCanon()) %} Sum:
       <li>
         {{ results["class"].name | e }} of {{ results["aspect"].name | e }}{% if

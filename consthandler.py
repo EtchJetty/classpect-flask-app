@@ -121,6 +121,11 @@ class ClasspectComponent:
     def paired(self):
         if self.type != "class":
             raise Exception("Only classes have paired classes!")
+        if self.isDual():
+            table = []
+            for i in self.dualComponents():
+                table.append(i.paired())
+            return (table[0] + table[1])
         for i in self.fullverbgroup():
             if (i.activity != self.activity) and (i.verb == self.verb):
                 return i
