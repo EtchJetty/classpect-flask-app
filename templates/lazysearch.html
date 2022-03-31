@@ -14,11 +14,9 @@ block head %} {{ super() }} {% endblock %} {% block content %}
             aria-label="Class"
             class="form-control"
             value="{% if results %}{{ results['class'].name | e }}{% else %}{% endif %}"
-            required
           /><span class="input-group-text">of</span>
           <input
             name="aspect"
-            required
             id="firstaspect"
             form="formy"
             placeholder="Aspect"
@@ -35,14 +33,24 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   {% if results %}
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Classpect</h5>
+      <h5 class="card-title">Result</h5>
       <p>
-        {{ results["class"].name | e }} of {{ results["aspect"].name | e }} {%
+        {{ results["class"].name | e }}{% if results["class"].name and results["aspect"].name %}
+ of {% endif %}{{ results["aspect"].name | e }} {%
         if results["aspect"].isCanon() %}<img
           src="{{ url_for('static', filename='images/') }}{{ results['aspect'].name }}.png"
           style="height: 24px; position: relative; bottom: 1px"
           class="img-fluid"
-        />{% endif %}
+        />{%
+        elif results["aspect"].isDual() %}<img
+          src="{{ url_for('static', filename='images/') }}{{ results['aspect'].dualComponents()[0].name }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        /><img
+          src="{{ url_for('static', filename='images/') }}{{ results['aspect'].dualComponents()[1].name }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        />{% endif %}{% if results["aspect"].isDual() or results["class"].isDual() %} <br><small class="text-muted">or: {{ results["class"].dualComponents()[0].name | e }}{{ results["class"].dualComponents()[1].name | e }} of {{ results["aspect"].dualComponents()[0].name | e }}{{ results["aspect"].dualComponents()[1].name | e }}</small>{% endif %}
       </p>
       {% if results["class"].inverse().name != "base" or
       results["aspect"].inverse().name != "base" %}
@@ -57,9 +65,19 @@ block head %} {{ super() }} {% endblock %} {% block content %}
           src="{{ url_for('static', filename='images/') }}{{ results['aspect'].inverse().name }}.png"
           style="height: 24px; position: relative; bottom: 1px"
           class="img-fluid"
+        />{%
+        elif results["aspect"].isDual() %}<img
+          src="{{ url_for('static', filename='images/') }}{{ results['aspect'].dualComponents()[0].inverse().name }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        /><img
+          src="{{ url_for('static', filename='images/') }}{{ results['aspect'].dualComponents()[1].inverse().name }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
         />{% endif %}
       </li>
-      {% endif %} {% if results["mathclass"] %} Sum:
+      {% endif %} {% if results["mathclass"] %}{% if
+        (results["aspect"].isCanon() and results["mathaspect"].isCanon()) %} Sum:
       <li>
         {{ results["class"].name | e }} of {{ results["aspect"].name | e }}{% if
         results["aspect"].isCanon() %}
@@ -83,12 +101,13 @@ block head %} {{ super() }} {% endblock %} {% block content %}
           src="{{ url_for('static', filename='images/') }}{{ results['aspect'].name }}.png"
           style="height: 24px; position: relative; bottom: 1px"
           class="img-fluid"
-        />{% endif %}{%if results["mathaspect"].isCanon() %} <img
+        />{% endif %}{%if results["mathaspect"].isCanon() %}<img
           src="{{ url_for('static', filename='images/') }}{{ results['mathaspect'].name | e }}.png"
           style="height: 24px; position: relative; bottom: 1px"
           class="img-fluid"
         />{% endif %}{% else %}+ERROR!{% endif %}
-      </li>
+      </li>{% endif %}{% if not
+        (results["aspect"].isCanon() and results["mathaspect"].isCanon()) %}
 Difference:
       <li>
         {{ results["class"].name | e }} of {{ results["aspect"].name | e }}{% if
@@ -114,7 +133,7 @@ Difference:
           class="img-fluid"
         />{% endif %}{% else %}-ERROR!{% endif %}
       </li>
-      {% endif %}
+      {% endif %}{% endif %}
       <form method="POST" id="mathform" name="mathform">
         <div class="form-group">
           <input

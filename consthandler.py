@@ -81,7 +81,29 @@ class ClasspectComponent:
                 return True
         return False
     
+    def isDual(self):
+        if self.isCanon():
+            return False
+        for classpect in getAllClasspects(self.type):
+            for sum in getAllClasspects(self.type):
+                if (classpect+sum).name == self.name:
+                    return True
+        return False
+    
+    def dualComponents(self):
+        if not self.isDual():
+            return self, None
+        for classpect in getAllClasspects(self.type):
+            for sum in getAllClasspects(self.type):
+                if (classpect+sum).name == self.name:
+                    return classpect, sum
+    
     def inverse(self):    
+        if self.isDual():
+            table = []
+            for i in self.dualComponents():
+                table.append(i.inverse())
+            return (table[0] + table[1])
         if self.type == "class":
             for i in self.fullverbgroup():
                 if (i.activity != self.activity) and (i.verb != self.verb):

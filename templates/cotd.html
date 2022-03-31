@@ -7,14 +7,14 @@ block head %} {{ super() }}
     <div class="col-md-3"></div>
     <div class="col-md-6">
       <div class="row">
-        <h1>ERIJAN CENTRAL</h1>
+        <h1>CLASSPECT OF THE DAY:</h1>
         <h4>
           Classpect of the Day for
           <span id="now"
             ><div class="spinner-border spinner-border-sm" role="status">
               <span class="visually-hidden">Loading...</span>
             </div></span
-          >
+          >:
         </h4>
       </div>
       <div class="row">
@@ -51,7 +51,36 @@ block head %} {{ super() }}
         ></button>
       </div>
       <div class="row">
-        <p><em>More features coming soon!</em></p>
+<h3 class="pt-2">Search Classpect:</h3>
+        <form method="POST" id="formy" name="mathform" action="{{url_for('lookupclspect')}}">
+    <div class="form-group">
+      <div class="row g-3 align-items-center">
+        <div class="input-group p-5 pt-2">
+          <input
+            name="class"
+            id="firstclass"
+            form="formy"
+            placeholder="Class"
+            type="text"
+            aria-label="Class"
+            class="form-control"
+            value="{% if results %}{{ results['class'].name | e }}{% else %}{% endif %}"
+          /><span class="input-group-text">of</span>
+          <input
+            name="aspect"
+            id="firstaspect"
+            form="formy"
+            placeholder="Aspect"
+            type="text"
+            aria-label="Aspect"
+            class="form-control"
+            value="{% if results %}{{ results['aspect'].name | e }}{% else %}{% endif %}"
+          />
+          <button type="submit" class="btn btn-primary">Get info!</button>
+        </div>
+      </div>
+    </div>
+  </form>
       </div>
     </div>
     <div class="col-md-3"></div>
