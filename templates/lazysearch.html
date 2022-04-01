@@ -51,9 +51,9 @@ block head %} {{ super() }} {% endblock %} {% block content %}
           src="{{ url_for('static', filename='images/') }}{{ results['aspect'].dualComponents()[1].name }}.png"
           style="height: 24px; position: relative; bottom: 1px"
           class="img-fluid"
-        />{% endif %}{% if results["aspect"].isDual() or results["class"].isDual() %} <br><small class="text-muted">or: {{ results["class"].dualComponents()[0].name | e }}{{ results["class"].dualComponents()[1].name | e }} of {{ results["aspect"].dualComponents()[0].name | e }}{{ results["aspect"].dualComponents()[1].name | e }}</small>{% endif %}
+        />{% endif %}{% if results["aspect"].isDual() or results["class"].isDual() %} <br><small class="text-muted">or: {%if results["class"].isDual() %}{{ results["class"].dualComponents()[0].name | e }}{{ results["class"].dualComponents()[1].name | e }}{% endif %}{% if results["aspect"].isDual() and results["class"].isDual() %} of {% endif %}{{ results["aspect"].dualComponents()[0].name | e }}{{ results["aspect"].dualComponents()[1].name | e }}</small>{% endif %}
       </p>
-      {% if results["class"].inverse().name != "base" or
+    {% if results["class"].inverse().name != "base" or
       results["aspect"].inverse().name != "base" %}
       <li>
         Inverse: {% if results["class"].inverse().name != "base" %}{{
@@ -75,7 +75,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
           src="{{ url_for('static', filename='images/') }}{{ results['aspect'].dualComponents()[1].inverse().name }}.png"
           style="height: 24px; position: relative; bottom: 1px"
           class="img-fluid"
-        />{% endif %}
+        />{% endif %}{% if results["aspect"].isDual() or results["class"].isDual() %}  <ul><li style="color: transparent"><small class="text-muted">or: {%if results["class"].isDual() %}{{ results["class"].dualComponents()[0].inverse().name | e }}{{ results["class"].dualComponents()[1].inverse().name | e }}{% endif %}{% if results["aspect"].isDual() and results["class"].isDual() %} of {% endif %}{{ results["aspect"].dualComponents()[0].inverse().name | e }}{{ results["aspect"].dualComponents()[1].inverse().name | e }}</small></li></ul>{% endif %}
       </li>
       {% endif %} 
 {% if results["class"].paired().name != "base" %}
@@ -110,7 +110,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
           src="{{ url_for('static', filename='images/') }}{{ results['aspect'].name }}.png"
           style="height: 24px; position: relative; bottom: 1px"
           class="img-fluid"
-        />{% endif %}{%if results["mathaspect"].isCanon() %}<img
+        />{% endif %}{%if results["mathaspect"].isCanon() and results["mathaspect"].name != results["aspect"].name %}<img
           src="{{ url_for('static', filename='images/') }}{{ results['mathaspect'].name | e }}.png"
           style="height: 24px; position: relative; bottom: 1px"
           class="img-fluid"
@@ -119,10 +119,18 @@ block head %} {{ super() }} {% endblock %} {% block content %}
         (results["aspect"].isCanon() and results["mathaspect"].isCanon()) %}
 Difference:
       <li>
-        {{ results["class"].name | e }} of {{ results["aspect"].name | e }}{% if
-        results["aspect"].isCanon() %}
-        <img
+        {{ results["class"].name | e }} of {{ results["aspect"].name | e }}{%
+        if results["aspect"].isCanon() %} <img
           src="{{ url_for('static', filename='images/') }}{{ results['aspect'].name }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        />{%
+        elif results["aspect"].isDual() %} <img
+          src="{{ url_for('static', filename='images/') }}{{ results['aspect'].dualComponents()[0].name }}.png"
+          style="height: 24px; position: relative; bottom: 1px"
+          class="img-fluid"
+        /><img
+          src="{{ url_for('static', filename='images/') }}{{ results['aspect'].dualComponents()[1].name }}.png"
           style="height: 24px; position: relative; bottom: 1px"
           class="img-fluid"
         />{% endif %} - {{ results["mathclass"].name | e }} of {{
@@ -132,18 +140,17 @@ Difference:
           src="{{ url_for('static', filename='images/') }}{{ results['mathaspect'].name | e }}.png"
           style="height: 24px; position: relative; bottom: 1px"
           class="img-fluid"
-        />{% endif %} = {% if (results["class"]-results["mathclass"]).name != "base" and
-        (results["aspect"]-results["mathaspect"]).name != "base" %} {{
-        (results["class"]-results["mathclass"]).name | e }} of {{
+        />{% endif %} = {% if (results["class"]-results["mathclass"]).name != "base" or
+        (results["aspect"]-results["mathaspect"]).name != "base" %} {% if (results["class"]-results["mathclass"]).name != "base" %}{{
+        (results["class"]-results["mathclass"]).name | e }}{% endif %}{% if (results["class"]-results["mathclass"]).name != "base" and
+        (results["aspect"]-results["mathaspect"]).name != "base" %} of {% endif %}{{
         (results["aspect"]-results["mathaspect"]).name | e }}{%if
         (results["aspect"] - results["mathaspect"]).isCanon() %} <img
           src="{{ url_for('static', filename='images/') }}{{ (results['aspect']-results['mathaspect']).name | e }}.png"
           style="height: 24px; position: relative; bottom: 1px"
           class="img-fluid"
-        />{% endif %}{% else %}-ERROR!{% endif %}
-      </li>
-      {% endif %}{% endif %}
-      <form method="POST" id="mathform" name="mathform">
+        />{% endif %}{% else %}-ERROR!</br><span class="text-muted text-right">Make sure to only subtract valid components (e.g. {{ results["class"].dualComponents()[0].name | e }} of {{ results["aspect"].dualComponents()[0].name | e }} or {{ results["class"].dualComponents()[1].name | e }} of {{ results["aspect"].dualComponents()[1].name | e }}).</span>{% endif %}
+      </li> {% endif %}{% endif %}  <form method="POST" id="mathform" name="mathform">
         <div class="form-group">
           <input
             type="hidden"
@@ -160,7 +167,7 @@ Difference:
             value='{{ results["aspect"].name | e }}'
           />
           <div class="row g-3 align-items-center">
-            <div class="input-group p-5">
+            <div class="input-group p-5 pt-3 pb-3">
               <input
                 name="mathclass"
                 id="mathclass"
@@ -197,6 +204,15 @@ Difference:
         var hiddenAspect = document.getElementById("hiddenAspect");
         hiddenClass.setAttribute('value',classclass);
         hiddenAspect.setAttribute('value',aspectclass);
+
+        if (document.getElementById("mathaspect").value || document.getElementById("mathclass").value){
+        if (!document.getElementById("mathclass").value){
+            document.getElementById("mathclass").removeAttribute("required");
+        }
+        if (!document.getElementById("mathaspect").value){
+                    document.getElementById("mathaspect").removeAttribute("required");
+                }
+            }
       }
     </script>
     {% endif %} {% endblock %}

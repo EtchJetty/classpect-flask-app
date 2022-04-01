@@ -5,7 +5,7 @@ import random
 
 class ClasspectComponent:
     'Generic classpect component. Used for classes and aspects.'
-    def __init__(self, name="base", type="class"):
+    def __init__(self, name, type):
         type = type.lower()
         self.name = name
         self.type = type
@@ -17,33 +17,29 @@ class ClasspectComponent:
             self.altverb = toBe["altverb"]
         
     def __add__(self, other):
-        if self.type == other.type:
-            if self.type == "class":
-                try:
-                    return ClasspectComponent(CLASSPECTS["classes"][self.name][other.name])
-                except:
-                    return ClasspectComponent()
-            else:
-                try:
-                    return ClasspectComponent(CLASSPECTS["aspects"][self.name][other.name])
-                except:
-                    return ClasspectComponent()
+        if (self.name == ""):
+            return other
+        elif (other.name == ""):
+            return self
+        elif self.type == other.type:
+            try:
+                return ClasspectComponent(CLASSPECTS[self.type][self.name][other.name], self.type)
+            except:
+                raise Exception("Failed to add classpects!")
         else: 
             raise Exception("Addition between different types not yet implimented!")
         
         
     def __sub__(self, other):
-        if self.type == other.type:
-            if self.type == "class":
-                try:
-                    return ClasspectComponent(next((k for k, v in CLASSPECTS["classes"][other.name].items() if v == self.name), "base"),"aspect")
-                except:
-                    return ClasspectComponent()
-            else:
-                try: 
-                    return ClasspectComponent(next((k for k, v in CLASSPECTS["aspects"][other.name].items() if v == self.name), "base"),"aspect")
-                except:
-                    return ClasspectComponent()
+        if (self.name == ""):
+            return other
+        elif (other.name == ""):
+            return self
+        elif self.type == other.type:
+            try:
+                return ClasspectComponent(next((k for k, v in CLASSPECTS[self.type][other.name].items() if v == self.name), ""),self.type)
+            except:
+                return ClasspectComponent("",self.type)
         else: 
             raise Exception("Subtraction between different types not yet implimented!")
         
@@ -55,7 +51,7 @@ class ClasspectComponent:
         elif other == 2:
             return self+self
         else:
-            return ClasspectComponent()
+            return ClasspectComponent("",self.type)
     
     def classdef(self):
         classDef = {}
@@ -112,11 +108,17 @@ class ClasspectComponent:
             try:
                 getDefs(ASPECTDEFS_CSV_PATH)[0][self.name]
             except:
-                return ClasspectComponent("base","aspect")
+                return ClasspectComponent("",self.type)
             else: 
                 for i in getDefs(ASPECTDEFS_CSV_PATH): 
-                    return ClasspectComponent(i[self.name],"aspect")
-        return ClasspectComponent()
+                    return ClasspectComponent(i[self.name],self.type)
+        return ClasspectComponent("",self.type)
+    
+    def typeInverse(self):    
+        if self.type == "class":
+            return "aspect"
+        else:
+            return "class"
         
     def paired(self):
         if self.type != "class":
@@ -129,7 +131,7 @@ class ClasspectComponent:
         for i in self.fullverbgroup():
             if (i.activity != self.activity) and (i.verb == self.verb):
                 return i
-        return ClasspectComponent()
+        return ClasspectComponent("",self.type)
 
 
     
@@ -152,20 +154,20 @@ def getDefs(filename = "classdefs.csv"):
 # begin general use functions
 def getRandomClasspect(duals:bool = False):
     rolls = []
-    if duals: # i have no clue why i did it this way but hey it works
-        for i in CLASSPECTS.values(): rolls.append(ClasspectComponent(i[random.choice(list(i.keys()))][random.choice(list(i.keys()))]))
+    if not duals: # i have no clue why i did it this way but hey it works
+        return [random.choice(getAllClasspects("class")),random.choice(getAllClasspects("aspect"))]
     else: 
-        for i in CLASSPECTS.values(): rolls.append(ClasspectComponent(random.choice(list(i.keys()))))
-    return rolls
+        return [random.choice(getAllClasspects("class"))+random.choice(getAllClasspects("class")),random.choice(getAllClasspects("aspect"))+random.choice(getAllClasspects("aspect"))]
 
-def getAllClasspects(type = "class"):
+
+def getAllClasspects(type):
     vgroup = []
     if type == "class":
         for k in getDefs(CLASSDEFS_CSV_PATH)[0].items():
-            vgroup.append(ClasspectComponent(k[0]))
+            vgroup.append(ClasspectComponent(k[0],type))
     else: 
          for k in getDefs(ASPECTDEFS_CSV_PATH)[0].items():
-            vgroup.append(ClasspectComponent(k[0],"aspect"))
+            vgroup.append(ClasspectComponent(k[0],type))
     vgroup.pop(0)
     return vgroup
 
@@ -173,7 +175,7 @@ def getAllClasspects(type = "class"):
 
 # begin fun functions
 def tests():
-    for classpect in getAllClasspects():
+    for classpect in getAllClasspects("class"):
         print(classpect.name)
     print()
     for classpect in getAllClasspects("aspect"):
@@ -189,8 +191,8 @@ def tests():
         print(roll[0].name,"of",roll[1].name)
     print("\nDefinitions Experiment:")
     
-    sylph = ClasspectComponent("Sylph")
-    bard = ClasspectComponent("Bard")
+    sylph = ClasspectComponent("Sylph","class")
+    bard = ClasspectComponent("Bard","class")
     print(sylph.name, ": One who ", sylph.verb, "s ", sylph.activity, "ly with their aspect.", sep="")
     
     time = ClasspectComponent("Time","aspect")
@@ -199,7 +201,7 @@ def tests():
     
     print(sylph.name,"+", bard.name, "=", (sylph+bard).name)
     
-    editor = ClasspectComponent("Editor")
+    editor = ClasspectComponent("Editor","class")
     print(editor.name,"-", bard.name, "=", (editor-bard).name)
     print(sylph.name,"-", sylph.name, "=", (sylph-sylph).name)
     
@@ -231,6 +233,6 @@ ASPECTS_CSV_PATH  = os.path.join(THIS_FOLDER, "static/aspects.csv")
 CLASSDEFS_CSV_PATH  = os.path.join(THIS_FOLDER, "static/classdefs.csv")
 ASPECTDEFS_CSV_PATH  = os.path.join(THIS_FOLDER, "static/aspectdefs.csv")
 
-CLASSPECTS = {"classes": getcsv(CLASSES_CSV_PATH), "aspects": getcsv(ASPECTS_CSV_PATH)}
+CLASSPECTS = {"class": getcsv(CLASSES_CSV_PATH), "aspect": getcsv(ASPECTS_CSV_PATH)}
 
 # main()

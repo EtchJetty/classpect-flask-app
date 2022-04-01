@@ -14,14 +14,14 @@
 <div class="col">
   <p><strong>Normals: </strong></br>
         {% for i in normals %}
-            {{ i | e }}</br>
+            {{ i | safe }}</br>
         {% endfor %}
         </p>
 </div>
 <div class="col">
 <p><strong>Duals: </strong></br>
         {% for i in duals %}
-            {{ i | e }}</br>
+            {{ i | safe }}</br>
         {% endfor %}
         </p>
 </div>

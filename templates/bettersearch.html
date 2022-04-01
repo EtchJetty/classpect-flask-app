@@ -1,0 +1,197 @@
+{% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
+block head %} {{ super() }} {% endblock %} {% block content %}
+<div class="container">
+  <h1 class="p-3 pt-4 pb-1">Search Classpect:</h1>
+<span class="ps-4">Enter a Class, Aspect, or both.</span>
+  <form
+    method="POST"
+    id="formy"
+    name="mathform"
+    class="pt-2 needs-validation"
+    novalidate
+  >
+    <div class="form-group">
+      <div class="row g-3 align-items-center">
+        <div class="input-group has-validation p-5 pt-2">
+          <input
+            name="class"
+            id="firstclass"
+            form="formy"
+            placeholder="Class"
+            type="text"
+            aria-label="Class"
+            class="form-control"
+            {%
+            if
+            results
+            %}value="{{ results['class'].name | e }}"
+            {%
+            else
+            %}{%
+            endif
+            %}
+            required
+          /><span class="input-group-text">of</span>
+          <input
+            name="aspect"
+            id="firstaspect"
+            form="formy"
+            placeholder="Aspect"
+            type="text"
+            aria-label="Aspect"
+            class="form-control"
+            {%
+            if
+            results
+            %}value="{{ results['aspect'].name | e }}"
+            {%
+            else
+            %}{%
+            endif
+            %}
+            required
+          />
+          <button type="submit" onclick="fixrequired()" class="btn btn-primary">
+            Get info!
+          </button>
+          <div class="invalid-feedback">
+            Please provide either a Class or an Aspect, then try again!
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      "use strict";
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll(".needs-validation");
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener(
+          "submit",
+          function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+
+            // form.classList.add("was-validated");
+          },
+          false
+        );
+      });
+    })();
+    function fixrequired() {
+      if (
+        document.getElementById("firstaspect").value ||
+        document.getElementById("firstclass").value
+      ) {
+        if (!document.getElementById("firstclass").value) {
+          document.getElementById("firstclass").removeAttribute("required");
+        }
+        if (!document.getElementById("firstaspect").value) {
+          document.getElementById("firstaspect").removeAttribute("required");
+        }
+      }
+    }
+  </script>
+  {% if results %}
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Result</h5>
+      {{ display|safe }}
+
+      {% if validator %}<form method="POST" id="mathform" name="mathform" novalidate>
+        <div class="form-group">
+          <input
+            type="hidden"
+            id="hiddenClass"
+            form="mathform"
+            name="class"
+            value='{{ results["class"].name | e }}'
+          />
+          <input
+            type="hidden"
+            form="mathform"
+            id="hiddenAspect"
+            name="aspect"
+            value='{{ results["aspect"].name | e }}'
+          />
+          <div class="row g-3 align-items-center">
+            <div class="input-group p-5 pt-3 pb-3">
+              <input
+                name="mathclass"
+                id="mathclass"
+                form="mathform"
+                placeholder="Class"
+                type="text"
+                required
+                aria-label="Class"
+                class="form-control"
+                value="{% if results['mathclass'] %}{{ results['mathclass'].name | e }}{% else %}{% endif %}"
+              /><span class="input-group-text">of</span>
+              <input
+                name="mathaspect"
+                id="mathaspect"
+                form="mathform"
+                placeholder="Aspect"
+                type="text"
+                required
+                aria-label="Aspect"
+                class="form-control"
+                value="{% if results['mathaspect'] %}{{ results['mathaspect'].name | e }}{% else %}{% endif %}"
+              />
+              <button
+                type="submit"
+                onclick="makesmooth()"
+                class="btn btn-primary"
+              >
+                Do math!
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      {{ mathdisplay|safe }}{% endif %}{{ embedfun }}
+    </div>
+    <script>
+      function makesmooth() {
+        let classclass = document.getElementById("firstclass").value;
+        let aspectclass = document.getElementById("firstaspect").value;
+
+        var hiddenClass = document.getElementById("hiddenClass");
+        var hiddenAspect = document.getElementById("hiddenAspect");
+        hiddenClass.setAttribute("value", classclass);
+        hiddenAspect.setAttribute("value", aspectclass);
+
+        if (
+          document.getElementById("mathaspect").value ||
+          document.getElementById("mathclass").value
+        ) {
+          if (!document.getElementById("mathclass").value) {
+            document.getElementById("mathclass").removeAttribute("required");
+          }
+          if (!document.getElementById("mathaspect").value) {
+            document.getElementById("mathaspect").removeAttribute("required");
+          }
+        }
+        if (
+          document.getElementById("firstaspect").value ||
+          document.getElementById("firstclass").value
+        ) {
+          if (!document.getElementById("firstclass").value) {
+            document.getElementById("firstclass").removeAttribute("required");
+          }
+          if (!document.getElementById("firstaspect").value) {
+            document.getElementById("firstaspect").removeAttribute("required");
+          }
+        }
+      }
+    </script>
+    {% endif %} {% endblock %}
+  </div>
+</div>
