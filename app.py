@@ -1,6 +1,6 @@
 import json
 import random
-from flask import Flask, render_template, g, request, url_for
+from flask import Flask, redirect, render_template, g, request, url_for
 from datetime import datetime
 from flask_babel import Babel, format_datetime
 import consthandler as ectdata
@@ -148,14 +148,24 @@ def home():
         display=display
     )
 
-@app.route("/classpects/search", methods=['GET', 'POST'])
-@app.route("/classpects/search/<custom>", methods=['GET', 'POST'])
-def lookupclspect(custom = None):
+@app.route("/classpects/search/<custom>", methods=['GET'])
+def searchfix(custom = None):
     if custom:
         request.method = "POST"
         custom = custom.split("of")
         request.form = {"class":custom[0],"aspect":custom[1]}
-        # request.form 
+        return redirect(url_for('lookupclspect', json=json.dumps(request.form), code=307))
+
+
+@app.route("/classpects/search", methods=['GET', 'POST'])
+def lookupclspect():
+    try:
+        json.loads(request.args["json"])
+    except:
+        pass
+    else: 
+        request.method = "POST"
+        hidden = json.loads(request.args["json"])
     if request.method == 'GET':
         display = []
         
@@ -164,16 +174,22 @@ def lookupclspect(custom = None):
             display=display,
             sitetitle="Lookup",
             )
-    elif request.method == "POST":        
+    if request.method == "POST":        
+
         form = dict(request.form)
         results = {}
         
         if list(form.values()).count("") == len(form):
-            return render_template(
+            try:
+                hidden
+            except:
+                return render_template(
             "bettersearch.html",
             results=results,classpects=fetchAllClasspects(),
             sitetitle="Lookup",display=""
             )
+            else:
+                form = hidden
         
         formState = {"dual":False,"math":False,"singular":False}
         if len(form) > 3:
