@@ -149,7 +149,7 @@ def home():
     )
 
 @app.route("/classpects/search", methods=['GET', 'POST'])
-@app.route("/classpects/search/<custom>")
+@app.route("/classpects/search/<custom>", methods=['GET', 'POST'])
 def lookupclspect(custom = None):
     if custom:
         request.method = "POST"
