@@ -1,8 +1,13 @@
 {% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
 block head %} {{ super() }} {% endblock %} {% block content %}
 <div class="container">
-<h1 class="p-3 pt-4 pb-1" style="transform: rotate(0);">Search Classpect:<a class="stretched-link" href="{{url_for('lookupclspect')}}"></a></h1>
-<span class="ps-4">Enter a Class, Aspect, or both.</span>
+  <h1 class="p-3 pt-4 pb-1" style="transform: rotate(0)">
+    Search Classpect:<a
+      class="stretched-link"
+      href="{{url_for('lookupclspect')}}"
+    ></a>
+  </h1>
+  <span class="ps-4">Enter a Class, Aspect, or both.</span>
   <form
     method="POST"
     id="formy"
@@ -31,7 +36,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
             endif
             %}
             required
-list = "fullclasses"
+            list="fullclasses"
           /><span class="input-group-text">of</span>
           <input
             name="aspect"
@@ -51,18 +56,18 @@ list = "fullclasses"
             endif
             %}
             required
-list = "fullaspects"
+            list="fullaspects"
           />
-<datalist id="fullclasses">
-{% for val in classpects["class"] %}
-  <option value={{val.name}}>
-{% endfor %}
-</datalist>
-<datalist id="fullaspects">
-{% for val in classpects["aspect"] %}
-  <option value={{val.name}}>
-{% endfor %}
-</datalist>
+          <datalist id="fullclasses">
+            {% for val in classpects["class"] %}
+            <option value="{{val.name}}">{% endfor %}</option>
+          </datalist>
+
+          <datalist id="fullaspects">
+            {% for val in classpects["aspect"] %}
+            <option value="{{val.name}}">{% endfor %}</option>
+          </datalist>
+
           <button type="submit" onclick="fixrequired()" class="btn btn-primary">
             Get info!
           </button>
@@ -115,9 +120,8 @@ list = "fullaspects"
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">Result</h5>
-      {{ display|safe }}
-
-      {% if validator %}<form method="POST" id="mathform" name="mathform" novalidate>
+      {{ display|safe }} {% if validator %}
+      <form method="POST" id="mathform" name="mathform" novalidate>
         <div class="form-group">
           <input
             type="hidden"
@@ -144,7 +148,7 @@ list = "fullaspects"
                 required
                 aria-label="Class"
                 class="form-control"
-list="classlist"
+                list="classlist"
                 value="{% if results['mathclass'] %}{{ results['mathclass'].name | e }}{% else %}{% endif %}"
               /><span class="input-group-text">of</span>
               <input
@@ -154,21 +158,21 @@ list="classlist"
                 placeholder="Aspect"
                 type="text"
                 required
-list="aspectlist"
+                list="aspectlist"
                 aria-label="Aspect"
                 class="form-control"
                 value="{% if results['mathaspect'] %}{{ results['mathaspect'].name | e }}{% else %}{% endif %}"
               />
-<datalist id="classlist">
-{% for val in validmath["class"] %}
-  <option value={{val.name}}>
-{% endfor %}
-</datalist>
-<datalist id="aspectlist">
-{% for val in validmath["aspect"] %}
-  <option value={{val.name}}>
-{% endfor %}
-</datalist>
+              <datalist id="classlist">
+                {% for val in validmath["class"] %}
+                <option value="{{val.name}}">{% endfor %}</option>
+              </datalist>
+
+              <datalist id="aspectlist">
+                {% for val in validmath["aspect"] %}
+                <option value="{{val.name}}">{% endfor %}</option>
+              </datalist>
+
               <button
                 type="submit"
                 onclick="makesmooth()"
@@ -215,6 +219,106 @@ list="aspectlist"
           }
         }
       }
+    </script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $("body").click(function (event) {
+        // Gets clicked on word (or selected text if text is selected)
+        var t = "";
+        if (window.getSelection && (sel = window.getSelection()).modify) {
+          // Webkit, Gecko
+          var s = window.getSelection();
+          if (s.isCollapsed) {
+            s.modify("move", "forward", "character");
+            s.modify("move", "backward", "word");
+            s.modify("extend", "forward", "word");
+            t = s.toString();
+            s.modify("move", "forward", "character"); //clear selection
+          } else {
+            t = s.toString();
+          }
+        } else if ((sel = document.selection) && sel.type != "Control") {
+          // IE 4+
+          var textRange = sel.createRange();
+          if (!textRange.text) {
+            textRange.expand("word");
+          }
+          // Remove trailing spaces
+          while (/\s$/.test(textRange.text)) {
+            textRange.moveEnd("character", -1);
+          }
+          t = textRange.text;
+        }
+        if (t == "") {
+          t = "base";
+        }
+        if (
+          document.elementFromPoint(event.clientX, event.clientY).tagName ==
+            "IMG") { 
+        // if(
+        //   !(
+        //     canonAspects.has(t[0].toUpperCase() + t.slice(1).toLowerCase()) ||
+        //     canonClasses.has(t[0].toUpperCase() + t.slice(1).toLowerCase())
+        //   )
+        // ) {
+          t = (
+            document
+              .elementFromPoint(event.clientX, event.clientY)
+              .src.substring(
+                document
+                  .elementFromPoint(event.clientX, event.clientY)
+                  .src.lastIndexOf("/") + 1
+              ).replace(".png","")
+          );
+        }
+// }
+        var cspe = t[0].toUpperCase() + t.slice(1).toLowerCase();
+        if (document.getElementById("housetrapped")) {
+          if (canonAspects.has(cspe) || canonClasses.has(cspe)) {
+            var buttonfix = document.getElementById("jstarget");
+            jstarget.setAttribute("class", "btn btn-link");
+            jstarget.setAttribute("style", "text-decoration: none;");
+
+            jstarget.disabled = false;
+            $("#collapseOne").collapse({
+              toggle: false,
+            });
+            var housetrapped_iframe = document.getElementById("housetrapped");
+            if (canonAspects.has(cspe)) {
+              jstarget.innerHTML =
+                "<a href='" +
+                "https://housetrapped-faq-archive.glitch.me/aspects.html#" +
+                archiveUrls["aspect"][cspe] +
+                "'>" +
+                cspe +
+                " Aspect analysis from the Housetrapped FAQ  (beta) <i class='bi bi-box-arrow-up-right minisize'></i></a>";
+              housetrapped_iframe.setAttribute(
+                "src",
+                "https://housetrapped-faq-archive.glitch.me/aspects.html#" +
+                  archiveUrls["aspect"][cspe]
+              );
+            }
+            if (canonClasses.has(cspe)) {
+              jstarget.innerHTML =
+                "<a href='" +
+                "https://housetrapped-faq-archive.glitch.me/classes.html#" +
+                archiveUrls["class"][cspe] +
+                "'>" +
+                cspe +
+                " Class analysis from the Housetrapped FAQ  (beta) <i class='bi bi-box-arrow-up-right minisize'></i></a>";
+              housetrapped_iframe.setAttribute(
+                "src",
+                "https://housetrapped-faq-archive.glitch.me/classes.html#" +
+                  archiveUrls["class"][cspe]
+              );
+            }
+          }
+        }
+      });
     </script>
     {% endif %} {% endblock %}
   </div>

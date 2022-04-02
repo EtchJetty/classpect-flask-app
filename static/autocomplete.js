@@ -1,170 +1,99 @@
-const DEFAULTS = {
-  threshold: 2,
-  maximumItems: 5,
-  highlightTyped: true,
-  highlightClass: 'text-primary',
-  label: 'label',
-  value: 'value',
-  showValue: false,
-  showValueBeforeLabel: false,
-};
-
-class Autocomplete {
-  constructor(field, options) {
-    this.field = field;
-    this.options = Object.assign({}, DEFAULTS, options);
-    this.dropdown = null;
-
-    field.parentNode.classList.add('dropdown');
-    field.setAttribute('data-bs-toggle', 'dropdown');
-    field.classList.add('dropdown-toggle');
-
-    const dropdown = ce(`<div class="dropdown-menu"></div>`);
-    if (this.options.dropdownClass)
-      dropdown.classList.add(this.options.dropdownClass);
-
-    insertAfter(dropdown, field);
-
-    this.dropdown = new bootstrap.Dropdown(field, this.options.dropdownOptions);
-
-    field.addEventListener('click', (e) => {
-      if (this.createItems() === 0) {
-        e.stopPropagation();
-        this.dropdown.hide();
-      }
-    });
-
-    field.addEventListener('input', () => {
-      if (this.options.onInput)
-        this.options.onInput(this.field.value);
-      this.renderIfNeeded();
-    });
-
-    field.addEventListener('keydown', (e) => {
-      if (e.keyCode === 27) {
-        this.dropdown.hide();
-        return;
-      }
-      if (e.keyCode === 40) {
-        this.dropdown._menu.children[0]?.focus();
-        return;
-      }
-    });
-  }
-
-  setData(data) {
-    this.options.data = data;
-    this.renderIfNeeded();
-  }
-
-  renderIfNeeded() {
-    if (this.createItems() > 0)
-      this.dropdown.show();
-    else
-      this.field.click();
-  }
-
-  createItem(lookup, item) {
-    let label;
-    if (this.options.highlightTyped) {
-      const idx = removeDiacritics(item.label)
-          .toLowerCase()
-          .indexOf(removeDiacritics(lookup).toLowerCase());
-      const className = Array.isArray(this.options.highlightClass) ? this.options.highlightClass.join(' ')
-        : (typeof this.options.highlightClass == 'string' ? this.options.highlightClass : '');
-      label = item.label.substring(0, idx)
-        + `<span class="${className}">${item.label.substring(idx, idx + lookup.length)}</span>`
-        + item.label.substring(idx + lookup.length, item.label.length);
+$("body").click(function () {
+  // Gets clicked on word (or selected text if text is selected)
+  var t = "";
+  if (window.getSelection && (sel = window.getSelection()).modify) {
+    // Webkit, Gecko
+    var s = window.getSelection();
+    if (s.isCollapsed) {
+      s.modify("move", "forward", "character");
+      s.modify("move", "backward", "word");
+      s.modify("extend", "forward", "word");
+      t = s.toString();
+      s.modify("move", "forward", "character"); //clear selection
     } else {
-      label = item.label;
+      t = s.toString();
     }
-
-    if (this.options.showValue) {
-      if (this.options.showValueBeforeLabel) {
-        label = `${item.value} ${label}`;
-      } else {
-        label += ` ${item.value}`;
-      }
+  } else if ((sel = document.selection) && sel.type != "Control") {
+    // IE 4+
+    var textRange = sel.createRange();
+    if (!textRange.text) {
+      textRange.expand("word");
     }
-
-    return ce(`<button type="button" class="dropdown-item" data-label="${item.label}" data-value="${item.value}">${label}</button>`);
+    // Remove trailing spaces
+    while (/\s$/.test(textRange.text)) {
+      textRange.moveEnd("character", -1);
+    }
+    t = textRange.text;
   }
-
-  createItems() {
-    const lookup = this.field.value;
-    if (lookup.length < this.options.threshold) {
-      this.dropdown.hide();
-      return 0;
-    }
-
-    const items = this.field.nextSibling;
-    items.innerHTML = '';
-
-    const keys = Object.keys(this.options.data);
-
-    let count = 0;
-    for (let i = 0; i < keys.length; i++) {
-      const key = keys[i];
-      const entry = this.options.data[key];
-      const item = {
-          label: this.options.label ? entry[this.options.label] : key,
-          value: this.options.value ? entry[this.options.value] : entry
-      };
-
-      if (removeDiacritics(item.label).toLowerCase().indexOf(removeDiacritics(lookup).toLowerCase()) >= 0) {
-        items.appendChild(this.createItem(lookup, item));
-        if (this.options.maximumItems > 0 && ++count >= this.options.maximumItems)
-          break;
-      }
-    }
-
-    this.field.nextSibling.querySelectorAll('.dropdown-item').forEach((item) => {
-      item.addEventListener('click', (e) => {
-        let dataLabel = e.target.getAttribute('data-label');
-        let dataValue = e.target.getAttribute('data-value');
-
-        this.field.value = dataLabel;
-
-        if (this.options.onSelectItem) {
-          this.options.onSelectItem({
-            value: dataValue,
-            label: dataLabel
-          });
+if (t == "") {
+          t = "base";
         }
+  var cspe = t[0].toUpperCase() + t.slice(1).toLowerCase();
+if (document.getElementById("housetrapped")) {
+var housetrapped_iframe = document.getElementById("housetrapped");
+  if (canonAspects.has(cspe)) {
+housetrapped_iframe.setAttribute("src", "https://housetrapped-faq-archive.glitch.me/aspects.html#" + archiveUrls["aspect"][cspe]);  }
+  if (canonClasses.has(cspe)) {
+housetrapped_iframe.setAttribute("src", "https://housetrapped-faq-archive.glitch.me/classes.html#" + archiveUrls["class"][cspe]);  
+  }}
+});
 
-        this.dropdown.hide();
-      })
-    });
+const canonAspects = new Set([
+  "Blood",
+  "Breath",
+  "Doom",
+  "Heart",
+  "Hope",
+  "Life",
+  "Light",
+  "Mind",
+  "Rage",
+  "Space",
+  "Time",
+  "Void",
+]);
+const canonClasses = new Set([
+  "Bard",
+  "Heir",
+  "Knight",
+  "Mage",
+  "Maid",
+  "Page",
+  "Prince",
+  "Rogue",
+  "Seer",
+  "Sylph",
+  "Thief",
+  "Witch",
+]);
 
-    return items.childNodes.length;
-  }
-}
-
-/**
- * @param html
- * @returns {Node}
- */
-function ce(html) {
-  let div = document.createElement('div');
-  div.innerHTML = html;
-  return div.firstChild;
-}
-
-/**
- * @param elem
- * @param refElem
- * @returns {*}
- */
-function insertAfter(elem, refElem) {
-  return refElem.parentNode.insertBefore(elem, refElem.nextSibling);
-}
-
-/**
- * @param {String} str
- * @returns {String}
- */
-function removeDiacritics(str) {
-  return str
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '');
-}
+const archiveUrls = {
+  class: {
+    Heir: "message-930617558002991145",
+    Bard: "message-930634497442082837",
+    Witch: "message-930618551340003388",
+    Knight: "message-930621209639530586",
+    Mage: "message-930620454899691550",
+    Maid: "message-930629176384442369",
+    Page: "message-930623251254751253",
+    Prince: "message-930632811893882930",
+    Rogue: "message-930627037918560366",
+    Seer: "message-930619500485808128",
+    Sylph: "message-930630920136949821",
+    Thief: "message-930625653089374300",
+  },
+  aspect: {
+    Blood: "message-930653867153166346",
+    Breath: "message-930651171188797460",
+    Doom: "message-930649304425701466",
+    Heart: "message-930662443884101632",
+    Hope: "message-930655170956759060",
+    Life: "message-930647614481920040",
+    Light: "message-930641626148253707",
+    Mind: "message-930660926020001823",
+    Rage: "message-930655170956759060",
+    Space: "message-930639006083977217",
+    Time: "message-930637393206333455",
+    Void: "message-930643051888648222",
+  },
+};

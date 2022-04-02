@@ -85,6 +85,20 @@ def dualName(unknown): #compatibility function
         for i in unknown:
             try:
                 x += i.name
+                if len(unknown) > 1 and i != unknown[-1]:
+                    x += "<span style='font-size:0.05px;'> </span>"
+            except:
+                pass
+        return x
+
+def dualClean(unknown): # dualName without js 
+    if unknown.__class__ != [].__class__:
+        return unknown.name
+    else:
+        x = ""
+        for i in unknown:
+            try:
+                x += i.name
             except:
                 pass
         return x
@@ -174,18 +188,19 @@ def sortByType(e):
     
 def makePrintable(formState, classpect_data):
     for i in classpect_data:
-        if (dualName(i) == ""):
+        if (dualClean(i) == ""):
             formState["singular"] = dualTypeInvTest(i)
                 
     printable_class = dualName(classpect_data[0])
     printable_aspect = dualName(classpect_data[1]) + emote(classpect_data[1])
-    if not (printable_aspect == "" or printable_class == ""):
-        of = " of "
-        return [printable_class, of, printable_aspect]
-    elif formState["singular"] == "class":
+    
+    if formState["singular"] == "class":
         return [printable_class]
     elif formState["singular"] == "aspect":
         return [printable_aspect]
+    elif not (printable_aspect == "" or printable_class == ""):
+        of = " of "
+        return [printable_class, of, printable_aspect]
             
 def dualFlavorText(formState, classpect_data):
     dual_class_data = list(classpect_data[0].dualComponents())
@@ -200,9 +215,9 @@ def wrapMuted(inputlist):
 def emote(aspect:ectdata.ClasspectComponent,style="height: 24px;"):
     if aspect.__class__ == [].__class__ or aspect.name == "" or (not aspect.isCanon() and not aspect.isDual()):
         return ""
-    urlFront = "<img src='" + url_for('static', filename='images/')
+    urlFront = "<a href='#'><img src='" + url_for('static', filename='images/')
     urlMid = ".png' style='position: relative; bottom: 1px; "
-    urlBack = "' class='img-fluid' />"
+    urlBack = "' class='img-fluid' /></a>"
     if aspect.isDual():
         return " " + urlFront + aspect.dualComponents()[0].name + urlMid + style + urlBack + urlFront + aspect.dualComponents()[1].name + urlMid + style + urlBack
     return " " + urlFront + aspect.name + urlMid + style + urlBack
@@ -344,7 +359,7 @@ def lookupclspect():
         else: 
             printable_dual_classpect_flavor_text = ""
             
-        # generating inverse 
+        # generating inverse and housetrapped 
         if not invalidCspects(classpect_data):
             hr1 = "<hr>"
             hr2 = "<hr>"
@@ -354,12 +369,37 @@ def lookupclspect():
                 printable_inverse_dual_classpect_flavor_text = "<ul style='margin-bottom: 0px'><li style='color: transparent'>" + dualFlavorText(formState,inverse_classpect_data) + "</li></ul>"
             else: 
                 printable_inverse_dual_classpect_flavor_text = ""
-        
+                
+            housetrapped = """
+<hr><p>Want a more detailed explanation?<br>
+<small><strong>Click</strong> on any canon Classpect, and you can view information on it below!</small></p>
+<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button id="jstarget" class="btn collapsed" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" disabled>
+          Please click on a Classpect!
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body" style="padding: unset;">
+        <div class="embed-responsive" style="height:400px;">
+          <iframe class="embed-responsive-item w-100 h-100" id="housetrapped" src=""></iframe>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>"""
+            
+            
         else:
             hr1 = ""
             hr2 = ""
             printable_inverse_classpect = ""
             printable_inverse_dual_classpect_flavor_text = ""
+            housetrapped = ""
             
         # generating paired class 
         if not invalidCspect(class_data):
@@ -472,8 +512,9 @@ def lookupclspect():
                             addit = "<ul style='margin-bottom: 0px'><li style='color: transparent'>" + dualFlavorText(formState,summed_data) + "</li></ul>"
                             mathdisplay.extend([printable_sum,addit])
         else:
-            mathdisplay = ""
-
+            mathdisplay = []
+        mathdisplay.extend([housetrapped])
+        
         display = compileArr(display)
         mathdisplay = compileArr(mathdisplay)
 
