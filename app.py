@@ -473,9 +473,11 @@ def rclspect():
         roll = ectdata.getRandomClasspect(duals=True)
         roll = (ectdata.ClasspectComponent(roll[0],"class"),ectdata.ClasspectComponent(roll[1],"class"))
         duals.append("<a href='" + url_for("lookupclspect") + "/" + roll[0].name + "of" + roll[1].name + "'>" + roll[0].name + " of " + roll[1].name + "</a>\n")
+    
+    
     return render_template(
         "checkit.html",
-        normals=normals, duals=duals,sitetitle="Randoms"
+        normals=normals, duals=duals,sitetitle="Randoms",icon=random.randint(1,6)
         )
 
 @app.route("/src/<name>")
