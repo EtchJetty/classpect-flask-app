@@ -6,27 +6,27 @@ from datetime import datetime
 from flask_babel import Babel, format_datetime
 import consthandler as ectdata
 
-import flask_profiler
+# import flask_profiler
 
 app = Flask(__name__)
-app.config["DEBUG"] = True
+# app.config["DEBUG"] = True
 
-# You need to declare necessary configuration to initialize
-# flask-profiler as follows:
-app.config["flask_profiler"] = {
-    "enabled": app.config["DEBUG"],
-    "storage": {
-        "engine": "sqlite"
-    },
-    "basicAuth":{
-        "enabled": True,
-        "username": "admin",
-        "password": "admin"
-    },
-    "ignore": [
-	    "^/static/.*"
-	]
-}
+# # You need to declare necessary configuration to initialize
+# # flask-profiler as follows:
+# app.config["flask_profiler"] = {
+#     "enabled": app.config["DEBUG"],
+#     "storage": {
+#         "engine": "sqlite"
+#     },
+#     "basicAuth":{
+#         "enabled": True,
+#         "username": "admin",
+#         "password": "admin"
+#     },
+#     "ignore": [
+# 	    "^/static/.*"
+# 	]
+# }
 
 
 
@@ -515,4 +515,4 @@ def homesturdle():
     return render_template(
         "homesturdle.html")
 
-flask_profiler.init_app(app)
+# flask_profiler.init_app(app)
