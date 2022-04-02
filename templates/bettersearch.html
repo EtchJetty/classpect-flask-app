@@ -1,7 +1,7 @@
 {% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
 block head %} {{ super() }} {% endblock %} {% block content %}
 <div class="container">
-  <h1 class="p-3 pt-4 pb-1">Search Classpect:</h1>
+<h1 class="p-3 pt-4 pb-1" style="transform: rotate(0);">Search Classpect:<a class="stretched-link" href="{{url_for('lookupclspect')}}"></a></h1>
 <span class="ps-4">Enter a Class, Aspect, or both.</span>
   <form
     method="POST"
