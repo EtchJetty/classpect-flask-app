@@ -31,6 +31,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
             endif
             %}
             required
+list = "fullclasses"
           /><span class="input-group-text">of</span>
           <input
             name="aspect"
@@ -50,7 +51,18 @@ block head %} {{ super() }} {% endblock %} {% block content %}
             endif
             %}
             required
+list = "fullaspects"
           />
+<datalist id="fullclasses">
+{% for val in classpects["class"] %}
+  <option value={{val.name}}>
+{% endfor %}
+</datalist>
+<datalist id="fullaspects">
+{% for val in classpects["aspect"] %}
+  <option value={{val.name}}>
+{% endfor %}
+</datalist>
           <button type="submit" onclick="fixrequired()" class="btn btn-primary">
             Get info!
           </button>
@@ -132,6 +144,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
                 required
                 aria-label="Class"
                 class="form-control"
+list="classlist"
                 value="{% if results['mathclass'] %}{{ results['mathclass'].name | e }}{% else %}{% endif %}"
               /><span class="input-group-text">of</span>
               <input
@@ -141,10 +154,21 @@ block head %} {{ super() }} {% endblock %} {% block content %}
                 placeholder="Aspect"
                 type="text"
                 required
+list="aspectlist"
                 aria-label="Aspect"
                 class="form-control"
                 value="{% if results['mathaspect'] %}{{ results['mathaspect'].name | e }}{% else %}{% endif %}"
               />
+<datalist id="classlist">
+{% for val in validmath["class"] %}
+  <option value={{val.name}}>
+{% endfor %}
+</datalist>
+<datalist id="aspectlist">
+{% for val in validmath["aspect"] %}
+  <option value={{val.name}}>
+{% endfor %}
+</datalist>
               <button
                 type="submit"
                 onclick="makesmooth()"

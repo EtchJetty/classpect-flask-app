@@ -17,9 +17,9 @@ class ClasspectComponent:
             self.altverb = toBe["altverb"]
         
     def __add__(self, other):
-        if (self.name == ""):
+        if (self.name == "") or (self.isDual() and not other.isDual()) or (other.isCanon() and not self.isCanon()) or ((not self.isDual() and not self.isCanon()) and other.isDual() and other.isCanon()):
             return other
-        elif (other.name == ""):
+        elif (other.name == "") or (other.isDual() and not self.isDual()) or (self.isCanon() and not other.isCanon())  or ((not other.isDual() and not other.isCanon()) and self.isDual() and self.isCanon()):
             return self
         elif self.type == other.type:
             try:
@@ -67,23 +67,21 @@ class ClasspectComponent:
     def fullverbgroup(self):
         fullgroup = []
         for classpect in getAllClasspects(self.type):
-            if classpect.vgroup == self.vgroup:
+            if ClasspectComponent(classpect,self.type).vgroup == self.vgroup:
                 fullgroup.append(classpect)
         return fullgroup
     
     def isCanon(self):
         for classpect in getAllClasspects(self.type):
-            if classpect.name == self.name:
+            if classpect == self.name:
                 return True
         return False
     
     def isDual(self):
         if self.isCanon():
             return False
-        for classpect in getAllClasspects(self.type):
-            for sum in getAllClasspects(self.type):
-                if (classpect+sum).name == self.name:
-                    return True
+        if self.name in getAllDuals(self.type):
+            return True
         return False
     
     def dualComponents(self):
@@ -91,8 +89,8 @@ class ClasspectComponent:
             return self, None
         for classpect in getAllClasspects(self.type):
             for sum in getAllClasspects(self.type):
-                if (classpect+sum).name == self.name:
-                    return classpect, sum
+                if (ClasspectComponent(classpect,self.type)+ClasspectComponent(sum,self.type)).name == self.name:
+                    return ClasspectComponent(classpect,self.type), ClasspectComponent(sum,self.type)
     
     def inverse(self):    
         if self.isDual():
@@ -101,7 +99,8 @@ class ClasspectComponent:
                 table.append(i.inverse())
             return (table[0] + table[1])
         if self.type == "class":
-            for i in self.fullverbgroup():
+            for tester in self.fullverbgroup():
+                i = ClasspectComponent(tester,self.type)
                 if (i.activity != self.activity) and (i.verb != self.verb):
                     return i
         else:
@@ -128,7 +127,8 @@ class ClasspectComponent:
             for i in self.dualComponents():
                 table.append(i.paired())
             return (table[0] + table[1])
-        for i in self.fullverbgroup():
+        for tester in self.fullverbgroup():
+            i = ClasspectComponent(tester,self.type)
             if (i.activity != self.activity) and (i.verb == self.verb):
                 return i
         return ClasspectComponent("",self.type)
@@ -151,25 +151,30 @@ def getDefs(filename = "classdefs.csv"):
 
 # end csv util functions
 
+def getAllDuals(type):
+    if type == "class":
+        return set().union(*(d.values() for d in getDefs(CLASSES_CSV_PATH)))
+    else: 
+        return set().union(*(d.values() for d in getDefs(ASPECTS_CSV_PATH)))
+
+
 # begin general use functions
 def getRandomClasspect(duals:bool = False):
     rolls = []
     if not duals: # i have no clue why i did it this way but hey it works
         return [random.choice(getAllClasspects("class")),random.choice(getAllClasspects("aspect"))]
     else: 
-        return [random.choice(getAllClasspects("class"))+random.choice(getAllClasspects("class")),random.choice(getAllClasspects("aspect"))+random.choice(getAllClasspects("aspect"))]
-
+        return [(ClasspectComponent(random.choice(getAllClasspects("class")),"class")+ClasspectComponent(random.choice(getAllClasspects("class")),"class")).name,(ClasspectComponent(random.choice(getAllClasspects("aspect")),"aspect")+ClasspectComponent(random.choice(getAllClasspects("aspect")),"aspect")).name]
 
 def getAllClasspects(type):
-    vgroup = []
     if type == "class":
-        for k in getDefs(CLASSDEFS_CSV_PATH)[0].items():
-            vgroup.append(ClasspectComponent(k[0],type))
+        listy = getDefs(CLASSES_CSV_PATH)
     else: 
-         for k in getDefs(ASPECTDEFS_CSV_PATH)[0].items():
-            vgroup.append(ClasspectComponent(k[0],type))
-    vgroup.pop(0)
-    return vgroup
+        listy = getDefs(ASPECTS_CSV_PATH)
+    x = (set().union(*(d.keys() for d in listy)))
+    x.remove("base")
+    x = list(x)
+    return x
 
 # end general use functions
 

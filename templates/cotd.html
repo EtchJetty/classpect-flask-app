@@ -65,6 +65,7 @@ block head %} {{ super() }}
             aria-label="Class"
             class="form-control"
             value="{% if results %}{{ results['class'].name | e }}{% else %}{% endif %}"
+list = "fullclasses"
           /><span class="input-group-text">of</span>
           <input
             name="aspect"
@@ -74,8 +75,27 @@ block head %} {{ super() }}
             type="text"
             aria-label="Aspect"
             class="form-control"
-            value="{% if results %}{{ results['aspect'].name | e }}{% else %}{% endif %}"
+            {%
+            if
+            results
+            %}value="{{ results['aspect'].name | e }}"
+            {%
+            else
+            %}{%
+            endif
+            %}
+list = "fullaspects"
           />
+<datalist id="fullclasses">
+{% for val in display.classpects["class"] %}
+  <option value={{val.name}}>
+{% endfor %}
+</datalist>
+<datalist id="fullaspects">
+{% for val in display.classpects["aspect"] %}
+  <option value={{val.name}}>
+{% endfor %}
+</datalist>
           <button type="submit" class="btn btn-primary">Get info!</button>
         </div>
       </div>
@@ -144,14 +164,7 @@ block head %} {{ super() }}
   }, 1000);
   var today = new Date().toDateString();
   document.getElementById("now").innerHTML = today;
-  var classpects = [];
-  {% for type in display.classpects -%}
-    var temparray = [];
-    {% for item in display.classpects[type] -%}
-      temparray.push(JSON.parse('{{ item|safe }}'));
-    {%- endfor %}
-    classpects.push(temparray);
-  {%- endfor %}
+  var classpects = {{ display.classpects | safe }};
 
   console.log(classpects);
   var seed =
@@ -173,7 +186,7 @@ block head %} {{ super() }}
   var roll2 = getRandomInt(0, 11);
   console.log(roll1);
   console.log(roll2);
-  var todayscspect = [classpects[0][roll1], classpects[1][roll2]];
+  var todayscspect = [classpects["class"][roll1], classpects["aspect"][roll2]];
   console.log(todayscspect);
 
   document.getElementById("rolledCspect").innerHTML =
@@ -191,7 +204,7 @@ block head %} {{ super() }}
     " and is " +
     todayscspect[0].activity +
     "ly " +
-    EnglishVerbs.getConjugation(VerbsData, todayscspect[0].verb, "PAST", "S") +
+    EnglishVerbs.getConjugation(VerbsData, todayscspect[0].verb, "PARTICIPLE_PAST", "S") +
     " through " +
     todayscspect[1].name +
     ' <img src="{{ url_for("static", filename="images/") }}' +

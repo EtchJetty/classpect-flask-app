@@ -1,4 +1,5 @@
 import json
+from operator import itemgetter
 import random
 from flask import Flask, redirect, render_template, g, request, url_for
 from datetime import datetime
@@ -41,12 +42,17 @@ def invalidCspects(aspects):
 def fetchAllClasspects():
     classes = ectdata.getAllClasspects("class")
     aspects = ectdata.getAllClasspects("aspect")
-    random.seed()
     for i in range(len(classes)):
-        classes[i] = json.dumps(classes[i].__dict__)
+        classes[i] = ectdata.ClasspectComponent(classes[i],"class").__dict__
     for i in range(len(aspects)):
-        aspects[i] = json.dumps(aspects[i].__dict__)
-    return {"classes":classes,"aspects":aspects}
+        aspects[i] = ectdata.ClasspectComponent(aspects[i],"aspect").__dict__
+        
+    aspects = sorted(aspects, key=itemgetter("name"))
+    classes = sorted(classes, key=itemgetter("name"))
+
+    string = ({"class":classes,"aspect":aspects})
+    
+    return string
 
 def dualName(unknown): #compatibility function
     if unknown.__class__ != [].__class__:
@@ -77,7 +83,30 @@ def wrapLi(inputlist,text):
     
 def magicant(form,results,formState):
     for i in results:
-        if not(results[i].isCanon() or results[i].isDual()) and (ectdata.ClasspectComponent(results[i].name,results[i].typeInverse()).isCanon() or ectdata.ClasspectComponent(results[i].name,results[i].typeInverse()).isDual()) and ((results[results[i].typeInverse()].name == "") or ((results["math"+results[i].typeInverse()].name == "") and (i == "math"+results[i].type))):
+        megaarr = (
+            not(results[i].isCanon() or results[i].isDual())
+        and
+            (
+                ectdata.ClasspectComponent(results[i].name,results[i].typeInverse()).isCanon()
+            or
+            ectdata.ClasspectComponent(results[i].name,results[i].typeInverse()).isDual()
+            )
+        and
+            (
+            (invalidCspect(results[results[i].typeInverse()]))
+            or
+            (
+                formState["math"]
+                and
+                (
+                (invalidCspect(results["math"+results[i].typeInverse()]))
+                and
+                (i == "math"+results[i].type)
+                )
+            )
+            )
+        )
+        if megaarr:
             results = {}
             newForm = {"class":form["aspect"],"aspect":form["class"]}
             if formState["math"]:
@@ -91,7 +120,30 @@ def magicant(form,results,formState):
                     newForm["class"] = form["class"] 
                     newForm["aspect"] = form["aspect"]
             for x in newForm:
-                results[x] = ectdata.ClasspectComponent(name=newForm[x].capitalize(),type=x.capitalize().replace("Math","")) 
+                results[x] = ectdata.ClasspectComponent(name=newForm[x].capitalize(),type=x.capitalize().replace("Math",""))
+                
+    last = list(i.name for i in results.values())
+    
+    if len(last) != len(set(last)):
+        if last[0] == last [1]:
+            if not invalidCspect(ectdata.ClasspectComponent(last[0],"class")):
+                validtype = "aspect"
+                results[validtype] = ectdata.ClasspectComponent("",validtype)
+            elif not invalidCspect(ectdata.ClasspectComponent(last[0],"aspect")):
+                validtype = "class"
+                results[validtype] = ectdata.ClasspectComponent("",validtype)
+        try: 
+            last[2]
+        except: 
+            pass
+        else: 
+            if last[2] == last [3]:
+                if not invalidCspect(ectdata.ClasspectComponent(last[2],"class")):
+                    validtype = "aspect"
+                    results["math"+validtype] = ectdata.ClasspectComponent("",validtype)
+                elif not invalidCspect(ectdata.ClasspectComponent(last[2],"aspect")):
+                    validtype = "class"
+                    results["math"+validtype] = ectdata.ClasspectComponent("",validtype)
     return results
     
 def sortByType(e):
@@ -131,18 +183,66 @@ def emote(aspect:ectdata.ClasspectComponent,style="height: 24px;"):
     if aspect.isDual():
         return " " + urlFront + aspect.dualComponents()[0].name + urlMid + style + urlBack + urlFront + aspect.dualComponents()[1].name + urlMid + style + urlBack
     return " " + urlFront + aspect.name + urlMid + style + urlBack
+
+
+def mathValidator(form):
+    try: 
+        form["mathclass"]
+    except:
+        form["mathclass"] = ""
+        form["mathaspect"] = ""
+        # if form["class"] + form["aspect"] != "":
+        #     if not (invalidCspect(ectdata.ClasspectComponent(form["class"],"class"))) or not (invalidCspect(ectdata.ClasspectComponent(form["aspect"],"aspect"))):
+        #         return True
+        # return False
     
+    results = {}
+    for i in form:
+        results[i] = (ectdata.ClasspectComponent(name=form[i].capitalize(),type=i.capitalize().replace("Math","")))
+    
+
+    try: 
+        results["mathclass"] + results["class"]
+    except:
+        try: 
+            results["mathaspect"] + results["aspect"]
+        except:
+            try:
+                results["mathclass"] - results["class"]
+            except:
+                try: 
+                    results["mathclass"] - results["aspect"]
+                except:
+                    try:
+                        results["class"] - results["mathclass"]
+                    except:
+                        try: 
+                            results["aspect"] - results["mathaspect"]
+                        except:
+                            pass
+                        else:
+                            return True
+                    else:
+                        return True
+                else:
+                    return True
+            else:
+                return True
+        else:
+            return True
+    else:
+        return True
+    
+    return False 
+                
     
 @app.route("/")
 def home():
     display = {}
     
     display["date"] = format_datetime(datetime.now(), "EEE, MMM d, yyyy")
-    
-    random.seed(format_datetime(datetime.now(), "EEE, MMM d, yyyy"))
-    
     display["classpects"] = fetchAllClasspects()
-    
+
     return render_template(
         "cotd.html",sitetitle="Home",
         display=display
@@ -159,18 +259,16 @@ def searchfix(custom = None):
 
 @app.route("/classpects/search", methods=['GET', 'POST'])
 def lookupclspect():
-    try:
+    if len(request.args) > 0:
         json.loads(request.args["json"])
-    except:
-        pass
-    else: 
+    
         request.method = "POST"
         hidden = json.loads(request.args["json"])
     if request.method == 'GET':
         display = []
         
         return render_template(
-            "bettersearch.html",
+            "bettersearch.html",classpects=fetchAllClasspects(),
             display=display,
             sitetitle="Lookup",
             )
@@ -204,6 +302,9 @@ def lookupclspect():
         
         #fix the swapped aspect/class search
         results = magicant(form,results,formState)
+        for i in results.values():
+            if i.isDual():
+                formState["dual"] = True
         
         class_data = results["class"]
         aspect_data = results["aspect"]
@@ -232,6 +333,7 @@ def lookupclspect():
                 printable_inverse_dual_classpect_flavor_text = "<ul style='margin-bottom: 0px'><li style='color: transparent'>" + dualFlavorText(formState,inverse_classpect_data) + "</li></ul>"
             else: 
                 printable_inverse_dual_classpect_flavor_text = ""
+        
         else:
             hr1 = ""
             hr2 = ""
@@ -245,31 +347,40 @@ def lookupclspect():
                 printable_paired_dual_class_flavor_text = "<ul style='margin-bottom: 0px'><li style='color: transparent'>" + dualFlavorText(formState,(class_data.paired(),ectdata.ClasspectComponent("","aspect"))) + "</li></ul>"
             else: 
                 printable_paired_dual_class_flavor_text = ""
+        
         else:
             printable_paired_class = ""
             printable_paired_dual_class_flavor_text = ""
 
-        
+        if (((invalidCspect(class_data) and aspect_data.name == "") or (invalidCspect(aspect_data) and class_data.name == "") and aspect_data.name != class_data.name)):
+            hr2 = "<hr>"            
+            
         # end basic classpect math generation!! :D
         display = [printable_classpect,printable_dual_classpect_flavor_text,hr1,printable_inverse_classpect,printable_inverse_dual_classpect_flavor_text,printable_paired_class,printable_paired_dual_class_flavor_text,hr2]
         
-        if not invalidCspects(classpect_data):
+        validmath = {}
+        if mathValidator(form):
             # math tooltip generation
             tooltip = ["Add or subtract classpects to make Dual Classes!<br><small>It looks like you've searched for a "]
             if not formState["dual"] and (class_data.isCanon() or aspect_data.isCanon()):
                 tooltip.extend("standard Classpect. This means you can add any other standard classpect to it, and it'll give you a unique dual!</small>")
+                validmath = fetchAllClasspects()
             elif formState["dual"]: 
                 components = {"class":[],"aspect":[]}
                 for i in classpect_data:
                     if i.isDual():
                         components[i.type].extend(i.dualComponents())
+                        
+                validmath = {"class":components["class"],"aspect":components["aspect"]} 
                 if components["class"] == []:
                     pull = components["aspect"]
+                    validmath["class"] = fetchAllClasspects()["class"]
                 elif components["aspect"] == []:
                     pull = components["class"]
+                    validmath["aspect"] = fetchAllClasspects()["aspect"]
                 else: 
-                    pull = components["class"]
-                    pull.extend(components["aspect"])
+                    pull = components["class"] + components["aspect"]
+                
                 ex1 = random.choice(pull).name
                 ex2 = ex1
                 while ex2 == ex1:
@@ -278,37 +389,62 @@ def lookupclspect():
                 if not (class_data.isCanon() or aspect_data.isCanon()):
                     tooltip.extend("Dual Classpect. Since the Dual Classpect is made up of regular Classpects, you can subtract any of its components <span class='text-muted'>(like " + ex1 + " or " + ex2 + ")</span> from your search term!</small>")
                 elif class_data.isCanon() or aspect_data.isCanon():
+                    if class_data.isCanon(): 
+                        sel = 0
+                    elif aspect_data.isCanon():
+                        sel = 1
                     
-                    tooltip.extend("mix of the two. Since the Dual Classpect is made up of regular Classpects, you can subtract any of its components <span class='text-muted'>(like " + ex1 + " or " + ex2 + ")</span> from your search term, but you can also add any regular classpect <span class='text-muted'>(like " + ectdata.getRandomClasspect()[random.randint(0,1)].name + " or " + ectdata.getRandomClasspect()[random.randint(0,1)].name + ")</span> to the non-Dual part of your search!</small>")
+                    ex3 = ectdata.getRandomClasspect()[sel]
+                    ex4 = ex3
+                    while ex4 == ex3:
+                        ex4 = ectdata.getRandomClasspect()[sel]
+                        
+                    tooltip.extend("mix of the two. Since the Dual Classpect is made up of regular Classpects, you can subtract any of its components <span class='text-muted'>(like " + ex1 + " or " + ex2 + ")</span> from your search term, but you can also add any regular classpect <span class='text-muted'>(like " + ex3 + " or " + ex4 + ")</span> to the non-Dual part of your search!</small>")
             
             
             display.extend(tooltip)
+        elif (((not invalidCspect(class_data) and aspect_data.name == "") or (not invalidCspect(aspect_data) and class_data.name == "") and aspect_data.name != class_data.name)):
+            tooltip = ["Add or subtract classpects to make Dual Classes!"]
+            validmath = {}
+            display.extend(tooltip)
+        else:
+            validmath = {}
             
         # math result generation
         if formState["math"]:            
             mathdisplay = []
-            if not invalidCspects(classpect_data):
+            if mathValidator(form):
             # math tooltip generation
                 if not formState["dual"] and (class_data.isCanon() or aspect_data.isCanon()):
                     summed_data = results["class"] + results["mathclass"],results["aspect"] + results["mathaspect"]
-                    printable_sum = wrapLi("".join(makePrintable(formState, summed_data)),"Sum")
-                    addit = "<ul style='margin-bottom: 0px'><li style='color: transparent'>" + dualFlavorText(formState,summed_data) + "</li></ul>"
-                    mathdisplay.extend([printable_sum,addit])
+                    if (summed_data[0].name + summed_data[1].name) != "":
+                        printable_sum = wrapLi("".join(makePrintable(formState, summed_data)),"Sum")
+                        addit = "<ul style='margin-bottom: 0px'><li style='color: transparent'>" + dualFlavorText(formState,summed_data) + "</li></ul>"
+                        mathdisplay.extend([printable_sum,addit])
                 elif formState["dual"]:
                     if not (class_data.isCanon() or aspect_data.isCanon()):
                         summed_data = results["class"] - results["mathclass"],results["aspect"] - results["mathaspect"]
-                        printable_sum = wrapLi("".join(makePrintable(formState, summed_data)),"Difference")
-                        mathdisplay.extend([printable_sum])
+                        if (summed_data[0].name + summed_data[1].name) != "":
+                            printable_sum = wrapLi("".join(makePrintable(formState, summed_data)),"Difference")
+                            mathdisplay.extend([printable_sum])
                     elif class_data.isCanon() or aspect_data.isCanon():
                         summed_data = ()
                         if class_data.isCanon():
                             summed_data = results["class"] + results["mathclass"],results["aspect"] - results["mathaspect"]
                         elif aspect_data.isCanon():
                             summed_data = results["class"] - results["mathclass"],results["aspect"] + results["mathaspect"]
-                        printable_sum = wrapLi("".join(makePrintable(formState, summed_data)),"Output")
-                        addit = "<ul style='margin-bottom: 0px'><li style='color: transparent'>" + dualFlavorText(formState,summed_data) + "</li></ul>"
-                        mathdisplay.extend([printable_sum,addit])
-                        pass
+                        if (summed_data[0].name + summed_data[1].name) != "":
+                            printable_sum = wrapLi("".join(makePrintable(formState, summed_data)),"Output")
+                            addit = "<ul style='margin-bottom: 0px'><li style='color: transparent'>" + dualFlavorText(formState,summed_data) + "</li></ul>"
+                            mathdisplay.extend([printable_sum,addit])
+            elif (((invalidCspect(class_data) and aspect_data.name == "") or (invalidCspect(aspect_data) and class_data.name == "") and aspect_data.name != class_data.name)):
+                for i in classpect_data:
+                    if invalidCspect(i):
+                        if (form[i.typeInverse()] == "") and not invalidCspect(ectdata.ClasspectComponent(form["math" + i.typeInverse()], i.typeInverse())):
+                            summed_data = sorted((i, ectdata.ClasspectComponent(form["math" + i.typeInverse()], i.typeInverse())),key=sortByType,reverse=True)
+                            printable_sum = wrapLi("".join(makePrintable(formState, summed_data)),"Output")
+                            addit = "<ul style='margin-bottom: 0px'><li style='color: transparent'>" + dualFlavorText(formState,summed_data) + "</li></ul>"
+                            mathdisplay.extend([printable_sum,addit])
         else:
             mathdisplay = ""
 
@@ -317,9 +453,9 @@ def lookupclspect():
 
                 
         return render_template(
-            "bettersearch.html",
-            results=results,classpects=fetchAllClasspects(),
-            sitetitle="Lookup",display=display,mathdisplay=mathdisplay,validator=not(invalidCspects(classpect_data))
+                "bettersearch.html",
+                results=results,classpects=fetchAllClasspects(),
+                sitetitle="Lookup",display=display,mathdisplay=mathdisplay,validator=mathValidator(form),validmath=validmath
             )
 
     
@@ -328,12 +464,14 @@ def rclspect():
     normals = []
     for i in range(12):
         roll = ectdata.getRandomClasspect()
+        roll = (ectdata.ClasspectComponent(roll[0],"class"),ectdata.ClasspectComponent(roll[1],"class"))
         normals.append("<a href='" + url_for("lookupclspect") + "/" + roll[0].name + "of" + roll[1].name + "'>" + roll[0].name + " of " + roll[1].name + "</a>\n")
     
     duals = []
 
     for i in range(12):
         roll = ectdata.getRandomClasspect(duals=True)
+        roll = (ectdata.ClasspectComponent(roll[0],"class"),ectdata.ClasspectComponent(roll[1],"class"))
         duals.append("<a href='" + url_for("lookupclspect") + "/" + roll[0].name + "of" + roll[1].name + "'>" + roll[0].name + " of " + roll[1].name + "</a>\n")
     return render_template(
         "checkit.html",
