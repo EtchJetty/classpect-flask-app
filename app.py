@@ -6,7 +6,30 @@ from datetime import datetime
 from flask_babel import Babel, format_datetime
 import consthandler as ectdata
 
+import flask_profiler
+
 app = Flask(__name__)
+app.config["DEBUG"] = True
+
+# You need to declare necessary configuration to initialize
+# flask-profiler as follows:
+app.config["flask_profiler"] = {
+    "enabled": app.config["DEBUG"],
+    "storage": {
+        "engine": "sqlite"
+    },
+    "basicAuth":{
+        "enabled": True,
+        "username": "admin",
+        "password": "admin"
+    },
+    "ignore": [
+	    "^/static/.*"
+	]
+}
+
+
+
 babel = Babel(app)
 
 @babel.localeselector
@@ -184,7 +207,6 @@ def emote(aspect:ectdata.ClasspectComponent,style="height: 24px;"):
         return " " + urlFront + aspect.dualComponents()[0].name + urlMid + style + urlBack + urlFront + aspect.dualComponents()[1].name + urlMid + style + urlBack
     return " " + urlFront + aspect.name + urlMid + style + urlBack
 
-
 def mathValidator(form):
     try: 
         form["mathclass"]
@@ -255,7 +277,6 @@ def searchfix(custom = None):
         custom = custom.split("of")
         request.form = {"class":custom[0],"aspect":custom[1]}
         return redirect(url_for('lookupclspect', json=json.dumps(request.form), code=307))
-
 
 @app.route("/classpects/search", methods=['GET', 'POST'])
 def lookupclspect():
@@ -361,6 +382,11 @@ def lookupclspect():
         validmath = {}
         if mathValidator(form):
             # math tooltip generation
+            if formState["dual"]:
+                for i in classpect_data:
+                    if not i.isDual():
+                        formState["dual"] = False
+                    
             tooltip = ["Add or subtract classpects to make Dual Classes!<br><small>It looks like you've searched for a "]
             if not formState["dual"] and (class_data.isCanon() or aspect_data.isCanon()):
                 tooltip.extend("standard Classpect. This means you can add any other standard classpect to it, and it'll give you a unique dual!</small>")
@@ -458,7 +484,6 @@ def lookupclspect():
                 sitetitle="Lookup",display=display,mathdisplay=mathdisplay,validator=mathValidator(form),validmath=validmath
             )
 
-    
 @app.route("/classpects/random")
 def rclspect():
     normals = []
@@ -490,5 +515,4 @@ def homesturdle():
     return render_template(
         "homesturdle.html")
 
-
-    
+flask_profiler.init_app(app)

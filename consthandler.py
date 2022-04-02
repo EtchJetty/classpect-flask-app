@@ -56,11 +56,11 @@ class ClasspectComponent:
     def classdef(self):
         classDef = {}
         try:
-            getDefs(CLASSDEFS_CSV_PATH)[0][self.name]
+            CLASSDEFS[0][self.name]
         except:
             return {"verb group": None, "verb": None, "passive/active": None, "altverb": None}
         else: 
-            for i in getDefs(CLASSDEFS_CSV_PATH): 
+            for i in CLASSDEFS: 
                 classDef[i["base"]] = i[self.name]
         return classDef
     
@@ -105,11 +105,11 @@ class ClasspectComponent:
                     return i
         else:
             try:
-                getDefs(ASPECTDEFS_CSV_PATH)[0][self.name]
+                ASPECTDEFS[0][self.name]
             except:
                 return ClasspectComponent("",self.type)
             else: 
-                for i in getDefs(ASPECTDEFS_CSV_PATH): 
+                for i in ASPECTDEFS: 
                     return ClasspectComponent(i[self.name],self.type)
         return ClasspectComponent("",self.type)
     
@@ -153,9 +153,9 @@ def getDefs(filename = "classdefs.csv"):
 
 def getAllDuals(type):
     if type == "class":
-        return set().union(*(d.values() for d in getDefs(CLASSES_CSV_PATH)))
+        return set().union(*(d.values() for d in CLASSDUALS))
     else: 
-        return set().union(*(d.values() for d in getDefs(ASPECTS_CSV_PATH)))
+        return set().union(*(d.values() for d in ASPECTDUALS))
 
 
 # begin general use functions
@@ -168,9 +168,9 @@ def getRandomClasspect(duals:bool = False):
 
 def getAllClasspects(type):
     if type == "class":
-        listy = getDefs(CLASSES_CSV_PATH)
+        listy = CLASSDUALS
     else: 
-        listy = getDefs(ASPECTS_CSV_PATH)
+        listy = ASPECTDUALS
     x = (set().union(*(d.keys() for d in listy)))
     x.remove("base")
     x = list(x)
@@ -239,5 +239,8 @@ CLASSDEFS_CSV_PATH  = os.path.join(THIS_FOLDER, "static/classdefs.csv")
 ASPECTDEFS_CSV_PATH  = os.path.join(THIS_FOLDER, "static/aspectdefs.csv")
 
 CLASSPECTS = {"class": getcsv(CLASSES_CSV_PATH), "aspect": getcsv(ASPECTS_CSV_PATH)}
-
+CLASSDEFS = getDefs(CLASSDEFS_CSV_PATH)
+ASPECTDEFS = getDefs(ASPECTDEFS_CSV_PATH)
+CLASSDUALS = getDefs(CLASSES_CSV_PATH)
+ASPECTDUALS = getDefs(ASPECTS_CSV_PATH)
 # main()
