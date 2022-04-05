@@ -22,6 +22,9 @@ def invalidCspects(aspects):
 
 def dualName(unknown): #compatibility function
     if unknown.__class__ != [].__class__:
+        if unknown.__class__ == ClasspectComponent("base","class").__class__:
+            if unknown.isCanon():
+                return "<a role='button'>" + unknown.name + "</a>"
         return unknown.name
     else:
         x = ""

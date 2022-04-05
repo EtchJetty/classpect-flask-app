@@ -156,7 +156,7 @@ def gSheets():
 
     SQL = """
     SELECT *
-    FROM "https://docs.google.com/spreadsheets/d/1Giy-e7veuPPftBssjvYguJwxBD3pTooAJOeqdsxSTAw/edit#gid=0"
+    FROM "https://docs.google.com/spreadsheets/d/1Giy-e7veuPPftBssjvYguJwxBD3pTooAJOeqdsxSTAw/edit#gid=524467466"
     """
 
     column_names = ["Time","Space","Light","Void","Life","Doom","Breath","Blood","Hope","Rage","Mind","Heart"]
