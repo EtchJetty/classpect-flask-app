@@ -186,7 +186,49 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       </form>
       {{ mathdisplay|safe }}{% endif %}{{ embedfun }}
     </div>
-    <script>
+    <script type="text/JavaScript">
+      function copycat(cspe) {
+      if (document.getElementById("housetrapped")) {
+          if (canonAspects.has(cspe) || canonClasses.has(cspe)) {
+            var buttonfix = document.getElementById("jstarget");
+            jstarget.setAttribute("class", "btn btn-link");
+            jstarget.setAttribute("style", "text-decoration: none;");
+
+            jstarget.disabled = false;
+            $("#collapseOne").collapse({
+              toggle: false,
+            });
+            var housetrapped_iframe = document.getElementById("housetrapped");
+            if (canonAspects.has(cspe)) {
+              jstarget.innerHTML =
+                "<a href='" +
+                "https://housetrapped-faq-archive.glitch.me/aspects.html#" +
+                archiveUrls["aspect"][cspe] +
+                "'>" +
+                cspe +
+                " Aspect analysis from the Housetrapped FAQ  (beta) <i class='bi bi-box-arrow-up-right minisize'></i></a>";
+              housetrapped_iframe.setAttribute(
+                "src",
+                "https://housetrapped-faq-archive.glitch.me/aspects.html#" +
+                  archiveUrls["aspect"][cspe]
+              );
+            }
+            if (canonClasses.has(cspe)) {
+              jstarget.innerHTML =
+                "<a href='" +
+                "https://housetrapped-faq-archive.glitch.me/classes.html#" +
+                archiveUrls["class"][cspe] +
+                "'>" +
+                cspe +
+                " Class analysis from the Housetrapped FAQ  (beta) <i class='bi bi-box-arrow-up-right minisize'></i></a>";
+              housetrapped_iframe.setAttribute(
+                "src",
+                "https://housetrapped-faq-archive.glitch.me/classes.html#" +
+                  archiveUrls["class"][cspe]
+              );
+            }
+          }
+      }}
       function makesmooth() {
         let classclass = document.getElementById("firstclass").value;
         let aspectclass = document.getElementById("firstaspect").value;
@@ -225,7 +267,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
       crossorigin="anonymous"
     ></script>
-    <script>
+    <script type="text/JavaScript">
       $("body").click(function (event) {
         // Gets clicked on word (or selected text if text is selected)
         var t = "";
@@ -258,24 +300,24 @@ block head %} {{ super() }} {% endblock %} {% block content %}
         }
         if (
           document.elementFromPoint(event.clientX, event.clientY).tagName ==
-            "IMG") { 
-        // if(
-        //   !(
-        //     canonAspects.has(t[0].toUpperCase() + t.slice(1).toLowerCase()) ||
-        //     canonClasses.has(t[0].toUpperCase() + t.slice(1).toLowerCase())
-        //   )
-        // ) {
-          t = (
-            document
-              .elementFromPoint(event.clientX, event.clientY)
-              .src.substring(
-                document
-                  .elementFromPoint(event.clientX, event.clientY)
-                  .src.lastIndexOf("/") + 1
-              ).replace(".png","")
-          );
+          "IMG"
+        ) {
+          // if(
+          //   !(
+          //     canonAspects.has(t[0].toUpperCase() + t.slice(1).toLowerCase()) ||
+          //     canonClasses.has(t[0].toUpperCase() + t.slice(1).toLowerCase())
+          //   )
+          // ) {
+          t = document
+            .elementFromPoint(event.clientX, event.clientY)
+            .src.substring(
+              document
+                .elementFromPoint(event.clientX, event.clientY)
+                .src.lastIndexOf("/") + 1
+            )
+            .replace(".png", "");
         }
-// }
+        // }
         var cspe = t[0].toUpperCase() + t.slice(1).toLowerCase();
         if (document.getElementById("housetrapped")) {
           if (canonAspects.has(cspe) || canonClasses.has(cspe)) {

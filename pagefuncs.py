@@ -24,7 +24,7 @@ def dualName(unknown): #compatibility function
     if unknown.__class__ != [].__class__:
         if unknown.__class__ == ClasspectComponent("base","class").__class__:
             if unknown.isCanon():
-                return "<a role='button'>" + unknown.name + "</a>"
+                return "<a onclick='copycat('"+ unknown.name +"');' role='button'>" + unknown.name + "</a>"
         return unknown.name
     else:
         x = ""
@@ -329,7 +329,7 @@ def searchpage():
             
         # generating paired class 
         if not invalidCspect(class_data):
-            printable_paired_class = wrapLi(dualName(class_data.paired()),"Paired class for " + class_data.name) # future me i am so sorry
+            printable_paired_class = wrapLi(dualName(class_data.paired()),"Paired class for " + dualName(class_data)) # future me i am so sorry
             if formState["dual"]:
                 printable_paired_dual_class_flavor_text = "<ul style='margin-bottom: 0px'><li style='color: transparent'>" + dualFlavorText(formState,(class_data.paired(),ClasspectComponent("","aspect"))) + "</li></ul>"
             else: 
