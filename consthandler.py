@@ -1,5 +1,5 @@
-import csv
-import random
+import csv, random
+from operator import itemgetter
 from shillelagh.backends.apsw.db import connect
 
 # turn classpects into an object
@@ -200,7 +200,27 @@ def getAllClasspects(type):
     return x
 
 # end general use functions
+def fetchAllDuals():
+    return dict([(kind,(getAllDuals(kind)) - (set(getAllClasspects(kind))) - {"base"}) for kind in fetchAllClasspects()])
+     
 
+    
+def fetchAllClasspects():
+    classes = getAllClasspects("class")
+    aspects = getAllClasspects("aspect")
+    for i in range(len(classes)):
+        classes[i] = ClasspectComponent(classes[i],"class").__dict__
+    for i in range(len(aspects)):
+        aspects[i] = ClasspectComponent(aspects[i],"aspect").__dict__
+        
+    aspects = sorted(aspects, key=itemgetter("name"))
+    classes = sorted(classes, key=itemgetter("name"))
+
+    string = ({"class":classes,"aspect":aspects})
+    
+    return string
+
+     
 # begin fun functions
 def tests():
     for classpect in getAllClasspects("class"):

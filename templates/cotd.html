@@ -32,7 +32,18 @@ block head %} {{ super() }}
                 </span>
               </h2>
               <em><span id="desc"></span></em>
+<p class="pt-4">
+  <a class="btn btn-outline-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Show today's Dual Classpect!
+  </a>
+</p>
+<div class="collapse" id="collapseExample">
+  <div id="rolledDualCspect" class="card text-white bg-secondary mb-3 card-body">
+    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+  </div>
+</div>
             </div>
+
           </div>
         </div>
       </div>
@@ -96,7 +107,8 @@ list = "fullaspects"
   <option value={{val.name}}>
 {% endfor %}
 </datalist>
-          <button type="submit" class="btn btn-primary">Get info!</button>
+          <button type="submit" class="btn btn-primary">Get info <i class="bi bi-search"></i>
+</button>
         </div>
       </div>
     </div>
@@ -165,55 +177,69 @@ list = "fullaspects"
   var today = new Date().toDateString();
   document.getElementById("now").innerHTML = today;
   var classpects = {{ display.classpects | safe }};
+  function days_passed(dt) {
+  var date1 = new Date("04/13/2009");
+  var date2 = new Date();
 
-  console.log(classpects);
-  var seed =
-    String(new Date().getDate()).padStart(2, "0") +
-    String(new Date().getMonth() + 1).padStart(2, "0") +
-    String(new Date().getFullYear());
-  console.log(seed);
-  function random() {
-    var x = Math.sin(seed++) * 10000;
+    return Math.ceil((date2 - date1) / (1000 * 3600 * 24));
+  }
+  // console.log(classpects);
+  var seed = days_passed();
+  // console.log(seed);
+  
+  var listy = {{ listy | safe }};
+  // console.log(listy);
+  var todayscspect = listy[(seed%144)];
+  var dual_listy = {{ dual_listy | safe }};
+  // console.log(dual_listy);
+  var todaysdualcspect = dual_listy[(seed%4422)];
 
-    return x - Math.floor(x);
-  }
-  function getRandomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(random() * (max - min + 1) + min); //The maximum is exclusive and the minimum is inclusive
-  }
-  var roll1 = getRandomInt(0, 11);
-  var roll2 = getRandomInt(0, 11);
-  console.log(roll1);
-  console.log(roll2);
-  var todayscspect = [classpects["class"][roll1], classpects["aspect"][roll2]];
-  console.log(todayscspect);
+var smalldual_listy = {{ smalldual_listy | safe }};
+  // console.log(smalldual_listy);
+  for (let i in smalldual_listy){
+  // console.log(smalldual_listy[i]);
+    if (smalldual_listy[i]["aspect"] == todaysdualcspect["aspect"]) {todaysdualcspect = smalldual_listy[i]}
+}
+  // console.log(todaysdualcspect);
 
   document.getElementById("rolledCspect").innerHTML =
-    todayscspect[0].name +
+    todayscspect["class"].name +
     " of " +
-    todayscspect[1].name +
+    todayscspect["aspect"].name +
     ' <img src="{{ url_for("static", filename="images/") }}' +
-    todayscspect[1].name +
+    todayscspect["aspect"].name +
     '.png" style="height: 36px; position: relative;" class="img-fluid" />';
   document.getElementById("desc").innerHTML =
     "One who " +
-    todayscspect[0].activity +
+    todayscspect["class"].activity +
     "ly " +
-    EnglishVerbs.getConjugation(null, todayscspect[0].verb, "PRESENT", "S") +
+    EnglishVerbs.getConjugation(null, todayscspect["class"].verb, "PRESENT", "S") +
     " and is " +
-    todayscspect[0].activity +
+    todayscspect["class"].activity +
     "ly " +
-    EnglishVerbs.getConjugation(VerbsData, todayscspect[0].verb, "PARTICIPLE_PAST", "S") +
+    EnglishVerbs.getConjugation(VerbsData, todayscspect["class"].verb, "PARTICIPLE_PAST", "S") +
     " through " +
-    todayscspect[1].name +
+    todayscspect["aspect"].name +
     ' <img src="{{ url_for("static", filename="images/") }}' +
-    todayscspect[1].name +
+    todayscspect["aspect"].name +
     '.png" style="height: 24px; position: relative; bottom: 1px" class="img-fluid" />.';
     var hiddenClass = document.getElementById("firstclass");
     var hiddenAspect = document.getElementById("firstaspect");
-    hiddenClass.setAttribute('value',todayscspect[0].name);
-    hiddenAspect.setAttribute('value',todayscspect[1].name);
+    hiddenClass.setAttribute('value',todayscspect["class"].name);
+    hiddenAspect.setAttribute('value',todayscspect["aspect"].name);
+      
+
+  document.getElementById("rolledDualCspect").innerHTML = "<div class='d-flex justify-content-center'><h3>" +
+    todaysdualcspect["class"] +
+    " of " +
+    todaysdualcspect["aspect"] +
+    ' <img src="{{ url_for("static", filename="images/") }}' +
+    todaysdualcspect["aspectduals"][0].name +
+    '.png" style="height: 24px; position: relative;" class="img-fluid" />' + 
+    '<img src="{{ url_for("static", filename="images/") }}' +
+    todaysdualcspect["aspectduals"][1].name +
+    '.png" style="height: 24px; position: relative;" class="img-fluid" /><div class="pt-2 d-flex justify-content-center"><a href="{{url_for("lookupclspect")}}/' + todaysdualcspect["class"] +  "of" +  todaysdualcspect["aspect"] + '"><div class="d-flex justify-content-center pt-2"><button class="btn btn-dark">Learn more <i class="bi bi-search"></i></button></a></div></div></h3></div>';
+    
       
 </script>
 {% endblock %}
