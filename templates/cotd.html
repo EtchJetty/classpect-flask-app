@@ -179,13 +179,15 @@ list = "fullaspects"
   var classpects = {{ display.classpects | safe }};
   function days_passed(dt) {
   var date1 = new Date("04/13/2009");
-  var date2 = new Date();
+  var date2 = new Date(today);
 
     return Math.ceil((date2 - date1) / (1000 * 3600 * 24));
   }
   // console.log(classpects);
   var seed = days_passed();
   // console.log(seed);
+  // console.log(seed%144);
+  // console.log(seed%4422);
   
   var listy = {{ listy | safe }};
   // console.log(listy);
@@ -197,8 +199,7 @@ list = "fullaspects"
 var smalldual_listy = {{ smalldual_listy | safe }};
   // console.log(smalldual_listy);
   for (let i in smalldual_listy){
-  // console.log(smalldual_listy[i]);
-    if (smalldual_listy[i]["aspect"] == todaysdualcspect["aspect"]) {todaysdualcspect = smalldual_listy[i]}
+    if (smalldual_listy[i]["aspect"] == todaysdualcspect["aspect"] && smalldual_listy[i]["class"] == todaysdualcspect["class"]) {todaysdualcspect = smalldual_listy[i]}
 }
   // console.log(todaysdualcspect);
 
