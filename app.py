@@ -6,6 +6,8 @@ from datetime import datetime
 from flask_babel import Babel, format_datetime
 import consthandler as ectdata
 
+# TODO : rework COTD generation
+
 # import flask_profiler
 
 app = Flask(__name__)
@@ -356,8 +358,11 @@ def lookupclspect():
         # generating the dual flavor text
         if formState["dual"]:
             printable_dual_classpect_flavor_text = "<br>" + dualFlavorText(formState,classpect_data)
+        elif class_data.isCanon() and aspect_data.isCanon():
+            printable_dual_classpect_flavor_text = "<br><small class='text-muted'>Examples include: " + ectdata.CLASSPECT_DICT[class_data.name][aspect_data.name] + "</small>"
         else: 
             printable_dual_classpect_flavor_text = ""
+        
             
         # generating inverse and housetrapped 
         if not invalidCspects(classpect_data):
