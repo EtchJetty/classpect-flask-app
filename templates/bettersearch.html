@@ -17,7 +17,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   >
     <div class="form-group">
       <div class="row g-3 align-items-center">
-        <div class="input-group has-validation p-5 pt-2">
+        <div class="input-group has-validation pt-2 pb-4 px-3">
           <input
             name="class"
             id="firstclass"
@@ -138,7 +138,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
             value='{{ results["aspect"].name | e }}'
           />
           <div class="row g-3 align-items-center">
-            <div class="input-group p-5 pt-3 pb-3">
+            <div class="input-group py-3 px-3">
               <input
                 name="mathclass"
                 id="mathclass"
@@ -178,7 +178,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
                 onclick="makesmooth()"
                 class="btn btn-primary"
               >
-                Do math!
+                Go!
               </button>
             </div>
           </div>

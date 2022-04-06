@@ -30,9 +30,9 @@ def dualName(unknown): #compatibility function
         x = ""
         for i in unknown:
             try:
-                x = "<span style='font-size:0.05px;'> </span><a role='button'>" + x + "</a><span style='font-size:0.05px;'> </span>" + "<span style='font-size:0.05px;'> </span><a role='button'>" + i.name + ""
+                x = "<span style='font-size:0.05px;'> </span><a onclick='copycat(\""+ i.name +"\");' role='button'>" + x + "</a><span style='font-size:0.05px;'> </span>" + "<span style='font-size:0.05px;'> </span><a onclick='copycat(\""+ i.name +"\");' role='button'>" + i.name + ""
                 if len(unknown) > 1 and i != unknown[-1]:
-                    x = "<span style='font-size:0.05px;'> </span><a role='button'>" + x + "</a><span style='font-size:0.05px;'> </span>"
+                    x = "<span style='font-size:0.05px;'> </span><a onclick='copycat(\""+ i.name +"\");' role='button'>" + x + "</a><span style='font-size:0.05px;'> </span>"
             except:
                 pass
         return x
