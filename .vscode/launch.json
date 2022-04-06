@@ -14,7 +14,7 @@
       "request": "launch",
       "module": "flask",
       "env": { "FLASK_APP": "app.py", "FLASK_ENV": "development" },
-      "args": ["run", "--no-debugger"],
+      "args": ["run",],
       "jinja": true,
       "justMyCode": true
     }

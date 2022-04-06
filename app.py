@@ -36,19 +36,22 @@ def home():
             
     listy = [[{inx["type"]:ClasspectComponent(inx["name"],inx["type"]).__dict__} for inx in types] for types in dict(fetchAllClasspects()).values()]        
     listy = [{"class":i["class"],"aspect":y["aspect"]} for i in listy[0] for y in listy[1]]
-    listy = dict(enumerate(listy))
+    random.Random(413).shuffle(listy)
+    listy = json.dumps(dict([(str(indexy), itemy) for indexy, itemy in enumerate(listy)]))
     # random.seed(413)
     # seeder = random.getstate()
-    random.Random(413).shuffle(listy)
+    # random.Random(413).shuffle(listy)
     dual_listy = fetchAllDuals()
     dual_listy = [{"class":i,"aspect":y} for i in sorted(dual_listy["class"]) for y in sorted(dual_listy["aspect"])]
-    loust = dict(sorted(enumerate(dual_listy),key=lambda item: item))
-    random.Random(413).shuffle(loust)
+    random.Random(413).shuffle(dual_listy)
+    dual_listy = dict(sorted(enumerate(dual_listy),key=lambda item: item))
+    # random.Random(413).shuffle(loust)
     daysNum = ((datetime.now().date() - date(2009,4,13)).days)%4422
     print(daysNum,"days")
     smalldual_listy = [{"class":dual_listy[i]["class"],"aspect":dual_listy[i]["aspect"],"aspectduals":[component.__dict__ for component in ClasspectComponent(dual_listy[i]["aspect"],"aspect").dualComponents()]} for i in range((abs(daysNum) - 3), (abs(daysNum) + 3))]
     display["classpects"] = fetchAllClasspects()
-
+    dual_listy = json.dumps(dual_listy)
+    smalldual_listy = json.dumps(smalldual_listy)
     return render_template(
         "cotd.html",sitetitle="Home",
         display=display,listy=listy,dual_listy=dual_listy,smalldual_listy=smalldual_listy
