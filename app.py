@@ -72,6 +72,6 @@ def arbitraryHtml(name = None):
 @app.route("/games/homesturdle")
 def homesturdle():
     return render_template(
-        "homesturdle.html")
+        "homesturdle.html",sitetitle= "HOMESTURDLE")
 
 # flask_profiler.init_app(app)
