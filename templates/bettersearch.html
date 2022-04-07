@@ -1,5 +1,29 @@
 {% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
 block head %} {{ super() }} {% endblock %} {% block content %}
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div
+    id="liveToast"
+    class="toast"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    data-bs-autohide="false"
+  >
+    <div class="toast-header">
+      <img src="{{ url_for('static', filename='images/pesterchum.png') }}" style="image-rendering: crisp-edges;" class="rounded me-2" alt="Google Forms logo" />
+      <strong class="me-auto">Feedback?</strong>
+      <small>Close</small>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="toast"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="toast-body">Hi homestuckers!!!! Happy 4/13! I'd love to get some feedback on this site, because it's my first time doing anything like it. You can <a href="https://forms.gle/Qo1RDbWDxjKqtoiz5">submit anonymous feedback</a>, or DM me on whatever platform you can find me. &lt;3 </div>
+  </div>
+</div>
+
 <div class="container">
   <h1 class="p-3 pt-4 pb-1" style="transform: rotate(0)">
     Search Classpect:<a
@@ -79,6 +103,11 @@ block head %} {{ super() }} {% endblock %} {% block content %}
     </div>
   </form>
   <script>
+    var toastTrigger = setTimeout(function () {
+      var toastLiveExample = document.getElementById("liveToast");
+      var toast = new bootstrap.Toast(toastLiveExample);
+      toast.show();
+    }, 5 * 1000);
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
       "use strict";
