@@ -10,10 +10,27 @@
       content="http://aeich.pythonanywhere.com{{url_for(request.endpoint)}}"
       property="og:url"
     />
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='/images/favicon_io/apple-touch-icon.png') }}" />
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='/images/favicon_io/favicon-32x32.png') }}" />
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='/images/favicon_io/favicon-16x16.png') }}" />
-    <link rel="manifest" href="{{ url_for('static', filename='/images/favicon_io/site.webmanifest') }}" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{ url_for('static', filename='/images/favicon_io/apple-touch-icon.png') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{ url_for('static', filename='/images/favicon_io/favicon-32x32.png') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{ url_for('static', filename='/images/favicon_io/favicon-16x16.png') }}"
+    />
+    <link
+      rel="manifest"
+      href="{{ url_for('static', filename='/images/favicon_io/site.webmanifest') }}"
+    />
     <meta
       content="Classpect of the day, games, and more!"
       property="og:description"
@@ -95,7 +112,6 @@
                     >Random Classpects</a
                   >
                 </li>
-
                 <li>
                   <a
                     class="dropdown-item"
@@ -204,23 +220,36 @@
     <main class="flex-shrink-0">{% block content %}{% endblock %}</main>
     <footer class="footer mt-auto py-3 bg-light">
       <div class="container">
-        <span class="text-muted"
-          >{% block footer %} Made by
-          <a style="text-decoration: none" href="https://twitter.com/EtchJetty"
-            ><i class="bi bi-twitter"></i> EtchJetty
-            <i class="bi bi-box-arrow-up-right minisize"></i
-          ></a>
-          and
-          <a
-            style="text-decoration: none"
-            href="https://www.fimfiction.net/user/459002/Nihilistic+Janitor"
-            ><img
-              src="https://static.fimfiction.net/images/favicon.png"
-              class="img-fluid minisize-16" />
-            Nihilistic Janitor! <i class="bi bi-box-arrow-up-right minisize"></i
-          ></a>
-          {% endblock %}</span
-        >
+        {% block footer %}
+        <div class="row">
+          <div class="col-11 p-0">
+            <span class="text-muted">
+              Made by
+              <a
+                style="text-decoration: none"
+                href="https://twitter.com/EtchJetty"
+                ><i class="bi bi-twitter"></i> EtchJetty
+                <i class="bi bi-box-arrow-up-right minisize"></i
+              ></a>
+              and
+              <a
+                style="text-decoration: none"
+                href="https://www.fimfiction.net/user/459002/Nihilistic+Janitor"
+                ><img
+                  src="https://static.fimfiction.net/images/favicon.png"
+                  class="img-fluid minisize-16" />
+                Nihilistic Janitor!
+                <i class="bi bi-box-arrow-up-right minisize"></i></a
+            ></span>
+          </div>
+          <div class="col-1 p-0 text-end">
+            <label class="text-end text-muted">
+              <a href="https://www.pythonanywhere.com/user/aeich/"
+                ><i class="bi bi-wrench-adjustable"></i></a
+            ></label>
+          </div>
+        </div>
+        {% endblock %}
       </div>
     </footer>
     <!-- Optional JavaScript; choose one of the two! -->
