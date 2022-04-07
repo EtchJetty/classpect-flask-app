@@ -64,11 +64,14 @@ def rclspect():
         normals=normals, duals=duals,sitetitle="Randoms",icon=random.randint(1,6)
         )
 
+@app.route("/src/")
 @app.route("/src/<name>")
-def arbitraryHtml(name = None):
-    return render_template(
-        name)
-    
+def arbitraryHtml(name = "404"):
+    try:
+        return render_template(name + ".html")
+    except:
+        return render_template("404.html")
+ 
 @app.route("/games/homesturdle")
 def homesturdle():
     return render_template(
