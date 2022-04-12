@@ -10,6 +10,12 @@ from consthandler import *
 
 app = Flask(__name__)
 
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return redirect(url_for('404'))
+
 babel = Babel(app)
 
 @babel.localeselector
@@ -26,7 +32,7 @@ def get_timezone():
     user = getattr(g, 'user', None)
     if user is not None:
         return user.timezone
- 
+  
 @app.route("/")
 def home():
     return homepage()
@@ -68,13 +74,23 @@ def rclspect():
 @app.route("/src/<name>")
 def arbitraryHtml(name = "404"):
     try:
-        return render_template(name + ".html")
+        return render_template(name + ".html", sitetitle = name)
     except:
-        return render_template("404.html")
+        return render_template("404.html", sitetitle="404")
  
 @app.route("/games/homesturdle")
 def homesturdle():
     return render_template(
         "homesturdle.html",sitetitle= "HOMESTURDLE")
+
+@app.route("/about")
+def about():
+    return render_template(
+        "about.html",sitetitle= "About")
+    
+@app.route("/404")
+def fourohfour():
+    return render_template(
+        "404.html",sitetitle= "404")
 
 # flask_profiler.init_app(app)

@@ -1,0 +1,126 @@
+{% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
+block head %} {{ super() }} {% endblock %} {% block content %}
+<style>
+  .darkenonhover:hover {
+    filter: brightness(66%);
+  }
+</style>
+
+<div class="container">
+  <div class="row p-3">
+    <div class="display-3">About ERIJAN CENTRAL</div>
+    <hr />
+    <h1>What is this? Who are you?</h1>
+    <p>
+      Welcome to ERIJAN CENTRAL! This site is a living repository of my
+      Homestuck classpect headcanons, themed after one of those late 2000s to
+      early 2010s fandom websites. Think the 39 Clues website or the original
+      version of Pottermore, with games, interactive in-universe tools, etc.
+    </p>
+    <p>
+      I'm EtchJetty
+      <a style="text-decoration: none" href="https://twitter.com/EtchJetty"><i class="bi bi-twitter"></i><sup> <i
+            class="bi bi-box-arrow-up-right minisize"></i></sup></a>
+      (girl bowser), the developer of the site, and one of the two writers of
+      ERIJAN (coming 20XX). The other is Nihilistic Janitor
+      <a class="darkenonhover" style="text-decoration: none"
+        href="https://www.fimfiction.net/user/459002/Nihilistic+Janitor"><img
+          src="https://static.fimfiction.net/images/favicon.png" class="img-fluid minisize-16" /><sup>
+          <i class="bi bi-box-arrow-up-right minisize"></i></sup></a>, without whom none of this would be possible.
+    </p>
+    <p>
+      I started programming this site for fun, but then it got pretty
+      feature-rich, and then I saw 4/13 coming up, so, here we are!
+    </p>
+  </div>
+  <div class="row" style="position: relative;">
+    <div class="col-3">
+      <nav id="qnascrollspy" class="navbar navbar-light bg-light flex-column align-items-stretch pt-2 p-3">
+        <a class="navbar-brand" href="#">Quick links</a>
+        <nav class="nav nav-pills flex-column">
+          <a class="nav-link" href="#erijan">What's ERIJAN?</a>
+          <a class="nav-link" href="#housetrapped">What's Housetrapped?</a>
+          <a class="nav-link" href="#duals">What are Dual Classpects?</a>
+        </nav>
+      </nav>
+    </div>
+    <div class="col-9">
+      <!-- <div data-bs-spy="scroll" data-bs-target="#qnascrollspy" data-bs-offset="0" tabindex="0"> -->
+      <h3 id="erijan">What's ERIJAN?</h3>
+      <p>
+        Erijan (inconsistently styled as ERIJAN) is the codename for a Homestuck
+        fanfic that does not currently exist in a readable state. Written by
+        Nihilistic Janitor and co-written by myself (mostly in the span of five
+        months starting in January 2021) the project, which started as, "hey,
+        eridan ampora is the WORST, what if we just, replaced him," ballooned into
+        essentially a full rewrite of Homestuck, complete with custom game
+        mechanics and blah blah blah blah.
+      </p>
+      <p>
+        The story itself isn't going to be published until the vague date of 20XX
+        (we don't want to set any time pressure for ourselves). Even though it's
+        not finished, the Classpecting lore is solid enough that this site, which
+        was planned as a "really simple classpect of the day + lookup classpects"
+        tool, started to take shape, and as Homestuck is wont to do, expand in
+        scope.
+      </p>
+      <p>
+        Erijan is named after Eridan Ampora + Nihilistic
+        <span class="fst-italic">Jan</span>itor, Nihilistic Janitor being the
+        primary author of the story.
+      </p>
+      <h3 id="housetrapped">What's Housetrapped?</h3>
+      <p>
+        In November 2020, I briefly ran a Homestuck text-based RP for a group of
+        friends. I had a
+        <a href="https://www.youtube.com/watch?v=sJXIl_GcWi4">total</a>
+        <a href="https://www.youtube.com/watch?v=zasJtfz9sX0">blast</a> working on
+        it, but life happened, and the RP dissolved right as work on Erijan
+        started. Much of the original Housetrapped lore ended up being repurposed
+        in Erijan. None of this is important, lmfao
+      </p>
+      <p>
+        In January 2022, I tried rebooting the RP, which didn't really go
+        anywhere, but in the process, since two of my friends hadn't finished
+        Homestuck, I wrote up what ended up being essentially
+        <a href="https://housetrapped-faq-archive.glitch.me/">a full length guide</a>
+        to all of Homestuck's mechanics. It can be found on the Classpect Search
+        page, as well as on its own in full.
+      </p>
+      <h3 id="duals">What are Dual Classpects?</h3>
+      <p>
+        Jan and I had a theory that Muse and Lord were actually made from
+        different standard classpects, just, added together. The natural thing to
+        do, of course, was to finish multiplying out the grid.
+      </p>
+      <p>
+        Then we did all the Aspects, too. So now we have over 100 fan Classes and
+        Aspects total.
+      </p>
+      <p>
+        Anyway, in short, you can now
+        <a href="/search">add two Classpects together.</a> Nice!
+      </p>
+      <p>
+        Check the <a href="https://classpectpokerap.tumblr.com/">Tumblr</a> in
+        coming days for a full list of all canon sprite-fused Dual Classpects. (As
+        a preview, Davepetasprite^2 is a
+        <a href="/classpects/search/hunterofpulse">Hunter of Pulse</a>.)
+      </p>
+      <!-- </div> -->
+    </div>
+  </div>
+
+
+
+</div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+<script>
+  // document.getElementsByTagName("body")[0].style.setProperty("position", "relative");
+  var scrollSpyContentEl = document.getElementById('qnascrollspy');
+    // var scrollSpy = bootstrap.ScrollSpy.getOrCreateInstance(scrollSpyContentEl) // Returns a Bootstrap scrollspy instance
+</script>
+{% endblock %}
