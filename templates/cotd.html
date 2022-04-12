@@ -18,8 +18,10 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       <div class="row">
         <div class="col">
           <div
-            class="card card-cover h-100 overflow-hidden text-white bg-dark rounded-5 shadow-lg"
+            class="card card-cover h-100 overflow-hidden rounded-5 text-white bg-dark shadow-lg"
+            id="cardback"
           >
+            <!-- text-white bg-dark  -->
             <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
               <h2 class="display-6 card-title lh-1 fw-bold">
                 <span id="rolledCspect"
@@ -211,6 +213,21 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   // console.log(dual_listy);
   var todaysdualcspect = dual_listy[seed % 4422];
 
+  var classcolors = {
+    Time: "#fdd",
+    Space: "#000",
+    Light: "#fed",
+    Void: "#fff",
+    Life: "#efd",
+    Doom: "#860",
+    Breath: "#def",
+    Blood: "#ecb",
+    Hope: "#ffd",
+    Rage: "#edf",
+    Heart: "#fde",
+    Mind: "#dee",
+  };
+
   var smalldual_listy = JSON.parse(`{{ smalldual_listy | safe }}`);
   // console.log(smalldual_listy);
   for (let i in smalldual_listy) {
@@ -258,6 +275,9 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   var hiddenAspect = document.getElementById("firstaspect");
   hiddenClass.setAttribute("value", todayscspect["class"].name);
   hiddenAspect.setAttribute("value", todayscspect["aspect"].name);
+
+  // document.getElementById("cardback").style.setProperty("background-color", classcolors[todayscspect["aspect"]["name"]]);
+
 
   document.getElementById("rolledDualCspect").innerHTML =
     "<div class='d-flex justify-content-center'><h3>" +
