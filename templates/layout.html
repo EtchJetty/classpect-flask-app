@@ -275,6 +275,7 @@
             class="btn-close"
             data-bs-dismiss="toast"
             aria-label="Close"
+            onclick="storeClosed();"
           ></button>
         </div>
         <div class="toast-body">
@@ -345,11 +346,17 @@
       src="{{ url_for('static', filename='autocomplete.js') }}"
     ></script>
     <script>
-      var toastTrigger = setTimeout(function () {
-        var toastLiveExample = document.getElementById("liveToast");
-        var toast = new bootstrap.Toast(toastLiveExample);
-        toast.show();
-      }, 5 * 1000);
+      const optedout = localStorage.getItem("closedit");
+      if (!optedout) {
+        var toastTrigger = setTimeout(function () {
+          var toastLiveExample = document.getElementById("liveToast");
+          var toast = new bootstrap.Toast(toastLiveExample);
+          toast.show();
+        }, 5 * 1000);
+      }
+      function storeClosed() {
+        localStorage.setItem("closedit", true);
+      }
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (function () {
         "use strict";
@@ -361,8 +368,9 @@
         Array.prototype.slice.call(forms).forEach(function (form) {
           form.addEventListener(
             "submit",
-            function (event) {event.preventDefault();
-                event.stopPropagation();
+            function (event) {
+              event.preventDefault();
+              event.stopPropagation();
               if (form.checkValidity()) {
                 window.location.href =
                   "https://classpectpokerap.tumblr.com/search/" +
