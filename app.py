@@ -14,7 +14,7 @@ app = Flask(__name__)
 @app.errorhandler(404)
 def page_not_found(e):
     # note that we set the 404 status explicitly
-    return redirect(url_for('404'))
+    return redirect(url_for('fourohfour'))
 
 babel = Babel(app)
 
@@ -37,6 +37,7 @@ def get_timezone():
 def home():
     return homepage()
 
+
 @app.route("/classpects/search/<custom>", methods=['GET'])
 def searchfix(custom = None):
     if custom:
@@ -44,7 +45,8 @@ def searchfix(custom = None):
         custom = custom.split("of")
         request.form = {"class":custom[0],"aspect":custom[1]}
         return redirect(url_for('lookupclspect', json=json.dumps(request.form), code=307))
-
+    
+@app.route("/search")
 @app.route("/classpects/search", methods=['GET', 'POST'])
 def lookupclspect():
     return searchpage()
