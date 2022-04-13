@@ -369,20 +369,20 @@ block head %} {{ super() }} {% endblock %} {% block content %}
 
   for (let i = 0; i < classpectsarr["class"].length; i++) {
     if ((classpectsarr["class"][i]["name"] == results["class"])) {
-      console.log("yay canon class alone")
+      // console.log("yay canon class alone")
       results["canonclass"] = true
 
     }
   }
   for (let i = 0; i < classpectsarr["aspect"].length; i++) {
     if ((classpectsarr["aspect"][i]["name"] == results["aspect"])) {
-      console.log("yay canon aspect alone")
+      // console.log("yay canon aspect alone")
       results["canonaspect"] = true
 
     }
   }
   if ((results["canonaspect"] == true) && !(results["canonclass"] == true)) {
-    console.log(results["aspect"])
+    // console.log(results["aspect"])
     copycat(results["aspect"])
 
   }
