@@ -26,13 +26,13 @@ def dualName(unknown): #compatibility function
     if unknown.__class__ != [].__class__:
         if unknown.__class__ == ClasspectComponent("base","class").__class__:
             if unknown.isCanon():
-                return "<a onclick='copycat('"+ unknown.name +"');' role='button'>" + unknown.name + "</a>"
+                return "<a onclick='copycat(\""+ unknown.name +"\");' role='button'>" + unknown.name + "</a>"
         return unknown.name
     else:
         x = ""
         for i in unknown:
             try:
-                x = "<span style='font-size:0.05px;'> </span><a onclick='copycat(\""+ i.name +"\");' role='button'>" + x + "</a><span style='font-size:0.05px;'> </span>" + "<span style='font-size:0.05px;'> </span><a onclick='copycat(\""+ i.name +"\");' role='button'>" + i.name + ""
+                x = "<span style='font-size:0.05px;'> </span><a onclick='copycat(\"" + i.name +"\");' role='button'>" + x + "</a><span style='font-size:0.05px;'> </span>" + "<span style='font-size:0.05px;'> </span><a onclick='copycat(\""+ i.name +"\");' role='button'>" + i.name + ""
                 if len(unknown) > 1 and i != unknown[-1]:
                     x = "<span style='font-size:0.05px;'> </span><a onclick='copycat(\""+ i.name +"\");' role='button'>" + x + "</a><span style='font-size:0.05px;'> </span>"
             except:

@@ -4,6 +4,20 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   .darkenonhover:hover {
     filter: brightness(66%);
   }
+
+  .fakenav {
+    display: block;
+    padding-top: 1rem;
+    color: #0d6efd;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out;
+  }
+
+  .secretlink {
+    color: unset;
+    text-decoration: none;
+  }
 </style>
 
 <div class="container">
@@ -18,13 +32,12 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       version of Pottermore, with games, interactive in-universe tools, etc.
     </p>
     <p>
-      I'm EtchJetty
-      <a style="text-decoration: none" href="https://twitter.com/EtchJetty"><i class="bi bi-twitter"></i><sup> <i
+      I'm <strong>EtchJetty</strong>
+      <a class="secretlink" href="https://twitter.com/EtchJetty"><i class="bi bi-twitter"></i><sup> <i
             class="bi bi-box-arrow-up-right minisize"></i></sup></a>
       (girl bowser), the developer of the site, and one of the two writers of
-      ERIJAN (coming 20XX). The other is Nihilistic Janitor
-      <a class="darkenonhover" style="text-decoration: none"
-        href="https://www.fimfiction.net/user/459002/Nihilistic+Janitor"><img
+      ERIJAN (coming 20XX). The other is <strong>Nihilistic Janitor</strong>
+      <a class="darkenonhover" class="secretlink" href="https://www.fimfiction.net/user/459002/Nihilistic+Janitor"><img
           src="https://static.fimfiction.net/images/favicon.png" class="img-fluid minisize-16" /><sup>
           <i class="bi bi-box-arrow-up-right minisize"></i></sup></a>, without whom none of this would be possible.
     </p>
@@ -33,18 +46,22 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       feature-rich, and then I saw 4/13 coming up, so, here we are!
     </p>
   </div>
-  <div class="row" style="position: relative;">
-    <div class="col-3">
-      <nav id="qnascrollspy" class="navbar navbar-light bg-light flex-column align-items-stretch pt-2 p-3">
+  <div class="row" style="position: relative">
+    <div id="toccol" class="col-4 d-none d-md-inline pe-0">
+      <nav id="qnascrollspy"
+        class="navbar-light bg-light flex-column align-items-start pt-sm-2 p-sm-3 text-wrap sticky-top">
         <a class="navbar-brand" href="#">Quick links</a>
-        <nav class="nav nav-pills flex-column">
-          <a class="nav-link" href="#erijan">What's ERIJAN?</a>
-          <a class="nav-link" href="#housetrapped">What's Housetrapped?</a>
-          <a class="nav-link" href="#duals">What are Dual Classpects?</a>
+        <nav class="nav nav-pills flex-column mh-100">
+          <a class="fakenav text-wrap" href="#erijan">What's ERIJAN?</a>
+          <!-- <hr> -->
+          <a class="fakenav text-wrap" href="#housetrapped">Housetrapped?</a>
+          <a class="fakenav text-wrap" href="#duals">Dual Classpects?</a>
+          <hr>
+          <a class="fakenav text-wrap pt-0" href="#credits">Credits</a>
         </nav>
       </nav>
     </div>
-    <div class="col-9">
+    <div id="qnacol" class="col align-self-end px-5 px-md-3">
       <!-- <div data-bs-spy="scroll" data-bs-target="#qnascrollspy" data-bs-offset="0" tabindex="0"> -->
       <h3 id="erijan">What's ERIJAN?</h3>
       <p>
@@ -52,17 +69,17 @@ block head %} {{ super() }} {% endblock %} {% block content %}
         fanfic that does not currently exist in a readable state. Written by
         Nihilistic Janitor and co-written by myself (mostly in the span of five
         months starting in January 2021) the project, which started as, "hey,
-        eridan ampora is the WORST, what if we just, replaced him," ballooned into
-        essentially a full rewrite of Homestuck, complete with custom game
+        eridan ampora is the WORST, what if we just, replaced him," ballooned
+        into essentially a full rewrite of Homestuck, complete with custom game
         mechanics and blah blah blah blah.
       </p>
       <p>
-        The story itself isn't going to be published until the vague date of 20XX
-        (we don't want to set any time pressure for ourselves). Even though it's
-        not finished, the Classpecting lore is solid enough that this site, which
-        was planned as a "really simple classpect of the day + lookup classpects"
-        tool, started to take shape, and as Homestuck is wont to do, expand in
-        scope.
+        The story itself isn't going to be published until the vague date of
+        20XX (we don't want to set any time pressure for ourselves). Even though
+        it's not finished, the Classpecting lore is solid enough that this site,
+        which was planned as a "really simple classpect of the day + lookup
+        classpects" tool, started to take shape, and as Homestuck is wont to do,
+        expand in scope.
       </p>
       <p>
         Erijan is named after Eridan Ampora + Nihilistic
@@ -74,10 +91,10 @@ block head %} {{ super() }} {% endblock %} {% block content %}
         In November 2020, I briefly ran a Homestuck text-based RP for a group of
         friends. I had a
         <a href="https://www.youtube.com/watch?v=sJXIl_GcWi4">total</a>
-        <a href="https://www.youtube.com/watch?v=zasJtfz9sX0">blast</a> working on
-        it, but life happened, and the RP dissolved right as work on Erijan
-        started. Much of the original Housetrapped lore ended up being repurposed
-        in Erijan. None of this is important, lmfao
+        <a href="https://www.youtube.com/watch?v=zasJtfz9sX0">blast</a> working
+        on it, but life happened, and the RP dissolved right as work on Erijan
+        started. Much of the original Housetrapped lore ended up being
+        repurposed in Erijan. None of this is important, lmfao
       </p>
       <p>
         In January 2022, I tried rebooting the RP, which didn't really go
@@ -90,12 +107,12 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       <h3 id="duals">What are Dual Classpects?</h3>
       <p>
         Jan and I had a theory that Muse and Lord were actually made from
-        different standard classpects, just, added together. The natural thing to
-        do, of course, was to finish multiplying out the grid.
+        different standard classpects, just, added together. The natural thing
+        to do, of course, was to finish multiplying out the grid.
       </p>
       <p>
-        Then we did all the Aspects, too. So now we have over 100 fan Classes and
-        Aspects total.
+        Then we did all the Aspects, too. So now we have over 100 fan Classes
+        and Aspects total.
       </p>
       <p>
         Anyway, in short, you can now
@@ -103,24 +120,144 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       </p>
       <p>
         Check the <a href="https://classpectpokerap.tumblr.com/">Tumblr</a> in
-        coming days for a full list of all canon sprite-fused Dual Classpects. (As
-        a preview, Davepetasprite^2 is a
+        coming days for a full list of all canon sprite-fused Dual Classpects.
+        (As a preview, Davepetasprite^2 is a
         <a href="/classpects/search/hunterofpulse">Hunter of Pulse</a>.)
       </p>
-      <!-- </div> -->
+      <hr>
+      <h1 id="credits">Credits</h1>
+      <p>
+        This website would not be possible without the combined help of so many people. In no particular order:
+      <div class="card">
+        <div class="card-body">
+          <div class="h4">People</div>
+          <ul class="list-unstyled ps-4">
+            <li><strong>Rose Davidson</strong> <a class="secretlink" href="https://inklesspen.com/"><i
+                  class="bi bi-globe"></i><sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
+            <ul>
+              <li>For helping my Python be less terrible, in addition to being awesome</li>
+            </ul>
+            <li><strong>FlaringK</strong> <a class="secretlink" href="https://flaringk.github.io/Portfolio/"><i
+                  class="bi bi-github"></i><sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
+            <ul>
+              <li>For inspiring my recent deep dive into HTML + CSS/JS, and giving visual feedback on the site itself
+              </li>
+            </ul>
+            <li><strong>TheSleepingKnight</strong> <a class="secretlink"
+                href="https://archiveofourown.org/users/TheSleepingKnight/pseuds/TheSleepingKnight"><img
+                  src="https://archiveofourown.org/images/ao3_logos/logo.png" class="img-fluid minisize-16" />
+                <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a>, <strong>Chartic</strong> <a
+                class="secretlink" href="https://archiveofourown.org/users/Chartic/pseuds/Chartic"><img
+                  src="https://archiveofourown.org/images/ao3_logos/logo.png" class="img-fluid minisize-16" />
+                <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a>, and <strong>ashfall</strong> <a
+                class="secretlink" href="https://archiveofourown.org/users/ashstorms/pseuds/ashstorms"><img
+                  src="https://archiveofourown.org/images/ao3_logos/logo.png" class="img-fluid minisize-16" />
+                <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
+            <ul>
+              <li>For being the original players of Housetrapped, and so kindly letting me use their words in the
+                interactive FAQ</li>
+            </ul>
+            <li>Discord User <strong>Saltrock</strong> <i class="bi bi-discord"></i></li>
+            <ul>
+              <li>For giving feedback on the site, including suggesting this very page you're reading!</li>
+            </ul>
+            <li>And also others, including but not limited to:</li>
+            <ul>
+              <li>Beokirby</li>
+              <li>Deacon Blues (@protagonist_of)</li>
+              <li>ReedRGale</li>
+
+            </ul>
+          </ul>
+        </div>
+      </div>
+      </p>
     </div>
   </div>
-
-
-
-</div>
+  NOTE TO SELF: mention the tumblrand other links
+  <a href="https://forms.gle/Qo1RDbWDxjKqtoiz5">Feedback form</a>
 </div>
 
-{% endblock %}
-{% block scripts %}
-<script>
-  // document.getElementsByTagName("body")[0].style.setProperty("position", "relative");
-  var scrollSpyContentEl = document.getElementById('qnascrollspy');
-    // var scrollSpy = bootstrap.ScrollSpy.getOrCreateInstance(scrollSpyContentEl) // Returns a Bootstrap scrollspy instance
-</script>
+{% endblock %} {% block scripts %}
+<!-- <script>
+  var qnacol = document.getElementById("qnacol");
+  var qnascrollspy = document.getElementById("qnascrollspy");
+  var sticker = document.getElementById("sticker");
+  let thing;
+  let testforme = (
+    window.innerHeight -
+    qnascrollspy.scrollHeight -
+    $(qnascrollspy).offset()["top"]
+  ).valueOf();
+  var toccol = document.getElementById("toccol");
+  var link = $(qnascrollspy);
+  var offset = link.offset();
+  var top = offset.top;
+  var left = offset.left;
+  var bottom = $(window).height() - link.height();
+  bottom = offset.top - bottom;
+  // var right = $(window).width() - link.width();
+  // right = offset.left - right;
+  thing = (bottom - window.scrollY).valueOf();
+
+  window.onscroll = function (ev) {
+    if (getComputedStyle(toccol)["display"] != "none") {
+      // console.log("we see u");
+
+      if (
+        $(qnascrollspy).offset()["top"] + qnascrollspy.scrollHeight >=
+        $(qnacol).offset()["top"] + qnacol.scrollHeight
+      ) {
+        // console.log("hehe botom");
+        document
+          .getElementById("qnascrollspy")
+          .classList.remove("position-fixed");
+        // document.getElementById("qnascrollspy").classList.add("d-inline-block");
+        toccol.classList.add("align-self-end");
+      }
+      // if (window.innerHeight + window.scrollY < document.body.scrollHeight) {
+
+      // console.log(
+      //   // (window.innerHeight -
+      //   //     qnascrollspy.scrollHeight -
+      //   //     $(qnascrollspy).offset()["top"] +
+      //   //     window.scrollY) == testforme,
+      //   thing == bottom - window.scrollY,
+      //   Math.round((window.innerHeight - $(qnascrollspy).height()) / 10),
+      //   // thing,
+      //   Math.round(window.scrollY / 10),
+      //   // Math.round(left/10),
+      //   Math.round(top / 10),
+      //   // Math.round(window.innerHeight/10),
+      //   Math.round(offset.top / 10)
+
+      //   // Math.round(right/10)
+      // );
+      else if (thing != bottom - window.scrollY) {
+        // if (
+        //   window.innerHeight -
+        //     qnascrollspy.scrollHeight -
+        //     $(qnascrollspy).offset()["top"] +
+        //     window.scrollY <
+        //   0
+        // ) {
+        // console.log($(qnascrollspy).offset().top);
+        // console.log(window.scrollY - $(qnascrollspy).offset().top);
+        if (
+          Array.from(toccol.classList).includes("align-self-end") &&
+          window.scrollY - $(qnascrollspy).offset().top < thing
+        ) {
+          document
+            .getElementById("qnascrollspy")
+            .classList.add("position-fixed");
+          toccol.classList.remove("align-self-end");
+        } else {
+          console.log(thing);
+          thing = (bottom - window.scrollY).valueOf();
+        }
+        // }
+      }
+    }
+  };
+</script> -->
 {% endblock %}
