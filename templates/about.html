@@ -1,7 +1,8 @@
 {% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
 block head %} {{ super() }} {% endblock %} {% block content %}
 <style>
-  .darkenonhover:hover {
+  .darkenonhover:hover,
+  .minisize-16:hover {
     filter: brightness(66%);
   }
 
@@ -17,6 +18,11 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   .secretlink {
     color: unset;
     text-decoration: none;
+  }
+
+  .seecret:hover {
+    filter: invert(31%) sepia(95%) saturate(3041%) hue-rotate(208deg) brightness(99%) contrast(103%);
+
   }
 </style>
 
@@ -56,6 +62,9 @@ block head %} {{ super() }} {% endblock %} {% block content %}
           <!-- <hr> -->
           <a class="fakenav text-wrap" href="#housetrapped">Housetrapped?</a>
           <a class="fakenav text-wrap" href="#duals">Dual Classpects?</a>
+          <hr>
+          <a class="fakenav text-wrap" href="#homestuck">Homestuck?</a>
+          <a class="fakenav text-wrap" href="#tumbler">Tumblr?</a>
           <hr>
           <a class="fakenav text-wrap pt-0" href="#credits">Credits</a>
         </nav>
@@ -125,6 +134,19 @@ block head %} {{ super() }} {% endblock %} {% block content %}
         <a href="/classpects/search/hunterofpulse">Hunter of Pulse</a>.)
       </p>
       <hr>
+      <h2 id="homestuck">What's Homestuck?</h2>
+      <p>
+        Homestuck was, at one point, a webcomic. It is now instead available as a desktop application <a
+          href="https://bambosh.github.io/unofficial-homestuck-collection/">here.</a>
+      </p>
+      <h3 id="tumbler">Do you have a Tumblr?</h3>
+      <p>
+        Last year, I made <a href="https://classpectpokerap.tumblr.com">https://classpectpokerap.tumblr.com</a>, a blog
+        that was meant to serve... more or less the function of this website. I ended up doing nothing with it at the
+        time, but in the coming days, I'll be kick-starting it with several theoryposts, as well as opening it up for
+        Asks!
+      </p>
+      <hr>
       <h1 id="credits">Credits</h1>
       <p>
         This website would not be possible without the combined help of so many people. In no particular order:
@@ -161,21 +183,72 @@ block head %} {{ super() }} {% endblock %} {% block content %}
             <ul>
               <li>For giving feedback on the site, including suggesting this very page you're reading!</li>
             </ul>
-            <li>And also others, including but not limited to:</li>
+            <li>Others:</li>
             <ul>
               <li>Beokirby</li>
               <li>Deacon Blues (@protagonist_of)</li>
               <li>ReedRGale</li>
 
+              <li>and more...!<br><small>&#8195;If you should be on this list and I forgot to include you, DM me!</small></li>
+
+
             </ul>
           </ul>
+          <div class="h4">Resources</div>
+          <ul class="ps-4">
+            <li><strong>Bootstrap</strong> v5.1.3 <a class="secretlink" href="https://getbootstrap.com/"><i
+                  class="bi bi-bootstrap-fill" style="color:#6610f2"></i>
+                <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
+            <ul>
+              <li>Website CSS + JS theming</li>
+            </ul>
+            <li><strong>Flask</strong> <a class="secretlink" href="https://flask.palletsprojects.com/en/2.1.x/"><i
+                  class="bi bi-code-slash"></i>
+                <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
+            <ul>
+              <li>Python framework for webhosting</li>
+            </ul>
+            <li><strong>PythonAnywhere</strong> <a class="seecret secretlink" href="https://pythonanywhere.com/"> <img
+                  src="{{ url_for('static', filename='images/pa.svg') }}" alt="" class="img-fluid minisize-16 ">
+                <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
+            <ul>
+              <li>Python framework for webhosting</li>
+            </ul>
+          </ul>
+          <div class="h4">Special Thanks to</div>
+          <ul class="list-unstyled ps-4">
+            <li>
+              <h3>Nihilistic Janitor</h3>
+            </li>
+            <ul>
+              <li><img src="{{ url_for('static', filename='images/large_pale_diamond.webp') }}" alt=""
+                  style="height: 24px"></li>
+            </ul>
         </div>
       </div>
       </p>
     </div>
   </div>
-  NOTE TO SELF: mention the tumblrand other links
-  <a href="https://forms.gle/Qo1RDbWDxjKqtoiz5">Feedback form</a>
+  <div class="row">
+    <div class="col">
+      <div class="shadow p-3 mb-5 bg-body card rounded">
+        <h1 class="text-center">Get in touch!</h1>
+        <p class="text-center">This website is NEW! It has BUGS! Probably! If you spot any isues, or have thoughts on
+          anything else, <strong>let me know</strong> by:</p>
+        <div class="col-2"></div>
+        <div class="col-8">
+          <ul>
+            <li>Leaving feedback on the <a href="https://forms.gle/Qo1RDbWDxjKqtoiz5">anonymous feedback form</a></li>
+            <li>Dropping me a DM on <a href="https://twitter.com/EtchJetty">Twitter</a></li>&#8195;or<li>Asking on the <a
+                href="https://classpectpokerap.tumblr.com/ask">Tumblr.</a></li>
+          </ul>
+        </div>
+        <div class="col-2"></div>
+        <p class="text-center px-2">Feel free to also send in Tumblr asks regarding, like, any other part of the site,
+          especially personalized Classpect reads.</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 {% endblock %} {% block scripts %}
