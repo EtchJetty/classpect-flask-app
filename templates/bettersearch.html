@@ -6,16 +6,18 @@ block head %} {{ super() }} {% endblock %} {% block content %}
     Search Classpect:<a class="stretched-link" href="{{url_for('lookupclspect')}}"></a>
   </h1>
   <span class="ps-4">Enter a Class, Aspect, or both.</span>
-  <form method="POST" id="formy" name="mathform" class="pt-2 needs-validation" novalidate>
+  <form method="GET" id="formy" name="mathform" class="pt-2 needs-validation" novalidate>
     <div class="form-group">
       <div class="row g-3 align-items-center">
         <div class="input-group has-validation pt-2 pb-4 px-3">
-          <input name="class" id="firstclass" form="formy" placeholder="Class" type="text" aria-label="Class"
+          <input name="c" id="firstclass" form="formy" placeholder="Class" type="text" aria-label="Class"
             class="form-control" {% if results %}value="{{ results['class'].name | e }}" {% else %}{% endif %} required
             list="fullclasses" /><span class="input-group-text">of</span>
-          <input name="aspect" id="firstaspect" form="formy" placeholder="Aspect" type="text" aria-label="Aspect"
+          <input name="a" id="firstaspect" form="formy" placeholder="Aspect" type="text" aria-label="Aspect"
             class="form-control" {% if results %}value="{{ results['aspect'].name | e }}" {% else %}{% endif %} required
             list="fullaspects" />
+          <input type="hidden" name="mc" value=""/>
+          <input type="hidden" name="ma" value=""/>
           <datalist id="fullclasses">
             {% for val in classpects["class"] %}
             <option value="{{val.name}}">{% endfor %}</option>
@@ -79,10 +81,10 @@ block head %} {{ super() }} {% endblock %} {% block content %}
     <div class="card-body">
       <h5 class="card-title">Result</h5>
       {{ display|safe }} {% if validator %}
-      <form method="POST" id="mathform" name="mathform" novalidate>
+      <form method="GET" id="mathform" name="mathform" novalidate>
         <div class="form-group">
-          <input type="hidden" id="hiddenClass" form="mathform" name="class" value='{{ results["class"].name | e }}' />
-          <input type="hidden" form="mathform" id="hiddenAspect" name="aspect"
+          <input type="hidden" id="hiddenClass" form="mathform" name="c" value='{{ results["class"].name | e }}' />
+          <input type="hidden" form="mathform" id="hiddenAspect" name="a"
             value='{{ results["aspect"].name | e }}' />
           <div class="row g-3 align-items-center">
             <div id="thecalculatorform" class="input-group py-3 px-3">
@@ -98,7 +100,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
                 list="classlist"
                 value="{% if results['mathclass'] %}{{ results['mathclass'].name | e }}{% else %}{% endif %}"
               /> -->
-              <select name="mathclass" id="mathclass" form="mathform" placeholder="Class" type="text" required
+              <select name="mc" id="mathclass" form="mathform" placeholder="Class" type="text" required
                 aria-label="Class" class="form-control" list="classlist">
                 {% for val in validmath["class"] %}
                 <option {% if results['mathclass'] %}{% if val.name==results['mathclass'].name %}selected{% else %}{%
@@ -106,7 +108,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
                 {% endfor %}
               </select>
               <span class="input-group-text">of</span>
-              <select name="mathaspect" id="mathaspect" form="mathform" placeholder="Aspect" type="text" required
+              <select name="ma" id="mathaspect" form="mathform" placeholder="Aspect" type="text" required
                 list="aspectlist" aria-label="Aspect" class="form-control">
                 {% for val in validmath["aspect"] %}
                 <option {% if results['mathaspect'] %}{% if val.name==results['mathaspect'].name %}selected{% else %}{%
@@ -306,7 +308,8 @@ block head %} {{ super() }} {% endblock %} {% block content %}
             //   }
             // });
 </script> -->
-<script>
+<script>if (document.getElementById("mathclass")) {
+
   const results = {{ niceresults | safe }}
   // console.log(results)
   function getRandomInt(min, max) {
@@ -314,7 +317,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
   }
-
+    
   let mathclassarr = document.getElementById("mathclass").children
   var scrambleclass = true;
   for (let i = 0; i < mathclassarr.length; i++) {
@@ -389,6 +392,6 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   }
 //  && (results["aspect"] == "")
 // && (results["class"] == "")
-
+}
       // console.log(scrambleclass, scrambleaspect)
 </script>{% endblock %}

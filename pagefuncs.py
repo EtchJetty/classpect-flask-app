@@ -224,10 +224,17 @@ def mathValidator(form):
     
 def searchpage():
     if len(request.args) > 0:
-        json.loads(request.args["json"])
-    
+        # json.loads(request.args["json"])
+        argargs = {}
         request.method = "POST"
-        hidden = json.loads(request.args["json"])
+        # hidden = json.loads(request.args["json"])
+        for fixe in ["c","a","mc","ma"]:
+            try: 
+                argargs[fixe] = request.args[fixe]
+            except:
+                argargs[fixe] = ""
+            
+        hidden = {"class":argargs["c"],"aspect":argargs["a"],"mathclass":argargs["mc"],"mathaspect":argargs["ma"]}
     if request.method == 'GET':
         display = []
         
@@ -257,7 +264,7 @@ def searchpage():
         
         formState = {"dual":False,"math":False,"singular":False}
         if len(form) >= 3:
-            formState["math"] = True 
+            
             try: 
                 form["mathaspect"]
             except:
@@ -266,6 +273,8 @@ def searchpage():
                 form["mathclass"]
             except:
                 form["mathclass"] = ""
+            if form["mathaspect"] != "" or form["mathclass"] != "":
+                formState["math"] = True 
             
         for i in form:
             results[i] = ClasspectComponent(name=form[i].capitalize(),type=i.capitalize().replace("Math","")) 

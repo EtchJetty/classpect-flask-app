@@ -42,10 +42,18 @@ def home():
 def searchfix(custom = None):
     if custom:
         request.method = "POST"
-        custom = custom.split("of")
-        request.form = {"class":custom[0],"aspect":custom[1]}
-        return redirect(url_for('lookupclspect', json=json.dumps(request.form), code=307))
+        criteria = ["class","aspect","mathclass","mathaspect"]
+        custom = dict([(criteria[inx], item) for inx, item in enumerate(custom.split("of"))])
+        if len(custom) != len(criteria):
+            for item in criteria:
+                try:
+                    custom[item]
+                except:
+                    custom[item] = ""
+        # return str(custom)
+        # request.form = {"class":custom[0],"aspect":custom[1]}
         # return redirect(url_for('lookupclspect', json=json.dumps(request.form), code=307))
+        return redirect(url_for('lookupclspect', c=custom["class"], a=custom["aspect"], mc=custom["mathclass"], ma=custom["mathaspect"]))
 
     return redirect(url_for('lookupclspect'))
 
