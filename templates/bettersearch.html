@@ -85,7 +85,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
           <input type="hidden" form="mathform" id="hiddenAspect" name="aspect"
             value='{{ results["aspect"].name | e }}' />
           <div class="row g-3 align-items-center">
-            <div class="input-group py-3 px-3">
+            <div id="thecalculatorform" class="input-group py-3 px-3">
               <!-- <input
                 name="mathclass"
                 id="mathclass"
@@ -100,19 +100,17 @@ block head %} {{ super() }} {% endblock %} {% block content %}
               /> -->
               <select name="mathclass" id="mathclass" form="mathform" placeholder="Class" type="text" required
                 aria-label="Class" class="form-control" list="classlist">
-
                 {% for val in validmath["class"] %}
-                <option {% if results['mathclass'] %}{% if val.name==results['mathclass'].name %}selected{% else %}nah{%
+                <option {% if results['mathclass'] %}{% if val.name==results['mathclass'].name %}selected{% else %}{%
                   endif %}{% endif %}>{{val.name}}</option>
                 {% endfor %}
               </select>
               <span class="input-group-text">of</span>
               <select name="mathaspect" id="mathaspect" form="mathform" placeholder="Aspect" type="text" required
                 list="aspectlist" aria-label="Aspect" class="form-control">
-
                 {% for val in validmath["aspect"] %}
-                <option {% if results['mathaspect'] %}{% if val.name==results['mathaspect'].name %}selected{% else
-                  %}nah{% endif %}{% endif %}>{{val.name}}</option>
+                <option {% if results['mathaspect'] %}{% if val.name==results['mathaspect'].name %}selected{% else %}{%
+                  endif %}{% endif %}>{{val.name}}</option>
                 {% endfor %}
               </select>
 
@@ -125,7 +123,11 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       </form>
       {{ mathdisplay|safe }}{% endif %}{{ embedfun }}
     </div>
-    <script type="text/JavaScript">
+    {% endif %} {% endblock %}
+  </div>
+</div>
+{% block scripts %}
+<script type="text/JavaScript">
       function copycat(cspe) {
       if (document.getElementById("housetrapped")) {
           if (canonAspects.has(cspe) || canonClasses.has(cspe)) {
@@ -134,9 +136,16 @@ block head %} {{ super() }} {% endblock %} {% block content %}
             jstarget.setAttribute("style", "text-decoration: none;");
 
             jstarget.disabled = false;
-            $("#collapseOne").collapse({
-              toggle: false,
-            });
+            var myCollapse = document.getElementById('collapseOne')
+            bootstrap.Collapse.getOrCreateInstance(myCollapse)
+            // var bsCollapse = new bootstrap.Collapse(myCollapse, {
+            // show: true,
+            //   toggle: true
+
+            // })
+            // $("#collapseOne").collapse({
+            //   toggle: false,
+            // });
             var housetrapped_iframe = document.getElementById("housetrapped");
             if (canonAspects.has(cspe)) {
               jstarget.innerHTML =
@@ -201,103 +210,185 @@ block head %} {{ super() }} {% endblock %} {% block content %}
         }
       }
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script type="text/JavaScript">
-      $("image").click(function (event) {
-        // Gets clicked on word (or selected text if text is selected)
-        var t = "";
-        // if (window.getSelection && (sel = window.getSelection()).modify) {
-        //   // Webkit, Gecko
-        //   var s = window.getSelection();
-        //   if (s.isCollapsed) {
-        //     s.modify("move", "forward", "character");
-        //     s.modify("move", "backward", "word");
-        //     s.modify("extend", "forward", "word");
-        //     t = s.toString();
-        //     s.modify("move", "forward", "character"); //clear selection
-        //   } else {
-        //     t = s.toString();
-        //   }
-        // } else if ((sel = document.selection) && sel.type != "Control") {
-        //   // IE 4+
-        //   var textRange = sel.createRange();
-        //   if (!textRange.text) {
-        //     textRange.expand("word");
-        //   }
-        //   // Remove trailing spaces
-        //   while (/\s$/.test(textRange.text)) {
-        //     textRange.moveEnd("character", -1);
-        //   }
-        //   t = textRange.text;
-        // }
-        // if (t == "") {
-        //   t = "base";
-        // }
-        if (
-          document.elementFromPoint(event.clientX, event.clientY).tagName ==
-          "IMG"
-        ) {
-          // if(
-          //   !(
-          //     canonAspects.has(t[0].toUpperCase() + t.slice(1).toLowerCase()) ||
-          //     canonClasses.has(t[0].toUpperCase() + t.slice(1).toLowerCase())
-          //   )
-          // ) {
-          t = document
-            .elementFromPoint(event.clientX, event.clientY)
-            .src.substring(
-              document
-                .elementFromPoint(event.clientX, event.clientY)
-                .src.lastIndexOf("/") + 1
-            )
-            .replace(".png", "");
-        }
-        // }
-        var cspe = t[0].toUpperCase() + t.slice(1).toLowerCase();
-        if (document.getElementById("housetrapped")) {
-          if (canonAspects.has(cspe) || canonClasses.has(cspe)) {
-            var buttonfix = document.getElementById("jstarget");
-            jstarget.setAttribute("class", "btn btn-link");
-            jstarget.setAttribute("style", "text-decoration: none;");
 
-            jstarget.disabled = false;
-            $("#collapseOne").collapse({
-              toggle: false,
-            });
-            var housetrapped_iframe = document.getElementById("housetrapped");
-            if (canonAspects.has(cspe)) {
-              jstarget.innerHTML =
-                "<a href='" +
-                "https://housetrapped-faq-archive.glitch.me/aspects.html#" +
-                archiveUrls["aspect"][cspe] +
-                "'>" +
-                cspe +
-                " Aspect analysis from the Housetrapped FAQ  (beta) <i class='bi bi-box-arrow-up-right minisize'></i></a>";
-              housetrapped_iframe.setAttribute(
-                "src",
-                "https://housetrapped-faq-archive.glitch.me/aspects.html#" +
-                  archiveUrls["aspect"][cspe]
-              );
-            }
-            if (canonClasses.has(cspe)) {
-              jstarget.innerHTML =
-                "<a href='" +
-                "https://housetrapped-faq-archive.glitch.me/classes.html#" +
-                archiveUrls["class"][cspe] +
-                "'>" +
-                cspe +
-                " Class analysis from the Housetrapped FAQ  (beta) <i class='bi bi-box-arrow-up-right minisize'></i></a>";
-              housetrapped_iframe.setAttribute(
-                "src",
-                "https://housetrapped-faq-archive.glitch.me/classes.html#" +
-                  archiveUrls["class"][cspe]
-              );
-            }
-          }
-        }
-      });
-    </script>
-    {% endif %} {% endblock %}
-  </div>
-</div>
+<!-- <script type="text/JavaScript">
+            // $("image").click(function (event) {
+            //   // Gets clicked on word (or selected text if text is selected)
+            //   var t = "";
+            //   // if (window.getSelection && (sel = window.getSelection()).modify) {
+            //   //   // Webkit, Gecko
+            //   //   var s = window.getSelection();
+            //   //   if (s.isCollapsed) {
+            //   //     s.modify("move", "forward", "character");
+            //   //     s.modify("move", "backward", "word");
+            //   //     s.modify("extend", "forward", "word");
+            //   //     t = s.toString();
+            //   //     s.modify("move", "forward", "character"); //clear selection
+            //   //   } else {
+            //   //     t = s.toString();
+            //   //   }
+            //   // } else if ((sel = document.selection) && sel.type != "Control") {
+            //   //   // IE 4+
+            //   //   var textRange = sel.createRange();
+            //   //   if (!textRange.text) {
+            //   //     textRange.expand("word");
+            //   //   }
+            //   //   // Remove trailing spaces
+            //   //   while (/\s$/.test(textRange.text)) {
+            //   //     textRange.moveEnd("character", -1);
+            //   //   }
+            //   //   t = textRange.text;
+            //   // }
+            //   // if (t == "") {
+            //   //   t = "base";
+            //   // }
+            //   if (
+            //     document.elementFromPoint(event.clientX, event.clientY).tagName ==
+            //     "IMG"
+            //   ) {
+            //     // if(
+            //     //   !(
+            //     //     canonAspects.has(t[0].toUpperCase() + t.slice(1).toLowerCase()) ||
+            //     //     canonClasses.has(t[0].toUpperCase() + t.slice(1).toLowerCase())
+            //     //   )
+            //     // ) {
+            //     t = document
+            //       .elementFromPoint(event.clientX, event.clientY)
+            //       .src.substring(
+            //         document
+            //           .elementFromPoint(event.clientX, event.clientY)
+            //           .src.lastIndexOf("/") + 1
+            //       )
+            //       .replace(".png", "");
+            //   }
+            //   // }
+            //   var cspe = t[0].toUpperCase() + t.slice(1).toLowerCase();
+            //   if (document.getElementById("housetrapped")) {
+            //     if (canonAspects.has(cspe) || canonClasses.has(cspe)) {
+            //       var buttonfix = document.getElementById("jstarget");
+            //       jstarget.setAttribute("class", "btn btn-link");
+            //       jstarget.setAttribute("style", "text-decoration: none;");
+
+            //       jstarget.disabled = false;
+            //       $("#collapseOne").collapse({
+            //         toggle: false,
+            //       });
+            //       var housetrapped_iframe = document.getElementById("housetrapped");
+            //       if (canonAspects.has(cspe)) {
+            //         jstarget.innerHTML =
+            //           "<a href='" +
+            //           "https://housetrapped-faq-archive.glitch.me/aspects.html#" +
+            //           archiveUrls["aspect"][cspe] +
+            //           "'>" +
+            //           cspe +
+            //           " Aspect analysis from the Housetrapped FAQ  (beta) <i class='bi bi-box-arrow-up-right minisize'></i></a>";
+            //         housetrapped_iframe.setAttribute(
+            //           "src",
+            //           "https://housetrapped-faq-archive.glitch.me/aspects.html#" +
+            //             archiveUrls["aspect"][cspe]
+            //         );
+            //       }
+            //       if (canonClasses.has(cspe)) {
+            //         jstarget.innerHTML =
+            //           "<a href='" +
+            //           "https://housetrapped-faq-archive.glitch.me/classes.html#" +
+            //           archiveUrls["class"][cspe] +
+            //           "'>" +
+            //           cspe +
+            //           " Class analysis from the Housetrapped FAQ  (beta) <i class='bi bi-box-arrow-up-right minisize'></i></a>";
+            //         housetrapped_iframe.setAttribute(
+            //           "src",
+            //           "https://housetrapped-faq-archive.glitch.me/classes.html#" +
+            //             archiveUrls["class"][cspe]
+            //         );
+            //       }
+            //     }
+            //   }
+            // });
+</script> -->
+<script>
+  const results = {{ niceresults | safe }}
+  // console.log(results)
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+  }
+
+  let mathclassarr = document.getElementById("mathclass").children
+  var scrambleclass = true;
+  for (let i = 0; i < mathclassarr.length; i++) {
+    // console.log(mathclassarr[i].attributes);
+    if (mathclassarr[i].attributes.length >= 1) {
+      scrambleclass = false;
+    }
+  }
+  if (scrambleclass) {
+    mathclassarr[getRandomInt(0, mathclassarr.length)].setAttribute("selected", "selected")
+  }
+
+
+  let mathaspectarr = document.getElementById("mathaspect").children
+  var scrambleaspect = true;
+
+  for (let i = 0; i < mathaspectarr.length; i++) {
+    // console.log(mathaspectarr[i].attributes);
+    if (mathaspectarr[i].attributes.length >= 1) {
+      scrambleaspect = false;
+    }
+  }
+  if (scrambleaspect) {
+    mathaspectarr[getRandomInt(0, mathaspectarr.length)].setAttribute("selected", "selected")
+  }
+
+  // for (let i = 0; i < mathaspectarr.length; i++) {
+  //   // console.log(mathaspectarr[i].attributes);
+  //   if (mathaspectarr[i].attributes.length >= 1) {
+  //     console.log(mathaspectarr[i])
+  //   }
+  // }
+  if (scrambleclass || scrambleaspect) {
+    document.getElementById("thecalculatorform").outerHTML += '<div class="row"><label id="calcformdescriptor" style="margin-top: .25rem; font-size: .875em; color: #6c757d;" class="mb-0 ps-3">Random example search loaded in for you. Play around with it!</label></div>';
+    document.getElementById("thecalculatorform").classList.remove("py-3")
+    document.getElementById("thecalculatorform").classList.add("pt-3")
+    document.getElementById("thecalculatorform").setAttribute("aria-describedby", "calcformdescriptor")
+  }
+
+  if (results["class"] == "") {
+    document.getElementById("mathclass").innerHTML = "<option selected value=\'\'></option>"
+    document.getElementById("mathclass").setAttribute("disabled", "disabled")
+  }
+  if (results["aspect"] == "") {
+    document.getElementById("mathaspect").innerHTML = "<option selected value=\'\'></option>"
+    document.getElementById("mathaspect").setAttribute("disabled", "disabled")
+  }
+  var classpectsarr = {{ classpects | safe }}
+
+  for (let i = 0; i < classpectsarr["class"].length; i++) {
+    if ((classpectsarr["class"][i]["name"] == results["class"])) {
+      console.log("yay canon class alone")
+      results["canonclass"] = true
+
+    }
+  }
+  for (let i = 0; i < classpectsarr["aspect"].length; i++) {
+    if ((classpectsarr["aspect"][i]["name"] == results["aspect"])) {
+      console.log("yay canon aspect alone")
+      results["canonaspect"] = true
+
+    }
+  }
+  if ((results["canonaspect"] == true) && !(results["canonclass"] == true)) {
+    console.log(results["aspect"])
+    copycat(results["aspect"])
+
+  }
+  else if ((results["canonclass"] == true) && !(results["canonaspect"] == true)) {
+    copycat(results["class"])
+
+  }
+//  && (results["aspect"] == "")
+// && (results["class"] == "")
+
+      // console.log(scrambleclass, scrambleaspect)
+</script>{% endblock %}

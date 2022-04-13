@@ -163,8 +163,8 @@ def wrapMuted(inputlist):
 def emote(aspect:ClasspectComponent,style="height: 24px;"):
     if aspect.__class__ == [].__class__ or aspect.name == "" or (not aspect.isCanon() and not aspect.isDual()):
         return ""
-    urlFront = "<a onclick='copycat(\'"
-    urlFront2 = "\');' role='button'><img src='" + url_for('static', filename='images/')
+    urlFront = "<a onclick='copycat(\""
+    urlFront2 = "\");' role='button'><img src='" + url_for('static', filename='images/')
     urlMid = ".png' style='position: relative; bottom: 1px; "
     urlBack = "' class='img-fluid' /></a>"
     if aspect.isDual():
@@ -253,9 +253,19 @@ def searchpage():
             else:
                 form = hidden
         
+        
+        
         formState = {"dual":False,"math":False,"singular":False}
-        if len(form) > 3:
+        if len(form) >= 3:
             formState["math"] = True 
+            try: 
+                form["mathaspect"]
+            except:
+                form["mathaspect"] = ""
+            try: 
+                form["mathclass"]
+            except:
+                form["mathclass"] = ""
             
         for i in form:
             results[i] = ClasspectComponent(name=form[i].capitalize(),type=i.capitalize().replace("Math","")) 
@@ -312,7 +322,7 @@ def searchpage():
       </h2>
     </div>
 
-    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+    <div id="collapseOne" class="collapse open" aria-labelledby="headingOne">
       <div class="card-body" style="padding: unset;">
         <div class="embed-responsive" style="height:400px;">
           <iframe class="embed-responsive-item w-100 h-100" id="housetrapped" src=""></iframe>
@@ -353,7 +363,7 @@ def searchpage():
             # math tooltip generation
             if formState["dual"]:
                 for i in classpect_data:
-                    if not i.isDual():
+                    if (not i.isDual()) and (i.name != ""):
                         formState["dual"] = False
                     
             tooltip = ["Add or subtract classpects to make Dual Classes!<br><small>It looks like you've searched for a "]
@@ -447,10 +457,13 @@ def searchpage():
         display = compileArr(display)
         mathdisplay = compileArr(mathdisplay)
 
+        niceresults = dict(results)
+        for k,v in niceresults.items():
+            niceresults[k] = v.name
                 
         return render_template(
                 "bettersearch.html",
-                results=results,classpects=fetchAllClasspects(),
+                results=results,niceresults=niceresults,classpects=fetchAllClasspects(),
                 sitetitle="Lookup",display=display,mathdisplay=mathdisplay,validator=mathValidator(form),validmath=validmath
             )
 

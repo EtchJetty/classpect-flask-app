@@ -45,6 +45,8 @@ def searchfix(custom = None):
         custom = custom.split("of")
         request.form = {"class":custom[0],"aspect":custom[1]}
         return redirect(url_for('lookupclspect', json=json.dumps(request.form), code=307))
+        # return redirect(url_for('lookupclspect', json=json.dumps(request.form), code=307))
+
     return redirect(url_for('lookupclspect'))
 
 @app.route("/classpects/search", methods=['GET', 'POST'])
