@@ -91,7 +91,7 @@ const archiveUrls = {
     Life: "message-930647614481920040",
     Light: "message-930641626148253707",
     Mind: "message-930660926020001823",
-    Rage: "message-930655170956759060",
+    Rage: "message-930659001526526012",
     Space: "message-930639006083977217",
     Time: "message-930637393206333455",
     Void: "message-930643051888648222",
