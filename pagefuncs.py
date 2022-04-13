@@ -32,9 +32,9 @@ def dualName(unknown): #compatibility function
         x = ""
         for i in unknown:
             try:
-                x = "<span style='font-size:0.05px;'> </span><a onclick='copycat(\"" + i.name +"\");' role='button'>" + x + "</a><span style='font-size:0.05px;'> </span>" + "<span style='font-size:0.05px;'> </span><a onclick='copycat(\""+ i.name +"\");' role='button'>" + i.name + ""
+                x = "<span style='font-size:0.05px;'>&nbsp;</span><a onclick='copycat(\"" + i.name +"\");' role='button'>" + x + "</a><span style='font-size:0.05px;'>&nbsp;</span>" + "<span style='font-size:0.05px;'>&nbsp;</span><a onclick='copycat(\""+ i.name +"\");' role='button'>" + i.name + ""
                 if len(unknown) > 1 and i != unknown[-1]:
-                    x = "<span style='font-size:0.05px;'> </span><a onclick='copycat(\""+ i.name +"\");' role='button'>" + x + "</a><span style='font-size:0.05px;'> </span>"
+                    x = "<span style='font-size:0.05px;'>&nbsp;</span><a onclick='copycat(\""+ i.name +"\");' role='button'>" + x + "</a><span style='font-size:0.05px;'>&nbsp;</span>"
             except:
                 pass
         return x
@@ -163,12 +163,13 @@ def wrapMuted(inputlist):
 def emote(aspect:ClasspectComponent,style="height: 24px;"):
     if aspect.__class__ == [].__class__ or aspect.name == "" or (not aspect.isCanon() and not aspect.isDual()):
         return ""
-    urlFront = "<a role='button'><img src='" + url_for('static', filename='images/')
+    urlFront = "<a onclick='copycat(\'"
+    urlFront2 = "\');' role='button'><img src='" + url_for('static', filename='images/')
     urlMid = ".png' style='position: relative; bottom: 1px; "
     urlBack = "' class='img-fluid' /></a>"
     if aspect.isDual():
-        return " " + urlFront + aspect.dualComponents()[0].name + urlMid + style + urlBack + urlFront + aspect.dualComponents()[1].name + urlMid + style + urlBack
-    return " " + urlFront + aspect.name + urlMid + style + urlBack
+        return " " + urlFront + aspect.dualComponents()[0].name + urlFront2 + aspect.dualComponents()[0].name + urlMid + style + urlBack + urlFront  + aspect.dualComponents()[1].name + urlFront2 + aspect.dualComponents()[1].name + urlMid + style + urlBack
+    return " " + urlFront + aspect.name + urlFront2 + aspect.name + urlMid + style + urlBack
 
 def mathValidator(form):
     try: 

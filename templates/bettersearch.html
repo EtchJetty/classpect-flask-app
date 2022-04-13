@@ -3,62 +3,19 @@ block head %} {{ super() }} {% endblock %} {% block content %}
 
 <div class="container">
   <h1 class="p-3 pt-4 pb-1" style="transform: rotate(0)">
-    Search Classpect:<a
-      class="stretched-link"
-      href="{{url_for('lookupclspect')}}"
-    ></a>
+    Search Classpect:<a class="stretched-link" href="{{url_for('lookupclspect')}}"></a>
   </h1>
   <span class="ps-4">Enter a Class, Aspect, or both.</span>
-  <form
-    method="POST"
-    id="formy"
-    name="mathform"
-    class="pt-2 needs-validation"
-    novalidate
-  >
+  <form method="POST" id="formy" name="mathform" class="pt-2 needs-validation" novalidate>
     <div class="form-group">
       <div class="row g-3 align-items-center">
         <div class="input-group has-validation pt-2 pb-4 px-3">
-          <input
-            name="class"
-            id="firstclass"
-            form="formy"
-            placeholder="Class"
-            type="text"
-            aria-label="Class"
-            class="form-control"
-            {%
-            if
-            results
-            %}value="{{ results['class'].name | e }}"
-            {%
-            else
-            %}{%
-            endif
-            %}
-            required
-            list="fullclasses"
-          /><span class="input-group-text">of</span>
-          <input
-            name="aspect"
-            id="firstaspect"
-            form="formy"
-            placeholder="Aspect"
-            type="text"
-            aria-label="Aspect"
-            class="form-control"
-            {%
-            if
-            results
-            %}value="{{ results['aspect'].name | e }}"
-            {%
-            else
-            %}{%
-            endif
-            %}
-            required
-            list="fullaspects"
-          />
+          <input name="class" id="firstclass" form="formy" placeholder="Class" type="text" aria-label="Class"
+            class="form-control" {% if results %}value="{{ results['class'].name | e }}" {% else %}{% endif %} required
+            list="fullclasses" /><span class="input-group-text">of</span>
+          <input name="aspect" id="firstaspect" form="formy" placeholder="Aspect" type="text" aria-label="Aspect"
+            class="form-control" {% if results %}value="{{ results['aspect'].name | e }}" {% else %}{% endif %} required
+            list="fullaspects" />
           <datalist id="fullclasses">
             {% for val in classpects["class"] %}
             <option value="{{val.name}}">{% endfor %}</option>
@@ -80,7 +37,6 @@ block head %} {{ super() }} {% endblock %} {% block content %}
     </div>
   </form>
   <script>
-    
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
       "use strict";
@@ -125,23 +81,12 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       {{ display|safe }} {% if validator %}
       <form method="POST" id="mathform" name="mathform" novalidate>
         <div class="form-group">
-          <input
-            type="hidden"
-            id="hiddenClass"
-            form="mathform"
-            name="class"
-            value='{{ results["class"].name | e }}'
-          />
-          <input
-            type="hidden"
-            form="mathform"
-            id="hiddenAspect"
-            name="aspect"
-            value='{{ results["aspect"].name | e }}'
-          />
+          <input type="hidden" id="hiddenClass" form="mathform" name="class" value='{{ results["class"].name | e }}' />
+          <input type="hidden" form="mathform" id="hiddenAspect" name="aspect"
+            value='{{ results["aspect"].name | e }}' />
           <div class="row g-3 align-items-center">
             <div class="input-group py-3 px-3">
-              <input
+              <!-- <input
                 name="mathclass"
                 id="mathclass"
                 form="mathform"
@@ -152,34 +97,26 @@ block head %} {{ super() }} {% endblock %} {% block content %}
                 class="form-control"
                 list="classlist"
                 value="{% if results['mathclass'] %}{{ results['mathclass'].name | e }}{% else %}{% endif %}"
-              /><span class="input-group-text">of</span>
-              <input
-                name="mathaspect"
-                id="mathaspect"
-                form="mathform"
-                placeholder="Aspect"
-                type="text"
-                required
-                list="aspectlist"
-                aria-label="Aspect"
-                class="form-control"
-                value="{% if results['mathaspect'] %}{{ results['mathaspect'].name | e }}{% else %}{% endif %}"
-              />
-              <datalist id="classlist">
+              /> -->
+              <select name="mathclass" id="mathclass" form="mathform" placeholder="Class" type="text" required
+                aria-label="Class" class="form-control" list="classlist">
+
                 {% for val in validmath["class"] %}
-                <option value="{{val.name}}">{% endfor %}</option>
-              </datalist>
+                <option {% if results['mathclass'] %}{% if val.name==results['mathclass'].name %}selected{% else %}nah{%
+                  endif %}{% endif %}>{{val.name}}</option>
+                {% endfor %}
+              </select>
+              <span class="input-group-text">of</span>
+              <select name="mathaspect" id="mathaspect" form="mathform" placeholder="Aspect" type="text" required
+                list="aspectlist" aria-label="Aspect" class="form-control">
 
-              <datalist id="aspectlist">
                 {% for val in validmath["aspect"] %}
-                <option value="{{val.name}}">{% endfor %}</option>
-              </datalist>
+                <option {% if results['mathaspect'] %}{% if val.name==results['mathaspect'].name %}selected{% else
+                  %}nah{% endif %}{% endif %}>{{val.name}}</option>
+                {% endfor %}
+              </select>
 
-              <button
-                type="submit"
-                onclick="makesmooth()"
-                class="btn btn-primary"
-              >
+              <button type="submit" onclick="makesmooth()" class="btn btn-primary">
                 Go!
               </button>
             </div>
@@ -264,42 +201,39 @@ block head %} {{ super() }} {% endblock %} {% block content %}
         }
       }
     </script>
-    <script
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
-      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/JavaScript">
-      $("body").click(function (event) {
+      $("image").click(function (event) {
         // Gets clicked on word (or selected text if text is selected)
         var t = "";
-        if (window.getSelection && (sel = window.getSelection()).modify) {
-          // Webkit, Gecko
-          var s = window.getSelection();
-          if (s.isCollapsed) {
-            s.modify("move", "forward", "character");
-            s.modify("move", "backward", "word");
-            s.modify("extend", "forward", "word");
-            t = s.toString();
-            s.modify("move", "forward", "character"); //clear selection
-          } else {
-            t = s.toString();
-          }
-        } else if ((sel = document.selection) && sel.type != "Control") {
-          // IE 4+
-          var textRange = sel.createRange();
-          if (!textRange.text) {
-            textRange.expand("word");
-          }
-          // Remove trailing spaces
-          while (/\s$/.test(textRange.text)) {
-            textRange.moveEnd("character", -1);
-          }
-          t = textRange.text;
-        }
-        if (t == "") {
-          t = "base";
-        }
+        // if (window.getSelection && (sel = window.getSelection()).modify) {
+        //   // Webkit, Gecko
+        //   var s = window.getSelection();
+        //   if (s.isCollapsed) {
+        //     s.modify("move", "forward", "character");
+        //     s.modify("move", "backward", "word");
+        //     s.modify("extend", "forward", "word");
+        //     t = s.toString();
+        //     s.modify("move", "forward", "character"); //clear selection
+        //   } else {
+        //     t = s.toString();
+        //   }
+        // } else if ((sel = document.selection) && sel.type != "Control") {
+        //   // IE 4+
+        //   var textRange = sel.createRange();
+        //   if (!textRange.text) {
+        //     textRange.expand("word");
+        //   }
+        //   // Remove trailing spaces
+        //   while (/\s$/.test(textRange.text)) {
+        //     textRange.moveEnd("character", -1);
+        //   }
+        //   t = textRange.text;
+        // }
+        // if (t == "") {
+        //   t = "base";
+        // }
         if (
           document.elementFromPoint(event.clientX, event.clientY).tagName ==
           "IMG"
