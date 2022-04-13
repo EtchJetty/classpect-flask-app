@@ -226,15 +226,15 @@ def searchpage():
     if len(request.args) > 0:
         # json.loads(request.args["json"])
         argargs = {}
-        request.method = "POST"
         # hidden = json.loads(request.args["json"])
         for fixe in ["c","a","mc","ma"]:
             try: 
                 argargs[fixe] = request.args[fixe]
             except:
                 argargs[fixe] = ""
-            
-        hidden = {"class":argargs["c"],"aspect":argargs["a"],"mathclass":argargs["mc"],"mathaspect":argargs["ma"]}
+        if "".join([value for key, value in argargs.items()]) != "":
+            request.method = "POST"
+            hidden = {"class":argargs["c"],"aspect":argargs["a"],"mathclass":argargs["mc"],"mathaspect":argargs["ma"]}
     if request.method == 'GET':
         display = []
         
