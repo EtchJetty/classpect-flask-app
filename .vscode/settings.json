@@ -1,0 +1,5 @@
+{
+    "html.format.templating": true,
+    "html.format.indentHandlebars": false,
+    "html.format.wrapLineLength": 0
+}
