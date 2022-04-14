@@ -39,23 +39,21 @@ block head %} {{ super() }} {% endblock %} {% block content %}
     </p>
     <p>
       I'm <strong>EtchJetty</strong>
-      <a class="secretlink" href="https://twitter.com/EtchJetty"><i class="bi bi-twitter"></i><sup> <i
-            class="bi bi-box-arrow-up-right minisize"></i></sup></a>
+      <a class="secretlink" href="https://twitter.com/EtchJetty"><i class="bi bi-twitter"></i><sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a>
       (girl bowser), the developer of the site, and one of the two writers of
       ERIJAN (coming 20XX). The other is <strong>Nihilistic Janitor</strong>
-      <a class="darkenonhover secretlink" href="https://www.fimfiction.net/user/459002/Nihilistic+Janitor"><img
-          src="https://static.fimfiction.net/images/favicon.png" class="img-fluid minisize-16" /><sup>
+      <a class="darkenonhover secretlink" href="https://www.fimfiction.net/user/459002/Nihilistic+Janitor"><img src="https://static.fimfiction.net/images/favicon.png" class="img-fluid minisize-16" /><sup>
           <i class="bi bi-box-arrow-up-right minisize"></i></sup></a>, without whom none of this would be possible.
     </p>
     <p>
       I started programming this site for fun, but then it got pretty
       feature-rich, and then I saw 4/13 coming up, so, here we are!
     </p>
+    <p>You may also know me as the creator of <a href="{{url_for('homesturdle')}}">Homesturdle</a>.</p>
   </div>
   <div class="row" style="position: relative">
     <div id="toccol" class="col-4 d-none d-md-inline pe-0 pb-3">
-      <nav id="qnascrollspy"
-        class="navbar-light bg-light flex-column align-items-start pt-sm-2 p-sm-3 text-wrap sticky-top">
+      <nav id="qnascrollspy" class="navbar-light bg-light flex-column align-items-start pt-sm-2 p-sm-3 text-wrap sticky-top">
         <a class="navbar-brand" href="#">Quick links</a>
         <nav class="nav nav-pills flex-column mh-100">
           <a class="fakenav text-wrap" href="#erijan">What's ERIJAN?</a>
@@ -63,7 +61,8 @@ block head %} {{ super() }} {% endblock %} {% block content %}
           <a class="fakenav text-wrap" href="#housetrapped">Housetrapped?</a>
           <a class="fakenav text-wrap" href="#duals">Dual Classpects?</a>
           <hr>
-          <a class="fakenav text-wrap" href="#homestuck">Homestuck?</a>
+          <a class="fakenav text-wrap pt-0" href="#homestuck">Homestuck?</a>
+          <a class="fakenav text-wrap" href="#hsturd">Homesturdle?</a>
           <a class="fakenav text-wrap" href="#tumbler">Tumblr?</a>
           <hr>
           <a class="fakenav text-wrap pt-0" href="#credits">Credits</a>
@@ -125,20 +124,26 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       </p>
       <p>
         Anyway, in short, you can now
-        <a href="/search">add two Classpects together.</a> Nice!
+        <a href="{{url_for('lookupclspect')}}?c=Bard&a=Time&mc=Page&ma=Mind" style="text-decoration: none;">add two Classpects together.</a> Nice!
       </p>
       <p>
         Check the <a href="https://classpectpokerap.tumblr.com/">Tumblr</a> in
         coming days for a full list of all canon sprite-fused Dual Classpects.
         (As a preview, Davepetasprite^2 is a
-        <a href="/classpects/search/hunterofpulse">Hunter of Pulse</a>.)
+        <a style="text-decoration: none;" href="/classpects/search/hunterofpulse">Hunter of Pulse</a>.)
       </p>
       <hr>
       <h2 id="homestuck">What's Homestuck?</h2>
       <p>
-        Homestuck was, at one point, a webcomic. It is now instead available as a desktop application <a
-          href="https://bambosh.github.io/unofficial-homestuck-collection/">here.</a>
+        Homestuck was, at one point, a webcomic. It is now instead available as a desktop application <a href="https://bambosh.github.io/unofficial-homestuck-collection/">here.</a>
       </p>
+      <h3 id="hsturd">What's Homesturdle?</h3>
+      <ol>
+        <li><a href="https://www.nytimes.com/games/wordle/index.html">Wordle</a> is a daily word game created by <a class="secretlink" href="https://www.powerlanguage.co.uk/">Josh Wardle<sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a>. </li>
+<li><a href="https://reactle.vercel.app/">react-wordle</a> is an <a href="https://github.com/cwackerfuss/react-wordle">open source</a> clone of Wordle made using the React framework. </li>
+<li><a href="https://etchjetty.github.io/homesturdle">Homesturdle</a> is an <a href="https://github.com/EtchJetty/homesturdle">open source</a> clone of the open source clone, made by me, someone who does not know how the React framework works, at all.</li>
+      </ol>
+<p>It's now <a href="{{url_for('homesturdle')}}" style="text-decoration: none;">available</a> to play on this site, though the old links should still work as well. Guess the Homestuck Troll in less than four tries, and you win! New troll every day, until you run out of new canon trolls, which has already happened at least once, lmao</p>
       <h3 id="tumbler">Do you have a Tumblr?</h3>
       <p>
         Last year, I made <a href="https://classpectpokerap.tumblr.com">https://classpectpokerap.tumblr.com</a>, a blog
@@ -154,26 +159,18 @@ block head %} {{ super() }} {% endblock %} {% block content %}
         <div class="card-body">
           <div class="h4">People</div>
           <ul class="list-unstyled ps-4">
-            <li><strong>Rose Davidson</strong> <a class="secretlink" href="https://inklesspen.com/"><i
-                  class="bi bi-globe"></i><sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
+            <li><strong>Rose Davidson</strong> <a class="secretlink" href="https://inklesspen.com/"><i class="bi bi-globe"></i><sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
             <ul>
               <li>For helping my Python be less terrible, in addition to being awesome</li>
             </ul>
-            <li><strong>FlaringK</strong> <a class="secretlink" href="https://flaringk.github.io/Portfolio/"><i
-                  class="bi bi-globe"></i><sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
+            <li><strong>FlaringK</strong> <a class="secretlink" href="https://flaringk.github.io/Portfolio/"><i class="bi bi-globe"></i><sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
             <ul>
               <li>For inspiring my recent deep dive into HTML + CSS/JS, and giving visual feedback on the site itself
               </li>
             </ul>
-            <li><strong>TheSleepingKnight</strong> <a class="secretlink"
-                href="https://archiveofourown.org/users/TheSleepingKnight/pseuds/TheSleepingKnight"><img
-                  src="https://archiveofourown.org/images/ao3_logos/logo.png" class="img-fluid minisize-16" />
-                <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a>, <strong>Chartic</strong> <a
-                class="secretlink" href="https://archiveofourown.org/users/Chartic/pseuds/Chartic"><img
-                  src="https://archiveofourown.org/images/ao3_logos/logo.png" class="img-fluid minisize-16" />
-                <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a>, and <strong>ashfall</strong> <a
-                class="secretlink" href="https://archiveofourown.org/users/ashstorms/pseuds/ashstorms"><img
-                  src="https://archiveofourown.org/images/ao3_logos/logo.png" class="img-fluid minisize-16" />
+            <li><strong>TheSleepingKnight</strong> <a class="secretlink" href="https://archiveofourown.org/users/TheSleepingKnight/pseuds/TheSleepingKnight"><img src="https://archiveofourown.org/images/ao3_logos/logo.png" class="img-fluid minisize-16" />
+                <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a>, <strong>Chartic</strong> <a class="secretlink" href="https://archiveofourown.org/users/Chartic/pseuds/Chartic"><img src="https://archiveofourown.org/images/ao3_logos/logo.png" class="img-fluid minisize-16" />
+                <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a>, and <strong>ashfall</strong> <a class="secretlink" href="https://archiveofourown.org/users/ashstorms/pseuds/ashstorms"><img src="https://archiveofourown.org/images/ao3_logos/logo.png" class="img-fluid minisize-16" />
                 <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
             <ul>
               <li>For being the original players of Housetrapped, and so kindly letting me use their words in the
@@ -183,8 +180,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
             <ul>
               <li>For giving feedback on the site, including suggesting this very page you're reading!</li>
             </ul>
-            <li><strong>lavendersiren</strong> <a class="secretlink" href="https://mspfa.com/?s=38989&p=1"><i
-                  class="bi bi-globe"></i><sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
+            <li><strong>lavendersiren</strong> <a class="secretlink" href="https://mspfa.com/?s=38989&p=1"><i class="bi bi-globe"></i><sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
             <ul>
               <li>For providing UX feedback on the search page post-launch</li>
             </ul>
@@ -204,20 +200,17 @@ block head %} {{ super() }} {% endblock %} {% block content %}
           </ul>
           <div class="h4">Resources</div>
           <ul class="ps-4">
-            <li><strong>Bootstrap</strong> v5.1.3 <a class="secretlink" href="https://getbootstrap.com/"><i
-                  class="bi bi-bootstrap-fill" style="color:#6610f2"></i>
+            <li><strong>Bootstrap</strong> v5.1.3 <a class="secretlink" href="https://getbootstrap.com/"><i class="bi bi-bootstrap-fill" style="color:#6610f2"></i>
                 <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
             <ul>
               <li>Website CSS + JS theming</li>
             </ul>
-            <li><strong>Flask</strong> <a class="secretlink" href="https://flask.palletsprojects.com/en/2.1.x/"><i
-                  class="bi bi-code-slash"></i>
+            <li><strong>Flask</strong> <a class="secretlink" href="https://flask.palletsprojects.com/en/2.1.x/"><i class="bi bi-code-slash"></i>
                 <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
             <ul>
               <li>Python framework for webhosting</li>
             </ul>
-            <li><strong>PythonAnywhere</strong> <a class="seecret secretlink" href="https://pythonanywhere.com/"> <img
-                  src="{{ url_for('static', filename='images/pa.svg') }}" alt="" class="img-fluid minisize-16 ">
+            <li><strong>PythonAnywhere</strong> <a class="seecret secretlink" href="https://pythonanywhere.com/"> <img src="{{ url_for('static', filename='images/pa.svg') }}" alt="" class="img-fluid minisize-16 ">
                 <sup> <i class="bi bi-box-arrow-up-right minisize"></i></sup></a></li>
             <ul>
               <li>Python webhosting for frameworks</li>
@@ -229,8 +222,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
               <h3>Nihilistic Janitor</h3>
             </li>
             <ul>
-              <li><img src="{{ url_for('static', filename='images/large_pale_diamond.webp') }}" alt=""
-                  style="height: 24px"></li>
+              <li><img src="{{ url_for('static', filename='images/large_pale_diamond.webp') }}" alt="" style="height: 24px"></li>
             </ul>
         </div>
       </div>
@@ -241,8 +233,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
     <div class="col">
       <div class="shadow p-3 mb-5 bg-body card rounded">
         <h1 class="text-center">Get in touch!</h1>
-        <p class="text-center">This website is NEW! It has BUGS! Probably! If you spot any <span
-            style="text-decoration: dotted red underline;">isues</span>, or have thoughts on
+        <p class="text-center">This website is NEW! It has BUGS! Probably! If you spot any <span style="text-decoration: dotted red underline;">isues</span>, or have thoughts on
           anything else, <strong>let me know</strong> by:</p>
         <div class="col-2"></div>
         <div class="col-8">
