@@ -1,0 +1,154 @@
+{% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
+block head %} {{ super() }} {% endblock %} {% block content %}
+
+<div class="container">
+  <div class="row p-3">
+    <div class="display-3">API Test</div>
+    <hr />
+    <h1>Enter in the field below.</h1>
+
+    <!-- <form method="GET" id="formy" name="mathform" class="pt-2 needs-validation" novalidate> -->
+
+    <div class="form-group">
+      <div class="row g-3">
+        <div class="input-group" id="pathgr">
+          <span class="input-group-text">Path</span>
+          <select onchange="fixFunctions()" name="p" id="path" form="formy" placeholder="/classpect/" type="text" aria-label="Path" value="" class="form-control">
+            {% for method in paths %}
+            <option value="{{method}}">/api/v1/classpects{{method}}</option>{% endfor %}
+          </select>
+        </div>
+        <label class="small my-0 text-muted" id="legend" for="Path">Method for accessing a single Classpect's data.</label>
+
+        <div class="input-group" id="fngr">
+          <span class="input-group-text">Function</span>
+          <select name="f" id="func" form="formy" placeholder="function()" type="text" aria-label="Function" value="" class="form-control" list="methodlist">
+            {% for method in methods %}
+            <option value="{{method}}">{{method}}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="input-group" id="namegr">
+          <span class="input-group-text">Name</span>
+          <input name="c" id="name" form="formy" placeholder="Seer, Void, Ranger, Soma" type="text" aria-label="Name" value="Seer" class="form-control" />
+        </div>
+        <div class="input-group" id="typegr">
+          <span class="input-group-text">Type</span>
+          <select name="f" id="type" form="formy" placeholder="class or aspect" type="text" aria-label="Type" value="Class" class="form-control">
+            <option value="class">Class</option>
+            <option value="aspect">Aspect</option>
+          </select>
+        </div> <div class="form-text"></div>
+        <div class="form-check" id="dualsgr" style="display: none;">
+          <input class="form-check-input" type="checkbox" value="" id="dualscheck">
+          <label class="form-check-label" for="dualscheck">
+            Get Duals instead
+          </label>
+        </div>
+
+        <div onclick="loadAPIExample()" class="btn btn-primary">
+          Get info!
+        </div>
+        <div class="invalid-feedback">
+          Please provide either a Class or an Aspect, then try again!
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </form> -->
+  <p><span class="fw-bold">Method:</span><br>
+    <span id="methoddisplay">Use the API, <span style="font-family: Comic Sans MS">dunkass... <small>aha.....</small></span></span>
+  </p>
+  <p><span class="fw-bold">Result:</span><br>
+    <span id="fillme">
+      See above
+    </span>
+  </p>
+  <!-- <p>List of functions: {{methods}}</p> -->
+</div>
+</div>
+<script>
+  const checkbox = document.getElementById('dualscheck')
+
+  checkbox.addEventListener('change', (event) => {
+    if (event.currentTarget.checked) {
+      checkbox.value = true;
+    } else {
+      checkbox.value = false;
+    }
+  })
+
+  const paths = {{ paths | safe }}
+  const methods = {{ methods | safe }}
+  const path = document.getElementById("path")
+  const func = document.getElementById("func")
+  const type = document.getElementById("type")
+  const legend = document.getElementById("legend")
+  const name = document.getElementById("name")
+  const fngr = document.getElementById("fngr")
+  const namegr = document.getElementById("namegr")
+  const dualsgr = document.getElementById("dualsgr")
+  const dualscheck = document.getElementById("dualscheck")
+  const methoddisplay = document.getElementById("methoddisplay")
+  const fillme = document.getElementById("fillme")
+
+  var newURL = func.value + "?name=" + name.value + "&type=" + type.value;
+  function fixFunctions() {
+    if (path.value == "/") {
+      legend.innerHTML = "Method for retrieving bulk Classpect data, e.g. names.<br> All params are optional, default behavior is to retrieve all canon classpects as a dictionary."
+      fngr.style.display = "none"
+      namegr.style.display = "none"
+      dualsgr.style.display = "block"
+      type.innerHTML = '<option value=""></option><option value="class">Class</option><option value="aspect">Aspect</option>'
+
+      newURL = "?duals=" + dualscheck.value + "&type=" + type.value;
+    }
+    else {
+      fngr.style.display = "flex"
+      namegr.style.display = "flex"
+      dualsgr.style.display = "none"
+      type.innerHTML = '<option value="class">Class</option><option value="aspect">Aspect</option>'
+      legend.innerHTML = "Method for accessing a single Classpect's data."
+    }
+
+    if (path.value == "/classpect/") {
+
+      newURL = func.value + "?name=" + name.value + "&type=" + type.value;
+    }
+    else { }
+
+    if (path.value == "/calc/") {
+
+    }
+    else {
+
+    }
+
+  }
+
+  function loadAPIExample() {
+    fixFunctions()
+    var baseURL = '{{url_for("api_page")}}' + "v1/classpects" + path.value
+    var assembledURL = baseURL + newURL
+    methoddisplay.innerHTML = assembledURL;
+    loadAPI(assembledURL);
+  }
+
+  function loadAPI(url) {
+    // Create a request variable and assign a new XMLHttpRequest object to it.
+    var request = new XMLHttpRequest()
+    console.log(url)
+    // Open a new connection, using the GET request on the URL endpoint
+    request.open('GET', url, true)
+
+    request.onload = function () {
+      console.log(this.response)
+      // var data = JSON.parse(this.response)
+      // console.log(data)
+      // Begin accessing JSON data here
+      fillme.innerHTML = this.response
+    }
+    // Send request
+    request.send()
+  }
+</script>
+{% endblock %}

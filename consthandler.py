@@ -183,7 +183,7 @@ def getAllDuals(type):
 
 # begin general use functions
 def getRandomClasspect(duals:bool = False):
-    rolls = []
+    # rolls = []
     if not duals: # i have no clue why i did it this way but hey it works
         return [random.choice(getAllClasspects("class")),random.choice(getAllClasspects("aspect"))]
     else: 
@@ -286,4 +286,7 @@ CLASSDEFS = getDefs(CLASSDEFS_CSV_PATH)
 ASPECTDEFS = getDefs(ASPECTDEFS_CSV_PATH)
 CLASSDUALS = getDefs(CLASSES_CSV_PATH)
 ASPECTDUALS = getDefs(ASPECTS_CSV_PATH)
-CLASSPECT_DICT = gSheets()
+try:
+    CLASSPECT_DICT = gSheets()
+except:
+    CLASSPECT_DICT = dict([])
