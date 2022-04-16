@@ -1,0 +1,644 @@
+{
+	"info": {
+		"_postman_id": "6bfafadc-b772-4a31-9df6-6972475974ed",
+		"name": "Classpect API Collection",
+		"description": "# Introduction\nWhat does your API do?\n\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests a user can send?",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/classpect/",
+			"item": [
+				{
+					"name": "Get Classpect",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/?name=Light&type=aspect",
+							"protocol": "https",
+							"host": [
+								"aeich",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"classpects",
+								"classpect",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Light"
+								},
+								{
+									"key": "type",
+									"value": "aspect"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Seer Class",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/?name=Seer&type=class",
+									"protocol": "https",
+									"host": [
+										"aeich",
+										"pythonanywhere",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"classpects",
+										"classpect",
+										""
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Seer"
+										},
+										{
+											"key": "type",
+											"value": "class"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 16 Apr 2022 03:54:32 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "93"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Clacks-Overhead",
+									"value": "GNU Terry Pratchett"
+								},
+								{
+									"key": "Server",
+									"value": "PythonAnywhere"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"activity\": \"passive\",\n    \"altverb\": \"\",\n    \"name\": \"Seer\",\n    \"type\": \"class\",\n    \"verb\": \"know\",\n    \"vgroup\": \"ck\"\n}"
+						},
+						{
+							"name": "Get Light Aspect",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/inverse/?name=Light&type=aspect",
+									"protocol": "https",
+									"host": [
+										"aeich",
+										"pythonanywhere",
+										"com"
+									],
+									"path": [
+										"api",
+										"v1",
+										"classpects",
+										"classpect",
+										"inverse",
+										""
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "Light"
+										},
+										{
+											"key": "type",
+											"value": "aspect"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 16 Apr 2022 03:54:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "33"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "X-Clacks-Overhead",
+									"value": "GNU Terry Pratchett"
+								},
+								{
+									"key": "Server",
+									"value": "PythonAnywhere"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"Light\",\n    \"type\": \"aspect\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Classpect Inverse",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/inverse/?name=Light&type=aspect",
+							"protocol": "https",
+							"host": [
+								"aeich",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"classpects",
+								"classpect",
+								"inverse",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Light"
+								},
+								{
+									"key": "type",
+									"value": "aspect"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Classpect Is Dual",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/isDual/?name=Memes&type=aspect",
+							"protocol": "https",
+							"host": [
+								"aeich",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"classpects",
+								"classpect",
+								"isDual",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Memes"
+								},
+								{
+									"key": "type",
+									"value": "aspect"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Paired Class",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/paired/?name=Seer&type=class",
+							"protocol": "https",
+							"host": [
+								"aeich",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"classpects",
+								"classpect",
+								"paired",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Seer"
+								},
+								{
+									"key": "type",
+									"value": "class"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Classpect Classdef",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/classdef/?name=Seer&type=class",
+							"protocol": "https",
+							"host": [
+								"aeich",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"classpects",
+								"classpect",
+								"classdef",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Seer"
+								},
+								{
+									"key": "type",
+									"value": "class"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Classpect Full Verb Group",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/fullverbgroup/?name=Seer&type=class",
+							"protocol": "https",
+							"host": [
+								"aeich",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"classpects",
+								"classpect",
+								"fullverbgroup",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Seer"
+								},
+								{
+									"key": "type",
+									"value": "class"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Dual Components",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/dualComponents/?name=Ranger&type=class",
+							"protocol": "https",
+							"host": [
+								"aeich",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"classpects",
+								"classpect",
+								"dualComponents",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Ranger"
+								},
+								{
+									"key": "type",
+									"value": "class"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Classpect Is Canon",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/isCanon/?name=Light&type=aspect",
+							"protocol": "https",
+							"host": [
+								"aeich",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"classpects",
+								"classpect",
+								"isCanon",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Light"
+								},
+								{
+									"key": "type",
+									"value": "aspect"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Type Inverse",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/typeInverse/?name=Seer&type=class",
+							"protocol": "https",
+							"host": [
+								"aeich",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"classpects",
+								"classpect",
+								"typeInverse",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Seer"
+								},
+								{
+									"key": "type",
+									"value": "class"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/calc/",
+			"item": [
+				{
+					"name": "Get Multiple",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/calc/mul?name=Seer&type=class&mval=-1",
+							"protocol": "https",
+							"host": [
+								"aeich",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"classpects",
+								"calc",
+								"mul"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Seer"
+								},
+								{
+									"key": "type",
+									"value": "class"
+								},
+								{
+									"key": "mval",
+									"value": "-1",
+									"description": "values only can be -1, 0, 1, or 2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Sum",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/calc/add?name=Seer&type=class&mname=Mage&mtype=class",
+							"protocol": "https",
+							"host": [
+								"aeich",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"classpects",
+								"calc",
+								"add"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Seer"
+								},
+								{
+									"key": "type",
+									"value": "class"
+								},
+								{
+									"key": "mname",
+									"value": "Mage"
+								},
+								{
+									"key": "mtype",
+									"value": "class"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Difference",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/calc/sub?name=Librarian&type=class&mname=Mage&mtype=class",
+							"protocol": "https",
+							"host": [
+								"aeich",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"classpects",
+								"calc",
+								"sub"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Librarian"
+								},
+								{
+									"key": "type",
+									"value": "class"
+								},
+								{
+									"key": "mname",
+									"value": "Mage"
+								},
+								{
+									"key": "mtype",
+									"value": "class"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Classpects",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/?type=class&duals=false",
+					"protocol": "https",
+					"host": [
+						"aeich",
+						"pythonanywhere",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"classpects",
+						""
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "class"
+						},
+						{
+							"key": "duals",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get COTD (wip)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/cotd/",
+					"protocol": "https",
+					"host": [
+						"aeich",
+						"pythonanywhere",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"classpects",
+						"cotd",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
