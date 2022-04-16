@@ -155,7 +155,7 @@ def api_cspect_calc(func=None):
         
         if func == "mul":
             try:
-                resultcspect = (cspect * request.args["mval"]).__dict__
+                resultcspect = (cspect * int(request.args["mval"])).__dict__
             except: 
                 resultcspect = {"status": 400,
                       "message": "You submitted a multiplication request for the calculator, but didn't include a number to multiply by."}
