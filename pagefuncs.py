@@ -476,7 +476,7 @@ def searchpage():
                 sitetitle="Lookup",display=display,mathdisplay=mathdisplay,validator=mathValidator(form),validmath=validmath
             )
 
-def homepage():
+def homepageget(): 
     display = {}
     
     display["date"] = format_datetime(datetime.now(), "EEE, MMM d, yyyy")
@@ -500,7 +500,10 @@ def homepage():
     display["classpects"] = fetchAllClasspects()
     dual_listy = json.dumps(dual_listy)
     smalldual_listy = json.dumps(smalldual_listy)
+    return (display, listy, dual_listy, smalldual_listy)
+
+def homepage():
+    pagevars = homepageget()
     return render_template(
-        "cotd.html",sitetitle="Home",
-        display=display,listy=listy,dual_listy=dual_listy,smalldual_listy=smalldual_listy
+        "cotd.html", sitetitle="Home", display=pagevars[0], listy=pagevars[1], dual_listy=pagevars[2], smalldual_listy=pagevars[3]
     )

@@ -107,6 +107,12 @@ def api_cspect():
         request.args["name"], request.args["type"]).__dict__
     return jsonify(cspect)
 
+@app.route('/api/v1/classpects/cotd', methods=['GET'])
+@app.route('/api/v1/classpects/cotd/', methods=['GET'])
+def api_cotd():
+    
+    return jsonify(list(homepageget()))
+
 
 @app.route('/api/v1/classpects/classpect/<func>', methods=['GET'])
 @app.route('/api/v1/classpects/classpect/<func>/', methods=['GET'])
@@ -139,12 +145,41 @@ def api_func(func=None):
         
     return jsonify(cspect)
 
-@app.route('/api/v1/classpects/calc', methods=['GET'])
 @app.route('/api/v1/classpects/calc/', methods=['GET'])
-def api_cspect_calc():
-    cspect = ClasspectComponent(
-        request.args["name"], request.args["type"]).__dict__
-    return jsonify(cspect)
+@app.route('/api/v1/classpects/calc<func>', methods=['GET'])
+@app.route('/api/v1/classpects/calc/<func>', methods=['GET'])
+def api_cspect_calc(func=None):
+    if func:
+        cspect = ClasspectComponent(
+                request.args["name"], request.args["type"])
+        
+        if func == "mul":
+            try:
+                resultcspect = (cspect * request.args["mval"]).__dict__
+            except: 
+                resultcspect = {"status": 400,
+                      "message": "You submitted a multiplication request for the calculator, but didn't include a number to multiply by."}
+        else: 
+            
+            mathcspect = ClasspectComponent(
+                request.args["mname"], request.args["mtype"])
+            
+            if func == "add":
+                try:
+                    resultcspect = (cspect + mathcspect).__dict__
+                except: 
+                    resultcspect = {"status": 400,
+                      "message": "You submitted an invalid addition request for the calculator."}
+            if func == "sub":
+                try: 
+                    resultcspect = (cspect - mathcspect).__dict__
+                except:
+                    resultcspect = {"status": 400,
+                      "message": "You submitted an invalid subtraction request for the calculator."}
+    else:   
+        resultcspect = {"status": 400,
+                      "message": "You submitted a request for the calculator, but didn't include the function."}
+    return jsonify(resultcspect)
 
 
 @app.route("/classpects/random")
