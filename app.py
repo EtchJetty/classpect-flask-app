@@ -174,7 +174,11 @@ def api_cspect_calc(func=None):
             try:
                 resultcspect = (cspect * int(request.args["mval"])).__dict__
             except:
-                resultcspect = {"status": 400,
+                if cspect.isDual and int(request.args["mval"]) == 2:
+                    resultcspect = {"status": 400,
+                                "message": "You tried to add two dual classpects together!"}
+                else:
+                    resultcspect = {"status": 400,
                                 "message": "You submitted a multiplication request for the calculator, but didn't include a number to multiply by."}
         else:
 

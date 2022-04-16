@@ -23,7 +23,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
 
           <div class="input-group" id="fngr">
             <span class="input-group-text">Function</span>
-            <select name="f" id="func" form="formy" placeholder="function()" type="text" aria-label="Function" value="" class="form-control" list="methodlist">
+            <select name="f" id="func" form="formy" placeholder="function()" type="text" aria-label="Function" value="" class="form-control" list="methodlist" onchange="fixMul()">
               {% for method in methods %}
               <option value="{{method}}">{{method}}</option>{% endfor %}
             </select>
@@ -57,24 +57,39 @@ block head %} {{ super() }} {% endblock %} {% block content %}
             </label>
           </div>
           <div id="mathsecret" style="display: none;">
-            <div class="input-group" id="mnamegr">
-              <span class="input-group-text">Math Name</span>
-              <input name="c" id="mname" form="formy" placeholder="seer, void, ranger, soma" type="text" aria-label="Name" value="Mage" class="form-control" onkeypress="checkenter(e)" />
+            <div id="mregsecret">
+              <div class="input-group" id="mnamegr">
+                <span class="input-group-text">Math Name</span>
+                <input name="c" id="mname" form="formy" placeholder="seer, void, ranger, soma" type="text" aria-label="Name" value="Mage" class="form-control" onkeypress="checkenter(e)" />
+              </div>
+              <span id="mnamereq" class="form-text">
+                Required.
+              </span>
+              <div class="input-group" id="mtypegr">
+                <span class="input-group-text">Math Type</span>
+                <select name="f" id="mtype" form="formy" placeholder="class or aspect" type="text" aria-label="Type" value="" class="form-control">
+                  <option value="class">Class</option>
+                  <option value="aspect">Aspect</option>
+                </select>
+              </div>
+              <span id="mtypereq" class="form-text">
+                Required.
+              </span>
             </div>
-            <span id="mnamereq" class="form-text">
-              Required.
-            </span>
-
-            <div class="input-group" id="mtypegr">
-              <span class="input-group-text">Math Type</span>
-              <select name="f" id="mtype" form="formy" placeholder="class or aspect" type="text" aria-label="Type" value="" class="form-control">
-                <option value="class">Class</option>
-                <option value="aspect">Aspect</option>
-              </select>
+            <div id="mvalsecret" style="display: none;">
+              <div class="input-group" id="mvalgr">
+                <span class="input-group-text">Math Value</span>
+                <select name="f" id="mval" form="formy" placeholder="-1, 0, 1, or 2" type="text" aria-label="Value" value="" class="form-control">
+                  <option>-1</option>
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                </select>
+              </div>
+              <span id="mvalreq" class="form-text">
+                Required. Can only be 1 (returns self), -1 (returns inverse), or 2 (returns sum of self and self). All other values will be treated as 0.
+              </span>
             </div>
-            <span id="mtypereq" class="form-text">
-              Required.
-            </span>
           </div>
 
           <div id="seedsecret" style="display: none;">
@@ -133,6 +148,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   const typereq = document.getElementById("typereq")
   const mathsecret = document.getElementById("mathsecret")
   const type = document.getElementById("type")
+  const mvalsecret = document.getElementById("mvalsecret")
   const seed = document.getElementById("seed")
   const legend = document.getElementById("legend")
   const name = document.getElementById("name")
@@ -140,6 +156,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   const mtype = document.getElementById("mtype")
   const fngr = document.getElementById("fngr")
   const namegr = document.getElementById("namegr")
+  const mregsecret = document.getElementById("mregsecret")
   const dualsgr = document.getElementById("dualsgr")
   const dualscheck = document.getElementById("dualscheck")
   const methoddisplay = document.getElementById("methoddisplay")
@@ -271,8 +288,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
 
     }
     else if (path.value == "/calc/") {
-      newURL = func.value + "?name=" + name.value + "&type=" + type.value + "&mname=" + mname.value + "&mtype=" + mtype.value;
-
+      fixMul()
       mathsecret.style.removeProperty("display")
       fngr.style.display = "flex"
       legend.innerHTML = "Method for using the Classpect Calculator."
@@ -342,6 +358,26 @@ block head %} {{ super() }} {% endblock %} {% block content %}
     }
 
   }
+
+  function fixMul() {
+    if (path.value == "/calc/" && func.value == "mul") {
+      console.log("multiplication time")
+      mvalsecret.style.removeProperty("display")
+      mregsecret.style.display = "none"
+      newURL = func.value + "?name=" + name.value + "&type=" + type.value + "&mval=" + mval.value;
+
+    }
+    else if (path.value == "/calc/" && func.value != "mul") {
+      console.log("other math time")
+      mvalsecret.style.display = "none"
+      mregsecret.style.display = "block"
+      newURL = func.value + "?name=" + name.value + "&type=" + type.value + "&mname=" + mname.value + "&mtype=" + mtype.value;
+
+    }
+
+
+  }
+
 
   function loadAPIExample() {
     fixFunctions()
