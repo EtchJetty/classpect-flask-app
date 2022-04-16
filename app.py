@@ -1,5 +1,6 @@
 import random
 from flask import Flask, redirect, render_template, g, request, url_for, jsonify
+from flask_cors import CORS
 from flask_babel import Babel
 from pagefuncs import *
 from consthandler import *
@@ -7,6 +8,7 @@ from consthandler import *
 # TODO : rework COTD generation
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.errorhandler(404)
@@ -70,35 +72,39 @@ def lookupclspect():
 @app.route('/api/')
 def api_page():
     methods = [""]
-    methods.extend([method for method in dir(ClasspectComponent) if method[0] != "_"])
+    methods.extend([method for method in dir(
+        ClasspectComponent) if method[0] != "_"])
     return render_template(
-        "apiexplain.html", sitetitle="API Docs", methods=methods, paths=["/classpect/","/calc/","/"])
+        "apiexplain.html", sitetitle="API Docs", methods=methods, paths=["/classpect/", "/", "/calc/", "/cotd/"])
 
 
 @app.route('/api/v1/classpects', methods=['GET'])
 @app.route('/api/v1/classpects/', methods=['GET'])
 def api_cspects():
-    try: 
+    try:
         request.args["type"]
     except:
         request.args["type"] = ""
-    
-    try: 
+
+    try:
         request.args["duals"]
     except:
         request.args["duals"] = ""
-        
+
     if request.args["duals"] == "true":
         if request.args["type"] != "":
             cspectlist = list(getAllDuals(request.args["type"]))
-        else: 
-            cspectlist = dict([(kind, list(getAllDuals(kind))) for kind in ["class", "aspect"]])
+        else:
+            cspectlist = dict([(kind, list(getAllDuals(kind)))
+                              for kind in ["class", "aspect"]])
     else:
         if request.args["type"] != "":
             cspectlist = getAllClasspects(request.args["type"])
-        else: 
-            cspectlist = dict([(kind, getAllClasspects(kind)) for kind in ["class", "aspect"]])
+        else:
+            cspectlist = dict([(kind, getAllClasspects(kind))
+                              for kind in ["class", "aspect"]])
     return jsonify(cspectlist)
+
 
 @app.route('/api/v1/classpects/classpect', methods=['GET'])
 @app.route('/api/v1/classpects/classpect/', methods=['GET'])
@@ -107,11 +113,22 @@ def api_cspect():
         request.args["name"], request.args["type"]).__dict__
     return jsonify(cspect)
 
+
 @app.route('/api/v1/classpects/cotd', methods=['GET'])
 @app.route('/api/v1/classpects/cotd/', methods=['GET'])
 def api_cotd():
-    
-    return jsonify(list(homepageget()))
+    try:
+        seed = int(request.args["seed"])
+    except:
+        seed = (datetime.now().date() - date(2009, 4, 13)).days
+
+    pagevars = homepageget()
+    vals = {"listy": json.loads(
+        pagevars[1]), "dual_listy": json.loads(pagevars[2])}
+
+    returnal = {"todayscspect": vals["listy"][str(
+        seed % 144)], "todaysdualcspect": vals["dual_listy"][str(seed % 4422)]}
+    return jsonify(returnal)
 
 
 @app.route('/api/v1/classpects/classpect/<func>', methods=['GET'])
@@ -129,7 +146,7 @@ def api_func(func=None):
     elif func == "paired":
         cspect = cspect.paired()
     elif func == "typeInverse":
-        cspect = cspect.typeInverse() 
+        cspect = cspect.typeInverse()
     elif func == "fullverbgroup":
         cspect = cspect.fullverbgroup()
 
@@ -141,9 +158,9 @@ def api_func(func=None):
                       "message": "You submitted a request for the dual components of a non-Dual classpect, and it failed."}
     if type(cspect) == ClasspectComponent:
         cspect = cspect.__dict__
-        
-        
+
     return jsonify(cspect)
+
 
 @app.route('/api/v1/classpects/calc/', methods=['GET'])
 @app.route('/api/v1/classpects/calc<func>', methods=['GET'])
@@ -151,34 +168,34 @@ def api_func(func=None):
 def api_cspect_calc(func=None):
     if func:
         cspect = ClasspectComponent(
-                request.args["name"], request.args["type"])
-        
+            request.args["name"], request.args["type"])
+
         if func == "mul":
             try:
                 resultcspect = (cspect * int(request.args["mval"])).__dict__
-            except: 
+            except:
                 resultcspect = {"status": 400,
-                      "message": "You submitted a multiplication request for the calculator, but didn't include a number to multiply by."}
-        else: 
-            
+                                "message": "You submitted a multiplication request for the calculator, but didn't include a number to multiply by."}
+        else:
+
             mathcspect = ClasspectComponent(
                 request.args["mname"], request.args["mtype"])
-            
+
             if func == "add":
                 try:
                     resultcspect = (cspect + mathcspect).__dict__
-                except: 
+                except:
                     resultcspect = {"status": 400,
-                      "message": "You submitted an invalid addition request for the calculator."}
+                                    "message": "You submitted an invalid addition request for the calculator."}
             if func == "sub":
-                try: 
+                try:
                     resultcspect = (cspect - mathcspect).__dict__
                 except:
                     resultcspect = {"status": 400,
-                      "message": "You submitted an invalid subtraction request for the calculator."}
-    else:   
+                                    "message": "You submitted an invalid subtraction request for the calculator."}
+    else:
         resultcspect = {"status": 400,
-                      "message": "You submitted a request for the calculator, but didn't include the function."}
+                        "message": "You submitted a request for the calculator, but didn't include the function."}
     return jsonify(resultcspect)
 
 

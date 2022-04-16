@@ -3,9 +3,10 @@ block head %} {{ super() }} {% endblock %} {% block content %}
 
 <div class="container">
   <div class="row p-3">
-    <div class="display-3">API Test</div>
+    <div class="display-3">API Playground</div>
     <hr />
     <h3>Play with the form to see how the API works!</h3>
+    <p>Documentation is coming soon<sup>TM</sup>, but in the meantime, play around with the form <a style="text-decoration: none" href="https://github.com/EtchJetty/classpect-flask-app/blob/main/misc/Classpect%20API%20Collection.postman_collection.json"><span commentedoutstyle="text-decoration: underline;">(or use the Postman collection)</span><sup><i class="bi bi-box-arrow-up-right minisize"></i></sup></a> to generate example URL methods.</p>
 
     <!-- <form method="GET" id="formy" name="mathform" class="pt-2 needs-validation" novalidate> -->
     <form action="">
@@ -75,6 +76,17 @@ block head %} {{ super() }} {% endblock %} {% block content %}
               Required.
             </span>
           </div>
+
+          <div id="seedsecret" style="display: none;">
+            <div class="input-group" id="seedgr">
+              <span class="input-group-text">Seed</span>
+              <input name="c" id="seed" form="formy" placeholder="" type="text" aria-label="Name" value="" class="form-control" onkeypress="checkenter(e)" />
+            </div>
+            <span id="seedreq" class="form-text">
+              Number of days since 4/13/2009. The API will divide it by the number of classpects, e.g. 144, and the remainder is the index of the shuffled list of Classpects that will be pulled.
+            </span>
+          </div>
+
           <a onclick="loadAPIExample()" id="apiinteract" class="btn btn-primary">
             Get info!
           </a>
@@ -87,13 +99,17 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   </div>
   <!-- </form> -->
   <p><span class="fw-bold">Method:</span><br>
-    <span id="methoddisplay">Use the API, <span style="font-family: Comic Sans MS">dunkass... <small>aha.....</small></span></span>
+    <span id="methoddisplay">Use the API, <span style='font-family: "Comic Sans MS", "Comic Sans", cursive;'>dunkass... <small>aha.....</small></span></span>
   </p>
   <p><span class="fw-bold">Result:</span><br>
     <span id="fillme">
       See above
     </span>
   </p>
+  <ul class="list-unstyled px-4">
+    <li><small class="text-muted">(To use the Postman collection, go to Postman, and import the JSON file, which you can get by clicking "raw" on the above link. You should be able to see all of the possible requests - click "code" to get a code snippet for your language of choice!)</small></li>
+    <li><small class="text-muted">DM me on Discord (girl bowser#0373) if you want any clarification - I should be on the /r/Homestuck and the MSPFA Discord servers, so if you're on those, you can DM me.</small> </li>
+  </ul>
   <!-- <p>List of functions: {{methods}}</p> -->
 </div>
 </div>
@@ -122,9 +138,11 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   const namereq = document.getElementById("namereq")
   const funcreq = document.getElementById("funcreq")
   const cspectSecret = document.getElementById("cspectSecret")
+  const seedsecret = document.getElementById("seedsecret")
   const typereq = document.getElementById("typereq")
   const mathsecret = document.getElementById("mathsecret")
   const type = document.getElementById("type")
+  const seed = document.getElementById("seed")
   const legend = document.getElementById("legend")
   const name = document.getElementById("name")
   const mname = document.getElementById("mname")
@@ -190,6 +208,8 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       namegr.style.display = "flex"
       namereq.style.display = "block"
       typereq.style.display = "block"
+      seedsecret.style.display = "none"
+      cspectSecret.style.display = "block"
       mathsecret.style.display = "none"
       funcreq.style.display = "none"
       dualsgr.style.display = "none"
@@ -224,6 +244,8 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       fngr.style.display = "none"
       namegr.style.display = "none"
       namereq.style.display = "none"
+      cspectSecret.style.display = "block"
+      seedsecret.style.display = "none"
       typereq.style.display = "none"
       dualsgr.style.display = "block"
       funcreq.style.display = "none"
@@ -254,6 +276,8 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       fngr.style.display = "flex"
       legend.innerHTML = "Method for using the Classpect Calculator."
       namegr.style.display = "flex"
+      seedsecret.style.display = "none"
+      cspectSecret.style.display = "block"
       namereq.style.display = "block"
       typereq.style.display = "block"
       funcreq.style.removeProperty("display")
@@ -263,17 +287,6 @@ block head %} {{ super() }} {% endblock %} {% block content %}
           type.removeChild(type.children[i])
         }
       }
-      // if (mathsecret.children[0].id == "mnamegr") {
-      //   tempName = name.value
-      //   tempType = type.value
-      //   tempFunc = func.value
-      //   temp = cspectSecret.innerHTML
-      //   cspectSecret.innerHTML = mathsecret.innerHTML
-      //   mathsecret.innerHTML = temp 
-      //   name.value = tempName
-      //   type.value = tempType
-      //   func.value = tempFunc
-      // }
 
       if ((func.children.length) != ["+", "-", "*"].length) {
         func.innerHTML = ""
@@ -282,6 +295,47 @@ block head %} {{ super() }} {% endblock %} {% block content %}
         }
       }
     }
+    else if (path.value == "/cotd/") {
+      newURL = "?seed=" + seed.value + "&duals=" + dualscheck.value + "&type=" + type.value;
+      legend.innerHTML = "Method for retrieving Classpect of the day. Default behavior is to fall back on server time, but getting user time through JS is ideal."
+      fngr.style.display = "none"
+      namegr.style.display = "none"
+      namereq.style.display = "none"
+      typereq.style.display = "none"
+      cspectSecret.style.display = "none"
+      seedsecret.style.removeProperty("display")
+      dualsgr.style.display = "none"
+      funcreq.style.display = "none"
+      mathsecret.style.display = "none"
+      // if (mathsecret.children[0].id != "mnamegr") {
+      //   temp = cspectSecret.innerHTML
+      //   cspectSecret.innerHTML = mathsecret.innerHTML
+      //   mathsecret.innerHTML = temp
+      // }
+      var today = new Date().toDateString();
+      function days_passed(dt) {
+        var date1 = new Date("04/13/2009");
+        var date2 = new Date(today);
+
+        return Math.ceil((date2 - date1) / (1000 * 3600 * 24));
+      }
+      var lendays = days_passed();
+      if (!(seed.value)) {
+        seed.value = lendays;
+      }
+      addit = true
+      for (let i = 0; i < type.children.length; i++) {
+        if (type.children[i].value == "") {
+          addit = false
+        }
+      }
+
+      if (addit) {
+        type.innerHTML = '<option value=""></option>' + type.innerHTML
+      }
+
+    }
+
     else {
       throw "What?"
     }
@@ -292,7 +346,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
     fixFunctions()
     var baseURL = '{{url_for("api_page")}}' + "v1/classpects" + path.value
     var assembledURL = baseURL + newURL
-    methoddisplay.innerHTML = assembledURL;
+    methoddisplay.innerHTML = "{{ request.url_root[:-1] }}" + assembledURL;
     loadAPI(assembledURL);
   }
 
