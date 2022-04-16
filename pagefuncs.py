@@ -93,7 +93,7 @@ def magicant(form,results,formState):
         )
         if megaarr:
             results = {}
-            newForm = {"class":form["aspect"],"aspect":form["class"]}
+            newForm = {"class":form["aspect"],"aspect":form["class"],"mathclass":form["mathclass"],"mathaspect":form["mathaspect"]}
             if formState["math"]:
                 print(i)
                 newForm["mathaspect"] = form["mathclass"]
