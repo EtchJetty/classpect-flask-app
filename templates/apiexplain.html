@@ -121,15 +121,6 @@ block head %} {{ super() }} {% endblock %} {% block content %}
 
   //   }
   // }
-  const checkbox = document.getElementById('dualscheck')
-
-  checkbox.addEventListener('change', (event) => {
-    if (event.currentTarget.checked) {
-      checkbox.value = true;
-    } else {
-      checkbox.value = false;
-    }
-  })
 
   const paths = {{ paths | safe }}
   const methods = {{ methods | safe }}
@@ -154,6 +145,16 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   const methoddisplay = document.getElementById("methoddisplay")
   const fillme = document.getElementById("fillme")
 
+
+
+
+  dualscheck.addEventListener('change', (event) => {
+    if (event.currentTarget.checked) {
+      dualscheck.value = true;
+    } else {
+      dualscheck.value = false;
+    }
+  })
 
   name.onkeypress = function (e) {
     if (!e) e = window.event;
