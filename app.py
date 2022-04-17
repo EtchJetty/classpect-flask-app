@@ -69,6 +69,21 @@ def lookupclspect():
     return searchpage()
 
 
+
+@app.route('/embeds')
+@app.route('/embeds/')
+def embed_page():
+    return render_template(
+        "embeds/embedexplain.html", sitetitle="Embeds")
+
+
+
+@app.route('/embeds/cotd')
+def embed_cotd():
+    return render_template(
+        "embeds/cotdiframe.html", sitetitle="Classpect of the Day")
+
+
 @app.route('/api/')
 def api_page():
     methods = [""]
@@ -81,25 +96,28 @@ def api_page():
 @app.route('/api/v1/classpects', methods=['GET'])
 @app.route('/api/v1/classpects/', methods=['GET'])
 def api_cspects():
+    requestdict = {"type": "", "duals": ""}
     try:
-        request.args["type"]
+        requestdict["type"] = request.args["type"]
     except:
-        request.args["type"] = ""
+        requestdict["type"] = ""
 
     try:
-        request.args["duals"]
+        requestdict["duals"] = request.args["duals"]
     except:
-        request.args["duals"] = ""
+        requestdict["duals"] = ""
+        
+        
 
-    if request.args["duals"] == "true":
-        if request.args["type"] != "":
-            cspectlist = list(getAllDuals(request.args["type"]))
+    if requestdict["duals"] == "true":
+        if requestdict["type"] != "":
+            cspectlist = list(getAllDuals(requestdict["type"]))
         else:
             cspectlist = dict([(kind, list(getAllDuals(kind)))
                               for kind in ["class", "aspect"]])
     else:
-        if request.args["type"] != "":
-            cspectlist = getAllClasspects(request.args["type"])
+        if requestdict["type"] != "":
+            cspectlist = getAllClasspects(requestdict["type"])
         else:
             cspectlist = dict([(kind, getAllClasspects(kind))
                               for kind in ["class", "aspect"]])
