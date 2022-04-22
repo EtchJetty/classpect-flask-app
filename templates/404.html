@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ sitetitle }}{% endblock %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row col">
+    <h1 class="pt-3 pb-1">404: Page not found</h1>
+    <p>Try going back a page! If you typed this URL manually, try, not doing that.</p><p> If you're seeing this for some other reason, let the dev know!</p>
+  </div>
+</div>
+{% endblock %}

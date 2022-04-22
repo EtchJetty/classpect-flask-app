@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+  {% block head %}
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta content="ERIJAN CENTRAL" property="og:title" />
+  <meta content="http://aeich.pythonanywhere.com{{url_for(request.endpoint)}}" property="og:url" />
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='/images/favicon_io/apple-touch-icon.png') }}" />
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='/images/favicon_io/favicon-32x32.png') }}" />
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='/images/favicon_io/favicon-16x16.png') }}" />
+  <link rel="manifest" href="{{ url_for('static', filename='/images/favicon_io/site.webmanifest') }}" />
+  <meta content="Classpect of the day, games, and more!" property="og:description" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <script type="text/javascript" src="{{ url_for('static', filename='autocomplete.js') }}"></script>
+  <style>
+    .minisize::before {
+      font-size: 10px;
+      position: relative;
+      bottom: 1.75px;
+    }
+
+    .minisize-16 {
+      height: 16px;
+      position: relative;
+      bottom: 1.5px;
+    }
+
+    .darkenonhover:hover,
+    .minisize-16:hover {
+      filter: brightness(66%);
+    }
+  </style>
+  <title>{% block title %}{% endblock %} - ERIJAN CENTRAL</title>
+  {% block navbar %}
+  <nav class="navbar navbar-expand-md navbar-dark bg-primary" style="    background: #013 url({{ url_for('static', filename='images/blue-ao3.png') }}) !important;
+ background-blend-mode: darken;
+    /* padding: 0 0; */
+    width: 100%;
+    box-shadow: inset 0 -6px 10px rgba(0,0,0,.35) , 1px 1px 3px -1px rgba(0,0,0,.25) , inset 0 -1px 0 rgba(0,0,0,.85);">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{url_for('home')}}"><img src="{{ url_for('static', filename='images/scratchlogo.png') }}" alt="" width="24" height="24" class="d-inline-block align-text-top img-fluid" />
+        ERIJAN CENTRAL</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <!-- <li class="nav-item">
+              <a
+                class="nav-link {% if url_for(request.endpoint) == url_for('home') %}active{% endif %}"
+                aria-current="page"
+                href="{{url_for('home')}}"
+                >Home</a
+              >
+            </li> -->
+          <li class="nav-item">
+            <a class="nav-link {% if url_for(request.endpoint) == url_for('about') %}active{% endif %}" aria-current="page" href="{{url_for('about')}}">About/FAQ</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Classpecting</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li>
+                <a class="dropdown-item {% if url_for(request.endpoint) == url_for('rclspect') %}active{% endif %}" href="{{url_for('home')}}">Classpect of the Day
+                  <span class="text-muted">(Home)</span></a>
+              </li>
+              <li>
+                <a class="dropdown-item {% if url_for(request.endpoint) == url_for('lookupclspect') %}active{% endif %}" href="{{url_for('lookupclspect')}}">Search Classpect</a>
+              </li>
+              <li>
+                <a class="dropdown-item {% if url_for(request.endpoint) == url_for('rclspect') %}active{% endif %}" href="{{url_for('rclspect')}}">Random Classpects</a>
+              </li>
+              <li>
+                <a class="dropdown-item {% if url_for(request.endpoint) == url_for('api_page') %}active{% endif %}" href="{{url_for('api_page')}}">Classpect API <sup class="{% if url_for(request.endpoint) != url_for('api_page') %}text-muted{% endif %}">New!</sup></a>
+              </li>
+
+              <li>
+                <a class="dropdown-item" href="https://classpectpokerap.tumblr.com/">Theories <span class="text-muted">(Tumblr)</span></a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="https://housetrapped-faq-archive.glitch.me/">Housetrapped FAQ (beta)
+                  <i class="bi bi-box-arrow-up-right minisize"></i></a>
+              </li>
+
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Games</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li>
+                <a class="dropdown-item {% if url_for(request.endpoint) == url_for('homesturdle') %}active{% endif %}" href="{{url_for('homesturdle')}}">Homesturdle</a>
+              </li>
+              <li>
+                <a class="dropdown-item disabled" href="#">MEGIDO <sup>Coming never!</sup></a>
+              </li>
+              <li>
+                <a class="dropdown-item disabled" href="#">ERIJAN THE MMORPG <sup>Coming never!</sup></a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">READ ERIJAN</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li>
+                <a class="dropdown-item disabled" href="#">Tree</a>
+              </li>
+              <li>
+                <a class="dropdown-item disabled" href="#">Night</a>
+              </li>
+              <li>
+                <a class="dropdown-item disabled" href="#">Death</a>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <h6 class="dropdown-header">Smith</h6>
+              </li>
+              <li>
+                <a class="dropdown-item" href="https://mspfa.com/?s=44691&p=1">Invite Link
+                  <i class="bi bi-box-arrow-up-right minisize"></i></a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="https://mspfa.com/?s=44768&p=1">Escal8 <i class="bi bi-box-arrow-up-right minisize"></i></a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a href="https://www.pythonanywhere.com/user/aeich/" class="dropdown-item"><i class="bi bi-wrench-adjustable"></i> Site Backend</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <form class="d-flex search-validation">
+          <div class="has-validation">
+            <input class="form-control me-2" type="text" placeholder="Search..." aria-label="Search" id="validationCustom" required />
+            <div class="invalid-tooltip">Search cannot be empty.</div>
+          </div>
+          <div class="ps-2">
+            <button class="btn btn-outline-light" type="button" onclick="javascript:searchTumblr()">
+              Search
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+  {% endblock %}{% endblock %}
+</head>
+
+<body class="d-flex flex-column h-100">
+  <main class="flex-shrink-0">{% block content %}{% endblock %}</main>
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+      <div class="toast-header">
+        <img src="{{ url_for('static', filename='images/pesterchum.png') }}" style="image-rendering: crisp-edges" class="rounded me-2" alt="Google Forms logo" />
+        <strong class="me-auto">Feedback?</strong>
+        <small>Don't show this again</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" onclick="storeClosed();"></button>
+      </div>
+      <div class="toast-body">
+        Hi homestuckers!!!! Happy 4/13! I'd love to get some feedback on this
+        site, because it's my first time doing anything like it. You can
+        <a href="https://forms.gle/Qo1RDbWDxjKqtoiz5">submit anonymous feedback</a>, or DM me on whatever platform you
+        can find me. &lt;3
+      </div>
+    </div>
+  </div>
+  {% block footer %}
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+
+      <div class="row">
+        <div class="col">
+          <span class="text-muted">
+            Made by
+            <a style="text-decoration: none" href="https://twitter.com/EtchJetty"><i class="bi bi-twitter"></i>
+              EtchJetty
+              <i class="bi bi-box-arrow-up-right minisize"></i></a>
+            and
+            <a style="text-decoration: none" href="https://www.fimfiction.net/user/459002/Nihilistic+Janitor"><img src="https://static.fimfiction.net/images/favicon.png" class="img-fluid minisize-16" />
+              Nihilistic Janitor!
+              <i class="bi bi-box-arrow-up-right minisize"></i></a></span>
+        </div>
+        <!-- <div class="col-1 p-0 text-end">
+            <label class="text-end text-muted">
+              <a href="https://www.pythonanywhere.com/user/aeich/"
+                ><i class="bi bi-wrench-adjustable"></i></a
+            ></label>
+          </div> -->
+      </div>
+
+    </div>
+  </footer>
+  {% endblock %}
+  <!-- Optional JavaScript; choose one of the two! -->
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+  <!-- Option 2: Separate Popper and Bootstrap JS -->
+  <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+    -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+  <script>
+    const optedout = localStorage.getItem("closedit");
+    if (!optedout) {
+      var toastTrigger = setTimeout(function () {
+        var toastLiveExample = document.getElementById("liveToast");
+        var toast = new bootstrap.Toast(toastLiveExample);
+        toast.show();
+      }, 5 * 1000);
+    }
+    function storeClosed() {
+      localStorage.setItem("closedit", true);
+    }
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      "use strict";
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll(".search-validation");
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener(
+          "submit",
+          function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (form.checkValidity()) {
+              window.location.href =
+                "https://classpectpokerap.tumblr.com/search/" +
+                document.getElementById("validationCustom").value;
+            }
+
+            // form.classList.add("was-validated");
+          },
+          false
+        );
+      });
+    })();
+    function searchTumblr() {
+      location.href =
+        "https://classpectpokerap.tumblr.com/search/" +
+        document.getElementById("validationCustom").value;
+      return true;
+    }
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+
+</html>

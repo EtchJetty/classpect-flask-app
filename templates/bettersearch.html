@@ -1,0 +1,397 @@
+{% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
+block head %} {{ super() }} {% endblock %} {% block content %}
+
+<div class="container">
+  <h1 class="p-3 pt-4 pb-1" style="transform: rotate(0)">
+    Search Classpect:<a class="stretched-link" href="{{url_for('lookupclspect')}}"></a>
+  </h1>
+  <span class="ps-4">Enter a Class, Aspect, or both.</span>
+  <form method="GET" id="formy" name="mathform" class="pt-2 needs-validation" novalidate>
+    <div class="form-group">
+      <div class="row g-3 align-items-center">
+        <div class="input-group has-validation pt-2 pb-4 px-3">
+          <input name="c" id="firstclass" form="formy" placeholder="Class" type="text" aria-label="Class"
+            class="form-control" {% if results %}value="{{ results['class'].name | e }}" {% else %}{% endif %} required
+            list="fullclasses" /><span class="input-group-text">of</span>
+          <input name="a" id="firstaspect" form="formy" placeholder="Aspect" type="text" aria-label="Aspect"
+            class="form-control" {% if results %}value="{{ results['aspect'].name | e }}" {% else %}{% endif %} required
+            list="fullaspects" />
+          <input type="hidden" name="mc" value=""/>
+          <input type="hidden" name="ma" value=""/>
+          <datalist id="fullclasses">
+            {% for val in classpects["class"] %}
+            <option value="{{val.name}}">{% endfor %}</option>
+          </datalist>
+
+          <datalist id="fullaspects">
+            {% for val in classpects["aspect"] %}
+            <option value="{{val.name}}">{% endfor %}</option>
+          </datalist>
+
+          <button type="submit" onclick="fixrequired()" class="btn btn-primary">
+            Get info!
+          </button>
+          <div class="invalid-feedback">
+            Please provide either a Class or an Aspect, then try again!
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+      "use strict";
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll(".needs-validation");
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener(
+          "submit",
+          function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+
+            // form.classList.add("was-validated");
+          },
+          false
+        );
+      });
+    })();
+    function fixrequired() {
+      if (
+        document.getElementById("firstaspect").value ||
+        document.getElementById("firstclass").value
+      ) {
+        if (!document.getElementById("firstclass").value) {
+          document.getElementById("firstclass").removeAttribute("required");
+        }
+        if (!document.getElementById("firstaspect").value) {
+          document.getElementById("firstaspect").removeAttribute("required");
+        }
+      }
+    }
+  </script>
+  {% if results %}
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Result</h5>
+      {{ display|safe }} {% if validator %}
+      <form method="GET" id="mathform" name="mathform" novalidate>
+        <div class="form-group">
+          <input type="hidden" id="hiddenClass" form="mathform" name="c" value='{{ results["class"].name | e }}' />
+          <input type="hidden" form="mathform" id="hiddenAspect" name="a"
+            value='{{ results["aspect"].name | e }}' />
+          <div class="row g-3 align-items-center">
+            <div id="thecalculatorform" class="input-group py-3 px-3">
+              <!-- <input
+                name="mathclass"
+                id="mathclass"
+                form="mathform"
+                placeholder="Class"
+                type="text"
+                required
+                aria-label="Class"
+                class="form-control"
+                list="classlist"
+                value="{% if results['mathclass'] %}{{ results['mathclass'].name | e }}{% else %}{% endif %}"
+              /> -->
+              <select name="mc" id="mathclass" form="mathform" placeholder="Class" type="text" required
+                aria-label="Class" class="form-control" list="classlist">
+                {% for val in validmath["class"] %}
+                <option {% if results['mathclass'] %}{% if val.name==results['mathclass'].name %}selected{% else %}{%
+                  endif %}{% endif %}>{{val.name}}</option>
+                {% endfor %}
+              </select>
+              <span class="input-group-text">of</span>
+              <select name="ma" id="mathaspect" form="mathform" placeholder="Aspect" type="text" required
+                list="aspectlist" aria-label="Aspect" class="form-control">
+                {% for val in validmath["aspect"] %}
+                <option {% if results['mathaspect'] %}{% if val.name==results['mathaspect'].name %}selected{% else %}{%
+                  endif %}{% endif %}>{{val.name}}</option>
+                {% endfor %}
+              </select>
+
+              <button type="submit" onclick="makesmooth()" class="btn btn-primary">
+                Go!
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      {{ mathdisplay|safe }}{% endif %}{{ embedfun }}
+    </div>
+    {% endif %} {% endblock %}
+  </div>
+</div>
+{% block scripts %}
+<script type="text/JavaScript">
+      function copycat(cspe) {
+      if (document.getElementById("housetrapped")) {
+          if (canonAspects.has(cspe) || canonClasses.has(cspe)) {
+            var buttonfix = document.getElementById("jstarget");
+            jstarget.setAttribute("class", "btn btn-link");
+            jstarget.setAttribute("style", "text-decoration: none;");
+
+            jstarget.disabled = false;
+            var myCollapse = document.getElementById('collapseOne')
+            bootstrap.Collapse.getOrCreateInstance(myCollapse)
+            // var bsCollapse = new bootstrap.Collapse(myCollapse, {
+            // show: true,
+            //   toggle: true
+
+            // })
+            // $("#collapseOne").collapse({
+            //   toggle: false,
+            // });
+            var housetrapped_iframe = document.getElementById("housetrapped");
+            if (canonAspects.has(cspe)) {
+              jstarget.innerHTML =
+                "<a href='" +
+                "https://housetrapped-faq-archive.glitch.me/aspects.html#" +
+                archiveUrls["aspect"][cspe] +
+                "'>" +
+                cspe +
+                " Aspect analysis from the Housetrapped FAQ  (beta) <i class='bi bi-box-arrow-up-right minisize'></i></a>";
+              housetrapped_iframe.setAttribute(
+                "src",
+                "https://housetrapped-faq-archive.glitch.me/aspects.html#" +
+                  archiveUrls["aspect"][cspe]
+              );
+            }
+            if (canonClasses.has(cspe)) {
+              jstarget.innerHTML =
+                "<a href='" +
+                "https://housetrapped-faq-archive.glitch.me/classes.html#" +
+                archiveUrls["class"][cspe] +
+                "'>" +
+                cspe +
+                " Class analysis from the Housetrapped FAQ  (beta) <i class='bi bi-box-arrow-up-right minisize'></i></a>";
+              housetrapped_iframe.setAttribute(
+                "src",
+                "https://housetrapped-faq-archive.glitch.me/classes.html#" +
+                  archiveUrls["class"][cspe]
+              );
+            }
+          }
+      }}
+      function makesmooth() {
+        let classclass = document.getElementById("firstclass").value;
+        let aspectclass = document.getElementById("firstaspect").value;
+
+        var hiddenClass = document.getElementById("hiddenClass");
+        var hiddenAspect = document.getElementById("hiddenAspect");
+        hiddenClass.setAttribute("value", classclass);
+        hiddenAspect.setAttribute("value", aspectclass);
+
+        if (
+          document.getElementById("mathaspect").value ||
+          document.getElementById("mathclass").value
+        ) {
+          if (!document.getElementById("mathclass").value) {
+            document.getElementById("mathclass").removeAttribute("required");
+          }
+          if (!document.getElementById("mathaspect").value) {
+            document.getElementById("mathaspect").removeAttribute("required");
+          }
+        }
+        if (
+          document.getElementById("firstaspect").value ||
+          document.getElementById("firstclass").value
+        ) {
+          if (!document.getElementById("firstclass").value) {
+            document.getElementById("firstclass").removeAttribute("required");
+          }
+          if (!document.getElementById("firstaspect").value) {
+            document.getElementById("firstaspect").removeAttribute("required");
+          }
+        }
+      }
+    </script>
+
+<!-- <script type="text/JavaScript">
+            // $("image").click(function (event) {
+            //   // Gets clicked on word (or selected text if text is selected)
+            //   var t = "";
+            //   // if (window.getSelection && (sel = window.getSelection()).modify) {
+            //   //   // Webkit, Gecko
+            //   //   var s = window.getSelection();
+            //   //   if (s.isCollapsed) {
+            //   //     s.modify("move", "forward", "character");
+            //   //     s.modify("move", "backward", "word");
+            //   //     s.modify("extend", "forward", "word");
+            //   //     t = s.toString();
+            //   //     s.modify("move", "forward", "character"); //clear selection
+            //   //   } else {
+            //   //     t = s.toString();
+            //   //   }
+            //   // } else if ((sel = document.selection) && sel.type != "Control") {
+            //   //   // IE 4+
+            //   //   var textRange = sel.createRange();
+            //   //   if (!textRange.text) {
+            //   //     textRange.expand("word");
+            //   //   }
+            //   //   // Remove trailing spaces
+            //   //   while (/\s$/.test(textRange.text)) {
+            //   //     textRange.moveEnd("character", -1);
+            //   //   }
+            //   //   t = textRange.text;
+            //   // }
+            //   // if (t == "") {
+            //   //   t = "base";
+            //   // }
+            //   if (
+            //     document.elementFromPoint(event.clientX, event.clientY).tagName ==
+            //     "IMG"
+            //   ) {
+            //     // if(
+            //     //   !(
+            //     //     canonAspects.has(t[0].toUpperCase() + t.slice(1).toLowerCase()) ||
+            //     //     canonClasses.has(t[0].toUpperCase() + t.slice(1).toLowerCase())
+            //     //   )
+            //     // ) {
+            //     t = document
+            //       .elementFromPoint(event.clientX, event.clientY)
+            //       .src.substring(
+            //         document
+            //           .elementFromPoint(event.clientX, event.clientY)
+            //           .src.lastIndexOf("/") + 1
+            //       )
+            //       .replace(".png", "");
+            //   }
+            //   // }
+            //   var cspe = t[0].toUpperCase() + t.slice(1).toLowerCase();
+            //   if (document.getElementById("housetrapped")) {
+            //     if (canonAspects.has(cspe) || canonClasses.has(cspe)) {
+            //       var buttonfix = document.getElementById("jstarget");
+            //       jstarget.setAttribute("class", "btn btn-link");
+            //       jstarget.setAttribute("style", "text-decoration: none;");
+
+            //       jstarget.disabled = false;
+            //       $("#collapseOne").collapse({
+            //         toggle: false,
+            //       });
+            //       var housetrapped_iframe = document.getElementById("housetrapped");
+            //       if (canonAspects.has(cspe)) {
+            //         jstarget.innerHTML =
+            //           "<a href='" +
+            //           "https://housetrapped-faq-archive.glitch.me/aspects.html#" +
+            //           archiveUrls["aspect"][cspe] +
+            //           "'>" +
+            //           cspe +
+            //           " Aspect analysis from the Housetrapped FAQ  (beta) <i class='bi bi-box-arrow-up-right minisize'></i></a>";
+            //         housetrapped_iframe.setAttribute(
+            //           "src",
+            //           "https://housetrapped-faq-archive.glitch.me/aspects.html#" +
+            //             archiveUrls["aspect"][cspe]
+            //         );
+            //       }
+            //       if (canonClasses.has(cspe)) {
+            //         jstarget.innerHTML =
+            //           "<a href='" +
+            //           "https://housetrapped-faq-archive.glitch.me/classes.html#" +
+            //           archiveUrls["class"][cspe] +
+            //           "'>" +
+            //           cspe +
+            //           " Class analysis from the Housetrapped FAQ  (beta) <i class='bi bi-box-arrow-up-right minisize'></i></a>";
+            //         housetrapped_iframe.setAttribute(
+            //           "src",
+            //           "https://housetrapped-faq-archive.glitch.me/classes.html#" +
+            //             archiveUrls["class"][cspe]
+            //         );
+            //       }
+            //     }
+            //   }
+            // });
+</script> -->
+<script>if (document.getElementById("mathclass")) {
+
+  const results = {{ niceresults | safe }}
+  // console.log(results)
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+  }
+    
+  let mathclassarr = document.getElementById("mathclass").children
+  var scrambleclass = true;
+  for (let i = 0; i < mathclassarr.length; i++) {
+    // console.log(mathclassarr[i].attributes);
+    if (mathclassarr[i].attributes.length >= 1) {
+      scrambleclass = false;
+    }
+  }
+  if (scrambleclass) {
+    mathclassarr[getRandomInt(0, mathclassarr.length)].setAttribute("selected", "selected")
+  }
+
+
+  let mathaspectarr = document.getElementById("mathaspect").children
+  var scrambleaspect = true;
+
+  for (let i = 0; i < mathaspectarr.length; i++) {
+    // console.log(mathaspectarr[i].attributes);
+    if (mathaspectarr[i].attributes.length >= 1) {
+      scrambleaspect = false;
+    }
+  }
+  if (scrambleaspect) {
+    mathaspectarr[getRandomInt(0, mathaspectarr.length)].setAttribute("selected", "selected")
+  }
+
+  // for (let i = 0; i < mathaspectarr.length; i++) {
+  //   // console.log(mathaspectarr[i].attributes);
+  //   if (mathaspectarr[i].attributes.length >= 1) {
+  //     console.log(mathaspectarr[i])
+  //   }
+  // }
+  if (scrambleclass || scrambleaspect) {
+    document.getElementById("thecalculatorform").outerHTML += '<div class="row"><label id="calcformdescriptor" style="margin-top: .25rem; font-size: .875em; color: #6c757d;" class="mb-0 ps-3">Random example search loaded in for you. Play around with it!</label></div>';
+    document.getElementById("thecalculatorform").classList.remove("py-3")
+    document.getElementById("thecalculatorform").classList.add("pt-3")
+    document.getElementById("thecalculatorform").setAttribute("aria-describedby", "calcformdescriptor")
+  }
+
+  if (results["class"] == "") {
+    document.getElementById("mathclass").innerHTML = "<option selected value=\'\'></option>"
+    document.getElementById("mathclass").setAttribute("disabled", "disabled")
+  }
+  if (results["aspect"] == "") {
+    document.getElementById("mathaspect").innerHTML = "<option selected value=\'\'></option>"
+    document.getElementById("mathaspect").setAttribute("disabled", "disabled")
+  }
+  var classpectsarr = {{ classpects | safe }}
+
+  for (let i = 0; i < classpectsarr["class"].length; i++) {
+    if ((classpectsarr["class"][i]["name"] == results["class"])) {
+      // console.log("yay canon class alone")
+      results["canonclass"] = true
+
+    }
+  }
+  for (let i = 0; i < classpectsarr["aspect"].length; i++) {
+    if ((classpectsarr["aspect"][i]["name"] == results["aspect"])) {
+      // console.log("yay canon aspect alone")
+      results["canonaspect"] = true
+
+    }
+  }
+  if ((results["canonaspect"] == true) && !(results["canonclass"] == true)) {
+    // console.log(results["aspect"])
+    copycat(results["aspect"])
+
+  }
+  else if ((results["canonclass"] == true) && !(results["canonaspect"] == true)) {
+    copycat(results["class"])
+
+  }
+//  && (results["aspect"] == "")
+// && (results["class"] == "")
+}
+      // console.log(scrambleclass, scrambleaspect)
+</script>{% endblock %}

@@ -1,0 +1,5 @@
+base,Prince,Bard,Witch,Heir,Knight,Page,Thief,Rogue,Mage,Seer,Maid,Sylph
+verb group,cd,cd,ck,ck,et,et,et,et,ck,ck,cd,cd
+verb,destroy,destroy,change,change,exploit,exploit,take,take,know,know,create,create
+passive/active,active,passive,active,passive,active,passive,active,passive,active,passive,active,passive
+altverb,,,,,,,steal,,,,make,

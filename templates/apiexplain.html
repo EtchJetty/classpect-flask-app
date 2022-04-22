@@ -1,0 +1,408 @@
+{% extends "layout.html" %} {% block title %}{{ sitetitle }}{% endblock %} {%
+block head %} {{ super() }} {% endblock %} {% block content %}
+
+<div class="container">
+  <div class="row p-3">
+    <div class="display-3">API Playground</div>
+    <hr />
+    <h3>Play with the form to see how the API works!</h3>
+    <p>Documentation is coming soon<sup>TM</sup>, but in the meantime, play around with the form <a style="text-decoration: none" href="https://github.com/EtchJetty/classpect-flask-app/blob/main/misc/Classpect%20API%20Collection.postman_collection.json"><span commentedoutstyle="text-decoration: underline;">(or use the Postman collection)</span><sup><i class="bi bi-box-arrow-up-right minisize"></i></sup></a> to generate example URL methods.</p>
+
+    <!-- <form method="GET" id="formy" name="mathform" class="pt-2 needs-validation" novalidate> -->
+    <form action="">
+      <div class="form-group">
+        <div class="row g-3">
+          <div class="input-group" id="pathgr">
+            <span class="input-group-text">Path</span>
+            <select onchange="fixFunctions()" name="p" id="path" form="formy" placeholder="/classpect/" type="text" aria-label="Path" value="" class="form-control">
+              {% for method in paths %}
+              <option value="{{method}}">/api/v1/classpects{{method}}</option>{% endfor %}
+            </select>
+          </div>
+          <label class="small my-0 text-muted" id="legend" for="Path">Method for accessing a single Classpect's data.</label>
+
+          <div class="input-group" id="fngr">
+            <span class="input-group-text">Function</span>
+            <select name="f" id="func" form="formy" placeholder="function()" type="text" aria-label="Function" value="" class="form-control" list="methodlist" onchange="fixMul()">
+              {% for method in methods %}
+              <option value="{{method}}">{{method}}</option>{% endfor %}
+            </select>
+          </div>
+          <span id="funcreq" style="display: none;" class="form-text">
+            Required.
+          </span>
+          <div id="cspectSecret">
+            <div class="input-group" id="namegr">
+              <span class="input-group-text">Name</span>
+              <input name="c" id="name" form="formy" placeholder="Seer, Void, Ranger, Soma" type="text" aria-label="Name" value="Seer" class="form-control" onkeypress="checkenter(e)" />
+            </div>
+            <span id="namereq" class="form-text">
+              Required.
+            </span>
+            <div class="input-group" id="typegr">
+              <span class="input-group-text">Type</span>
+              <select name="f" id="type" form="formy" placeholder="class or aspect" type="text" aria-label="Type" value="Class" class="form-control">
+                <option value="class">Class</option>
+                <option value="aspect">Aspect</option>
+              </select>
+            </div>
+            <span id="typereq" class="form-text">
+              Required.
+            </span>
+          </div>
+          <div class="form-check" id="dualsgr" style="display: none;">
+            <input class="form-check-input" type="checkbox" value="" id="dualscheck" onkeypress="checkenter(event)">
+            <label class="form-check-label" for="dualscheck">
+              Get Duals instead
+            </label>
+          </div>
+          <div id="mathsecret" style="display: none;">
+            <div id="mregsecret">
+              <div class="input-group" id="mnamegr">
+                <span class="input-group-text">Math Name</span>
+                <input name="c" id="mname" form="formy" placeholder="seer, void, ranger, soma" type="text" aria-label="Name" value="Mage" class="form-control" onkeypress="checkenter(e)" />
+              </div>
+              <span id="mnamereq" class="form-text">
+                Required.
+              </span>
+              <div class="input-group" id="mtypegr">
+                <span class="input-group-text">Math Type</span>
+                <select name="f" id="mtype" form="formy" placeholder="class or aspect" type="text" aria-label="Type" value="" class="form-control">
+                  <option value="class">Class</option>
+                  <option value="aspect">Aspect</option>
+                </select>
+              </div>
+              <span id="mtypereq" class="form-text">
+                Required.
+              </span>
+            </div>
+            <div id="mvalsecret" style="display: none;">
+              <div class="input-group" id="mvalgr">
+                <span class="input-group-text">Math Value</span>
+                <select name="f" id="mval" form="formy" placeholder="-1, 0, 1, or 2" type="text" aria-label="Value" value="" class="form-control">
+                  <option>-1</option>
+                  <option>0</option>
+                  <option>1</option>
+                  <option>2</option>
+                </select>
+              </div>
+              <span id="mvalreq" class="form-text">
+                Required. Can only be 1 (returns self), -1 (returns inverse), or 2 (returns sum of self and self). All other values will be treated as 0.
+              </span>
+            </div>
+          </div>
+
+          <div id="seedsecret" style="display: none;">
+            <div class="input-group" id="seedgr">
+              <span class="input-group-text">Seed</span>
+              <input name="c" id="seed" form="formy" placeholder="" type="text" aria-label="Name" value="" class="form-control" onkeypress="checkenter(e)" />
+            </div>
+            <span id="seedreq" class="form-text">
+              Number of days since 4/13/2009. The API will divide it by the number of classpects, e.g. 144, and the remainder is the index of the shuffled list of Classpects that will be pulled.
+            </span>
+          </div>
+
+          <a onclick="loadAPIExample()" id="apiinteract" class="btn btn-primary">
+            Get info!
+          </a>
+          <div class="invalid-feedback">
+            Please provide either a Class or an Aspect, then try again!
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- </form> -->
+  <p class="text-break"><span class="fw-bold">Method:</span><br>
+    <span id="methoddisplay">Use the API, <span style='font-family: "Comic Sans MS", "Comic Sans", cursive;'>dunkass... <small>aha.....</small></span></span>
+  </p>
+  <p class="text-break"><span class="fw-bold">Result:</span><br>
+    <span id="fillme">
+      See above
+    </span>
+  </p>
+  <ul class="list-unstyled px-4">
+    <li><small class="text-muted">(To use the Postman collection, go to Postman, and import the JSON file, which you can get by clicking "raw" on the above link. You should be able to see all of the possible requests - click "code" to get a code snippet for your language of choice!)</small></li>
+    <li><small class="text-muted">DM me on Discord (girl bowser#0373) if you want any clarification - I should be on the /r/Homestuck and the MSPFA Discord servers, so if you're on those, you can DM me.</small> </li>
+  </ul>
+  <!-- <p>List of functions: {{methods}}</p> -->
+</div>
+</div>
+<script>
+
+  // function remVal(element, wanted) {
+  //   if ((element.firstChild.value = "") && wanted) {
+  //     // It has at least one
+
+  //   }
+  // }
+
+  const paths = {{ paths | safe }}
+  const methods = {{ methods | safe }}
+  const path = document.getElementById("path")
+  const func = document.getElementById("func")
+  const namereq = document.getElementById("namereq")
+  const funcreq = document.getElementById("funcreq")
+  const cspectSecret = document.getElementById("cspectSecret")
+  const seedsecret = document.getElementById("seedsecret")
+  const typereq = document.getElementById("typereq")
+  const mathsecret = document.getElementById("mathsecret")
+  const type = document.getElementById("type")
+  const mvalsecret = document.getElementById("mvalsecret")
+  const seed = document.getElementById("seed")
+  const legend = document.getElementById("legend")
+  const name = document.getElementById("name")
+  const mname = document.getElementById("mname")
+  const mtype = document.getElementById("mtype")
+  const fngr = document.getElementById("fngr")
+  const namegr = document.getElementById("namegr")
+  const mregsecret = document.getElementById("mregsecret")
+  const dualsgr = document.getElementById("dualsgr")
+  const dualscheck = document.getElementById("dualscheck")
+  const methoddisplay = document.getElementById("methoddisplay")
+  const fillme = document.getElementById("fillme")
+
+
+
+
+  dualscheck.addEventListener('change', (event) => {
+    if (event.currentTarget.checked) {
+      dualscheck.value = true;
+    } else {
+      dualscheck.value = false;
+    }
+  })
+
+  name.onkeypress = function (e) {
+    if (!e) e = window.event;
+    var keyCode = e.code || e.key;
+    if (keyCode == 'Enter') {
+      // Enter pressed
+      loadAPIExample()
+    }
+  }
+
+  mname.onkeypress = function (e) {
+    if (!e) e = window.event;
+    var keyCode = e.code || e.key;
+    if (keyCode == 'Enter') {
+      // Enter pressed
+      loadAPIExample()
+    }
+  }
+
+  type.onkeypress = function (e) {
+    if (!e) e = window.event;
+    var keyCode = e.code || e.key;
+    if (keyCode == 'Enter') {
+      // Enter pressed
+      loadAPIExample()
+    }
+  }
+
+  mtype.onkeypress = function (e) {
+    if (!e) e = window.event;
+    var keyCode = e.code || e.key;
+    if (keyCode == 'Enter') {
+      // Enter pressed
+      loadAPIExample()
+    }
+  }
+
+  func.onkeypress = function (e) {
+    if (!e) e = window.event;
+    var keyCode = e.code || e.key;
+    if (keyCode == 'Enter') {
+      // Enter pressed
+      loadAPIExample()
+    }
+  }
+
+  var newURL = func.value + "?name=" + name.value + "&type=" + type.value;
+  function fixFunctions() {
+    if (path.value == "/classpect/") {
+      newURL = func.value + "?name=" + name.value + "&type=" + type.value;
+      fngr.style.display = "flex"
+      namegr.style.display = "flex"
+      namereq.style.display = "block"
+      typereq.style.display = "block"
+      seedsecret.style.display = "none"
+      cspectSecret.style.display = "block"
+      mathsecret.style.display = "none"
+      funcreq.style.display = "none"
+      dualsgr.style.display = "none"
+      for (let i = 0; i < type.children.length; i++) {
+        if (type.children[i].value == "") {
+          type.removeChild(type.children[i])
+        }
+      }
+      if (func.children.length != methods.length) {
+        func.innerHTML = ''
+        for (let i = 0; i < methods.length; i++) {
+          func.innerHTML += "<option value='" + methods[i] + "'>" + methods[i] + "</option>"
+        }
+      }
+
+      // if (mathsecret.children[0].id != "mnamegr") {
+      //   tempName = name.value
+      //   tempType = type.value
+      //   tempFunc = func.value
+      //   temp = cspectSecret.innerHTML
+      //   cspectSecret.innerHTML = mathsecret.innerHTML
+      //   mathsecret.innerHTML = temp 
+      //   name.value = tempName
+      //   type.value = tempType
+      //   func.value = tempFunc
+      // }
+      legend.innerHTML = "Method for accessing a single Classpect's data."
+    }
+    else if (path.value == "/") {
+      newURL = "?duals=" + dualscheck.value + "&type=" + type.value;
+      legend.innerHTML = "Method for retrieving bulk Classpect data, e.g. names.<br> All params are optional, default behavior is to retrieve all canon classpects as a dictionary."
+      fngr.style.display = "none"
+      namegr.style.display = "none"
+      namereq.style.display = "none"
+      cspectSecret.style.display = "block"
+      seedsecret.style.display = "none"
+      typereq.style.display = "none"
+      dualsgr.style.display = "block"
+      funcreq.style.display = "none"
+      mathsecret.style.display = "none"
+      // if (mathsecret.children[0].id != "mnamegr") {
+      //   temp = cspectSecret.innerHTML
+      //   cspectSecret.innerHTML = mathsecret.innerHTML
+      //   mathsecret.innerHTML = temp
+      // }
+
+
+      addit = true
+      for (let i = 0; i < type.children.length; i++) {
+        if (type.children[i].value == "") {
+          addit = false
+        }
+      }
+
+      if (addit) {
+        type.innerHTML = '<option value=""></option>' + type.innerHTML
+      }
+
+    }
+    else if (path.value == "/calc/") {
+      fixMul()
+      mathsecret.style.removeProperty("display")
+      fngr.style.display = "flex"
+      legend.innerHTML = "Method for using the Classpect Calculator."
+      namegr.style.display = "flex"
+      seedsecret.style.display = "none"
+      cspectSecret.style.display = "block"
+      namereq.style.display = "block"
+      typereq.style.display = "block"
+      funcreq.style.removeProperty("display")
+      dualsgr.style.display = "none"
+      for (let i = 0; i < type.children.length; i++) {
+        if (type.children[i].value == "") {
+          type.removeChild(type.children[i])
+        }
+      }
+
+      if ((func.children.length) != ["+", "-", "*"].length) {
+        func.innerHTML = ""
+        for (let i = 0; i < ["+", "-", "*"].length; i++) {
+          func.innerHTML += "<option value='" + ["add", "sub", "mul"][i] + "'>" + ["+", "-", "*"][i] + "</option>"
+        }
+      }
+    }
+    else if (path.value == "/cotd/") {
+      newURL = "?seed=" + seed.value + "&duals=" + dualscheck.value + "&type=" + type.value;
+      legend.innerHTML = "Method for retrieving Classpect of the day. Default behavior is to fall back on server time, but getting user time through JS is ideal."
+      fngr.style.display = "none"
+      namegr.style.display = "none"
+      namereq.style.display = "none"
+      typereq.style.display = "none"
+      cspectSecret.style.display = "none"
+      seedsecret.style.removeProperty("display")
+      dualsgr.style.display = "none"
+      funcreq.style.display = "none"
+      mathsecret.style.display = "none"
+      // if (mathsecret.children[0].id != "mnamegr") {
+      //   temp = cspectSecret.innerHTML
+      //   cspectSecret.innerHTML = mathsecret.innerHTML
+      //   mathsecret.innerHTML = temp
+      // }
+      var today = new Date().toDateString();
+      function days_passed(dt) {
+        var date1 = new Date("04/13/2009");
+        var date2 = new Date(today);
+
+        return Math.ceil((date2 - date1) / (1000 * 3600 * 24));
+      }
+      var lendays = days_passed();
+      if (!(seed.value)) {
+        seed.value = lendays;
+      }
+      addit = true
+      for (let i = 0; i < type.children.length; i++) {
+        if (type.children[i].value == "") {
+          addit = false
+        }
+      }
+
+      if (addit) {
+        type.innerHTML = '<option value=""></option>' + type.innerHTML
+      }
+
+    }
+
+    else {
+      throw "What?"
+    }
+
+  }
+
+  function fixMul() {
+    if (path.value == "/calc/" && func.value == "mul") {
+      console.log("multiplication time")
+      mvalsecret.style.removeProperty("display")
+      mregsecret.style.display = "none"
+      newURL = func.value + "?name=" + name.value + "&type=" + type.value + "&mval=" + mval.value;
+
+    }
+    else if (path.value == "/calc/" && func.value != "mul") {
+      console.log("other math time")
+      mvalsecret.style.display = "none"
+      mregsecret.style.display = "block"
+      newURL = func.value + "?name=" + name.value + "&type=" + type.value + "&mname=" + mname.value + "&mtype=" + mtype.value;
+
+    }
+
+
+  }
+
+
+  function loadAPIExample() {
+    fixFunctions()
+    var baseURL = '{{url_for("api_page")}}' + "v1/classpects" + path.value
+    var assembledURL = baseURL + newURL
+    methoddisplay.innerHTML = "{{ request.url_root[:-1] }}" + assembledURL;
+    loadAPI(assembledURL);
+  }
+
+  function loadAPI(url) {
+    // Create a request variable and assign a new XMLHttpRequest object to it.
+    var request = new XMLHttpRequest()
+    console.log(url)
+    // Open a new connection, using the GET request on the URL endpoint
+    request.open('GET', url, true)
+
+    request.onload = function () {
+      console.log(this.response)
+      // var data = JSON.parse(this.response)
+      // console.log(data)
+      // Begin accessing JSON data here
+      fillme.innerHTML = this.response
+    }
+    // Send request
+    request.send()
+  }
+</script>
+{% endblock %}

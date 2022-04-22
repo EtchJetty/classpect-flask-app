@@ -1,0 +1,184 @@
+<!-- {% extends "layout.html" %}
+
+{% block title %}{{ sitetitle }}{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block navbar %}
+{% endblock %}
+
+
+{% block content %} -->
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <base target="_parent">
+
+</head>
+
+<body class="d-flex flex-column h-100">
+  <main class="flex-shrink-0">
+    <!-- <body class="p-0"> -->
+    <!-- <div class="container">
+  <div class="row">
+  <div class="col"> -->
+    <div class="card card-cover h-100 overflow-hidden rounded-5 text-white bg-dark shadow-lg" id="cardback">
+      <!-- text-white bg-dark  -->
+      <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+        <h1 class="display-6 card-title lh-1 fw-bold">
+          <span id="rolledCspect">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            Loading...
+          </span>
+        </h1>
+        <em><span id="desc"></span></em>
+        <p class="pt-4 text-center">
+          <a class="btn btn-outline-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Show today's Dual Classpect!
+          </a><a href="/about#duals" class="btn btn-outline-primary btn-sm">What's a Dual?</a>
+        </p>
+        <div class="collapse" id="collapseExample">
+          <div id="rolledDualCspect" class="card text-white bg-secondary mb-3 card-body">
+            Loading today's dual...
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h3 class="pt-2">Search Classpect:</h3>
+      <form method="POST" id="formy" name="mathform" action="{{url_for('lookupclspect')}}">
+        <div class="form-group">
+          <div class="row g-3 align-items-center">
+            <div class="input-group px-3 p-5 pt-2">
+              <input name="class" id="firstclass" form="formy" placeholder="Class" type="text" aria-label="Class" class="form-control" value="{% if results %}{{ results['class'].name | e }}{% else %}{% endif %}" list="fullclasses" /><span class="input-group-text">of</span>
+              <input name="aspect" id="firstaspect" form="formy" placeholder="Aspect" type="text" aria-label="Aspect" class="form-control" {%
+                  if
+                  results
+                  %}value="{{ results['aspect'].name | e }}" {%
+                  else
+                  %}{%
+                  endif
+                  %} list="fullaspects" />
+              <datalist id="fullclasses">
+                {% for val in display.classpects["class"] %}
+                <option value="{{val.name}}">{% endfor %}</option>
+              </datalist>
+
+              <datalist id="fullaspects">
+                {% for val in display.classpects["aspect"] %}
+                <option value="{{val.name}}">{% endfor %}</option>
+              </datalist>
+
+              <button type="submit" class="btn btn-primary">
+                Get info <i class="bi bi-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+  <!-- </div></div>
+  </div> -->
+  <script>
+    var exports = {};
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='node_modules/english-verbs-helper/dist/index.js') }}"></script>
+
+  <script type="text/javascript" src="{{ url_for('static', filename='node_modules/english-verbs-irregular/dist/verbs.json') }}"></script>
+
+  <script type="text/javascript" src="{{ url_for('static', filename='node_modules/english-verbs-gerunds/dist/gerunds.json') }}"></script>
+  <script>
+    function printClasspect() {
+      document.getElementById("rolledCspect").innerHTML =
+        todayscspect["class"].name +
+        " of " +
+        todayscspect["aspect"].name +
+        ' <img src="{{ url_for("static", filename="images/") }}' +
+        todayscspect["aspect"].name +
+        '.png" style="height: 36px; position: relative;" class="img-fluid" />';
+      document.getElementById("desc").innerHTML =
+        "One who " +
+        todayscspect["class"].activity +
+        "ly " +
+        EnglishVerbs.getConjugation(
+          null,
+          todayscspect["class"].verb,
+          "PRESENT",
+          "S"
+        ) +
+        " and is " +
+        todayscspect["class"].activity +
+        "ly " +
+        EnglishVerbs.getConjugation(
+          VerbsData,
+          todayscspect["class"].verb,
+          "PARTICIPLE_PAST",
+          "S"
+        ) +
+        " through " +
+        todayscspect["aspect"].name +
+        ' <img src="{{ url_for("static", filename="images/") }}' +
+        todayscspect["aspect"].name +
+        '.png" style="height: 24px; position: relative; bottom: 1px" class="img-fluid" />.';
+      document.getElementById("rolledDualCspect").innerHTML =
+        "<div class='d-flex justify-content-center'><h3>" +
+        todaysdualcspect["class"] +
+        " of " +
+        todaysdualcspect["aspect"] +
+        ' <img src="{{ url_for("static", filename="images/") }}' +
+        todaysdualcspect["aspectduals"][0].name +
+        '.png" style="height: 24px; position: relative;" class="img-fluid" />' +
+        '<img src="{{ url_for("static", filename="images/") }}' +
+        todaysdualcspect["aspectduals"][1].name +
+        '.png" style="height: 24px; position: relative;" class="img-fluid" /><div class="pt-2 d-flex justify-content-center"><a href="{{url_for("lookupclspect")}}/' +
+        todaysdualcspect["class"] +
+        "of" +
+        todaysdualcspect["aspect"] +
+        '"><div class="d-flex justify-content-center pt-2"><button class="btn btn-dark">Learn more <i class="bi bi-search"></i></button></a></div></div></h3></div>';
+    }
+
+
+    var todayscspect = {}
+    var todaysdualcspect = {}
+    const EnglishVerbs = exports;
+    const VerbsData = EnglishVerbs.mergeVerbsData(Irregular, Gerunds);
+
+    var requestOptions = {
+      method: 'GET',
+      redirect: 'follow'
+    };
+
+    var dayssince = Math.floor(((new Date()).getTime() - (new Date("4/13/2009")).getTime()) / (24 * 60 * 60 * 1000))
+    // add actual date calc
+    fetch("/api/v1/classpects/cotd/?seed=" + dayssince, requestOptions)
+      .then(response => response.text())
+      .then(result => {
+        todayscspect = JSON.parse(result)["todayscspect"]
+        todaysdualcspect = JSON.parse(result)["todaysdualcspect"]
+        fetch("/api/v1/classpects/classpect/dualComponents?name=" + todaysdualcspect["aspect"] + "&type=aspect", requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            todaysdualcspect["aspectduals"] = JSON.parse(result)
+            printClasspect()
+          }
+          )
+          .catch(error => console.log('error', error));
+
+      }
+      )
+      .catch(error => console.log('error', error));
+    // var todayscspect = result["todayscspect"]
+
+
+  </script>
+</body>
+
+<!-- {% endblock %} -->

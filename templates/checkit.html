@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ sitetitle }}{% endblock %}
+
+{% block head %}
+  {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+<div class="row  p-3">
+
+<div class="col">
+  <p><strong>Normals: </strong></br>
+        {% for i in normals %}
+            {{ i | safe }}</br>
+        {% endfor %}
+        </p>
+</div>
+<div class="col">
+<p><strong>Duals: </strong></br>
+        {% for i in duals %}
+            {{ i | safe }}</br>
+        {% endfor %}
+        </p>
+</div>
+<div class="row p-3 pb-1">        <a href="{{url_for('rclspect')}}"><button type="button" class="btn btn-primary btn-lg">Reroll <i class="bi bi-dice-{{ icon }}"></i></button></a>
+</div>
+</div>
+{% endblock %}

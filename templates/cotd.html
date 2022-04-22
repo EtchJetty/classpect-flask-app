@@ -1,0 +1,298 @@
+{% extends "layout.html" %} {% block title %} {{ sitetitle }} {% endblock %} {%
+block head %} {{ super() }} {% endblock %} {% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="row">
+        <h1 class="pt-2">CLASSPECT OF THE DAY</h1>
+        <h4>
+          Classpect of the Day for
+          <span id="now"
+            ><div class="spinner-border spinner-border-sm" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div></span
+          >:
+        </h4>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div
+            class="card card-cover h-100 overflow-hidden rounded-5 text-white bg-dark shadow-lg"
+            id="cardback"
+          >
+            <!-- text-white bg-dark  -->
+            <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
+              <h2 class="display-6 card-title lh-1 fw-bold">
+                <span id="rolledCspect"
+                  ><div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  Loading...
+                </span>
+              </h2>
+              <em><span id="desc"></span></em>
+              <p class="pt-4 text-center">
+                <a
+                  class="btn btn-outline-primary"
+                  data-bs-toggle="collapse"
+                  href="#collapseExample"
+                  role="button"
+                  aria-expanded="false"
+                  aria-controls="collapseExample"
+                >
+                  Show today's Dual Classpect!
+                </a><a href="/about#duals" class="btn btn-outline-primary btn-sm">What's a Dual?</a>
+              </p>
+              <div class="collapse" id="collapseExample">
+                <div
+                  id="rolledDualCspect"
+                  class="card text-white bg-secondary mb-3 card-body"
+                >
+                  Some placeholder content for the collapse component. This
+                  panel is hidden by default but revealed when the user
+                  activates the relevant trigger.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-primary alert-dismissible fade show" role="alert">
+        New Classpect in
+        <span id="cdown"
+          ><div class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div></span
+        >!
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="row">
+        <h3 class="pt-2">Search Classpect:</h3>
+        <form
+          method="POST"
+          id="formy"
+          name="mathform"
+          action="{{url_for('lookupclspect')}}"
+        >
+          <div class="form-group">
+            <div class="row g-3 align-items-center">
+              <div class="input-group px-3 p-5 pt-2">
+                <input
+                  name="class"
+                  id="firstclass"
+                  form="formy"
+                  placeholder="Class"
+                  type="text"
+                  aria-label="Class"
+                  class="form-control"
+                  value="{% if results %}{{ results['class'].name | e }}{% else %}{% endif %}"
+                  list="fullclasses"
+                /><span class="input-group-text">of</span>
+                <input
+                  name="aspect"
+                  id="firstaspect"
+                  form="formy"
+                  placeholder="Aspect"
+                  type="text"
+                  aria-label="Aspect"
+                  class="form-control"
+                  {%
+                  if
+                  results
+                  %}value="{{ results['aspect'].name | e }}"
+                  {%
+                  else
+                  %}{%
+                  endif
+                  %}
+                  list="fullaspects"
+                />
+                <datalist id="fullclasses">
+                  {% for val in display.classpects["class"] %}
+                  <option value="{{val.name}}">{% endfor %}</option>
+                </datalist>
+
+                <datalist id="fullaspects">
+                  {% for val in display.classpects["aspect"] %}
+                  <option value="{{val.name}}">{% endfor %}</option>
+                </datalist>
+
+                <button type="submit" class="btn btn-primary">
+                  Get info <i class="bi bi-search"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+</div>
+<script>
+  var exports = {};
+</script>
+
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='node_modules/english-verbs-helper/dist/index.js') }}"
+></script>
+
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='node_modules/english-verbs-irregular/dist/verbs.json') }}"
+></script>
+
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='node_modules/english-verbs-gerunds/dist/gerunds.json') }}"
+></script>
+
+<script>
+  const EnglishVerbs = exports;
+  const VerbsData = EnglishVerbs.mergeVerbsData(Irregular, Gerunds);
+  // Set the date we're counting down to
+  var countDownDate = new Date();
+  countDownDate.setHours(24, 0, 0, 0);
+
+  // Update the count down every 1 second
+  var x = setInterval(function () {
+    // Get today's date and time
+    var now = new Date().getTime();
+
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now;
+
+    // Time calculations for days, hours, minutes and seconds
+    var hours = String(
+      Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+    ).padStart(2, "0");
+    var minutes = String(
+      Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+    ).padStart(2, "0");
+    var seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(
+      2,
+      "0"
+    );
+
+    // Display the result in the element with id="demo"
+    document.getElementById("cdown").innerHTML =
+      "<strong>" + hours + ":" + minutes + ":" + seconds + "</strong>";
+
+    // If the count down is finished, write some text
+    if (distance < 0) {
+      clearInterval(x);
+      document.getElementById("cdown").innerHTML = "Refresh the page!";
+    }
+  }, 1000);
+  var today = new Date().toDateString();
+  document.getElementById("now").innerHTML = today;
+  var classpects = `{{ display.classpects | safe }}`;
+  function days_passed(dt) {
+    var date1 = new Date("04/13/2009");
+    var date2 = new Date(today);
+
+    return Math.ceil((date2 - date1) / (1000 * 3600 * 24));
+  }
+  // console.log(classpects);
+  var seed = days_passed();
+  // console.log(seed);
+  // console.log(seed%144);
+  // console.log(seed%4422);
+
+  var listy = JSON.parse(`{{ listy | safe }}`);
+  // console.log(listy);
+  var todayscspect = listy[seed % 144];
+  var dual_listy = JSON.parse(`{{ dual_listy | safe }}`);
+  // console.log(dual_listy);
+  var todaysdualcspect = dual_listy[seed % 4422];
+
+  var classcolors = {
+    Time: "#fdd",
+    Space: "#000",
+    Light: "#fed",
+    Void: "#fff",
+    Life: "#efd",
+    Doom: "#860",
+    Breath: "#def",
+    Blood: "#ecb",
+    Hope: "#ffd",
+    Rage: "#edf",
+    Heart: "#fde",
+    Mind: "#dee",
+  };
+
+  var smalldual_listy = JSON.parse(`{{ smalldual_listy | safe }}`);
+  // console.log(smalldual_listy);
+  for (let i in smalldual_listy) {
+    if (
+      smalldual_listy[i]["aspect"] == todaysdualcspect["aspect"] &&
+      smalldual_listy[i]["class"] == todaysdualcspect["class"]
+    ) {
+      todaysdualcspect = smalldual_listy[i];
+    }
+  }
+  // console.log(todaysdualcspect);
+
+  document.getElementById("rolledCspect").innerHTML =
+    todayscspect["class"].name +
+    " of " +
+    todayscspect["aspect"].name +
+    ' <img src="{{ url_for("static", filename="images/") }}' +
+    todayscspect["aspect"].name +
+    '.png" style="height: 36px; position: relative;" class="img-fluid" />';
+  document.getElementById("desc").innerHTML =
+    "One who " +
+    todayscspect["class"].activity +
+    "ly " +
+    EnglishVerbs.getConjugation(
+      null,
+      todayscspect["class"].verb,
+      "PRESENT",
+      "S"
+    ) +
+    " and is " +
+    todayscspect["class"].activity +
+    "ly " +
+    EnglishVerbs.getConjugation(
+      VerbsData,
+      todayscspect["class"].verb,
+      "PARTICIPLE_PAST",
+      "S"
+    ) +
+    " through " +
+    todayscspect["aspect"].name +
+    ' <img src="{{ url_for("static", filename="images/") }}' +
+    todayscspect["aspect"].name +
+    '.png" style="height: 24px; position: relative; bottom: 1px" class="img-fluid" />.';
+  var hiddenClass = document.getElementById("firstclass");
+  var hiddenAspect = document.getElementById("firstaspect");
+  hiddenClass.setAttribute("value", todayscspect["class"].name);
+  hiddenAspect.setAttribute("value", todayscspect["aspect"].name);
+
+  // document.getElementById("cardback").style.setProperty("background-color", classcolors[todayscspect["aspect"]["name"]]);
+
+
+  document.getElementById("rolledDualCspect").innerHTML =
+    "<div class='d-flex justify-content-center'><h3>" +
+    todaysdualcspect["class"] +
+    " of " +
+    todaysdualcspect["aspect"] +
+    ' <img src="{{ url_for("static", filename="images/") }}' +
+    todaysdualcspect["aspectduals"][0].name +
+    '.png" style="height: 24px; position: relative;" class="img-fluid" />' +
+    '<img src="{{ url_for("static", filename="images/") }}' +
+    todaysdualcspect["aspectduals"][1].name +
+    '.png" style="height: 24px; position: relative;" class="img-fluid" /><div class="pt-2 d-flex justify-content-center"><a href="{{url_for("lookupclspect")}}/' +
+    todaysdualcspect["class"] +
+    "of" +
+    todaysdualcspect["aspect"] +
+    '"><div class="d-flex justify-content-center pt-2"><button class="btn btn-dark">Learn more <i class="bi bi-search"></i></button></a></div></div></h3></div>';
+</script>
+{% endblock %}

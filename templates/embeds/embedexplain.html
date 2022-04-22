@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ sitetitle }}{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="pt-3 pb-1">Embed test</h1>
+            <p>Bluh bluh.</p>
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <div class="d-flex overflow-visible"><iframe class="w-100 overflow-visible" src="{{ url_for('embed_cotd') }}" height="315px" frameborder="0"></iframe>
+           
+                    </div>
+             <p>Some text.</p>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <script>
+    function fit() {
+        var iframes = document.querySelectorAll("iframe.gh-fit")
+
+        for (var id = 0; id < iframes.length; id++) {
+            var win = iframes[id].contentWindow
+            var doc = win.document
+            var html = doc.documentElement
+            var body = doc.body
+            var ifrm = iframes[id] // or win.frameElement
+
+            if (body) {
+                body.style.overflowX = "scroll" // scrollbar-jitter fix
+                body.style.overflowY = "hidden"
+            }
+            if (html) {
+                html.style.overflowX = "scroll" // scrollbar-jitter fix
+                html.style.overflowY = "hidden"
+                var style = win.getComputedStyle(html)
+                ifrm.width = parseInt(style.getPropertyValue("width")) // round value
+                ifrm.height = parseInt(style.getPropertyValue("height"))
+            }
+        }
+
+        requestAnimationFrame(fit)
+    }
+
+    addEventListener("load", requestAnimationFrame.bind(this, fit))
+</script> -->
+{% endblock %}
