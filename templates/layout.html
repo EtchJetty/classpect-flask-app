@@ -38,7 +38,7 @@
   </style>
   <title>{% block title %}{% endblock %} - ERIJAN CENTRAL</title>
   {% block navbar %}
-  <nav class="navbar navbar-expand-md navbar-dark bg-primary" style="    background: #013 url({{ url_for('static', filename='images/blue-ao3.png') }}) !important;
+  <nav id="erijan-nav" class="fixed-top navbar navbar-expand-md navbar-dark bg-primary" style="    background: #013 url({{ url_for('static', filename='images/blue-ao3.png') }}) !important;
  background-blend-mode: darken;
     /* padding: 0 0; */
     width: 100%;
@@ -63,7 +63,7 @@
             <a class="nav-link {% if url_for(request.endpoint) == url_for('about') %}active{% endif %}" aria-current="page" href="{{url_for('about')}}">About/FAQ</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Classpecting</a>
+            <a class="nav-link dropdown-toggle {% if url_for(request.endpoint)[:11] == url_for('rclspect')[:11] %}active{% endif %}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Classpecting</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown01">
               <li>
                 <a class="dropdown-item {% if url_for(request.endpoint) == url_for('rclspect') %}active{% endif %}" href="{{url_for('home')}}">Classpect of the Day
@@ -90,7 +90,7 @@
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Games</a>
+            <a class="nav-link dropdown-toggle {% if url_for(request.endpoint)[:11] == url_for('homesturdle')[:11] %}active{% endif %}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Games</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown01">
               <li>
                 <a class="dropdown-item {% if url_for(request.endpoint) == url_for('homesturdle') %}active{% endif %}" href="{{url_for('homesturdle')}}">Homesturdle</a>
@@ -156,7 +156,7 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-  <main class="flex-shrink-0">{% block content %}{% endblock %}</main>
+  <main id="maincontent" class="flex-shrink-0">{% block content %}{% endblock %}</main>
   <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
     <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
       <div class="toast-header">
@@ -255,6 +255,12 @@
         document.getElementById("validationCustom").value;
       return true;
     }
+    let navit = document.getElementById("erijan-nav")
+    let maincontent = document.getElementById("maincontent")
+    window.onload = function () {
+      maincontent.setAttribute('style', 'margin-top:' + navit.offsetHeight + 'px;');
+    }
+
   </script>
   {% block scripts %}{% endblock %}
 </body>
