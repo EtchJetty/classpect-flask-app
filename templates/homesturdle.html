@@ -3,31 +3,36 @@ block head %} {{ super() }} {% endblock %} {% block content %}
 <div class="container mw-100">
   <div class="row">
     <div class="col p-0">
-<div class="text-nowrap" style="position: fixed;">
-  If you're on iPhone using Chrome, try switching to Safari!
-</div>
+      <div class="text-nowrap" style="position: fixed;">
+        If you're on iPhone using Chrome, try switching to Safari!
+      </div>
       <div id="gameiframe" class="ratio p-5 mw-100 mh-100">
-        <iframe
-          src="https://etchjetty.github.io/homesturdle"
-          title="Homesturdle"
-          allow="clipboard-read; clipboard-write"
-        ></iframe>
+        <iframe src="https://etchjetty.github.io/homesturdle" title="Homesturdle" allow="clipboard-read; clipboard-write"></iframe>
       </div>
     </div>
   </div>
 </div>
 <script>
-window.onload = function() {
-document.getElementsByTagName("footer")[0].className = "footer py-3 bg-light"
-document.getElementById("gameiframe").style.height = (window.innerHeight - document.getElementsByTagName("main")[0].offsetTop - document.getElementsByTagName("footer")[0].scrollHeight).toString() + "px";
-// (document.getElementsByTagName("footer")[0].offsetTop - document.getElementsByTagName("main")[0].offsetTop).toString() + "px";
-document.getElementById("gameiframe").style.width = window.innerWidth.toString() + "px";
-}
-window.onresize = function() {
-document.getElementsByTagName("footer")[0].className = "footer py-3 bg-light"
-document.getElementById("gameiframe").style.height = (window.innerHeight - document.getElementsByTagName("main")[0].offsetTop - document.getElementsByTagName("footer")[0].scrollHeight).toString() + "px";
-// (document.getElementsByTagName("footer")[0].offsetTop - document.getElementsByTagName("main")[0].offsetTop).toString() + "px";
-document.getElementById("gameiframe").style.width = window.innerWidth.toString() + "px";
-}
+
+  fixBox = function () {
+    document.getElementsByTagName("footer")[0].className = "footer py-3 bg-light"
+    document.getElementById("gameiframe").style.height = (window.innerHeight - document.getElementsByTagName("main")[0].offsetTop - 56 - document.getElementsByTagName("footer")[0].scrollHeight).toString() + "px";
+    // (document.getElementsByTagName("footer")[0].offsetTop - document.getElementsByTagName("main")[0].offsetTop).toString() + "px";
+    document.getElementById("gameiframe").style.width = window.innerWidth.toString() + "px";
+  }
+  if (window.addEventListener) // W3C standard
+  {
+    window.addEventListener('load', fixBox, false); // NB **not** 'onload'
+  }
+  else if (window.attachEvent) // Microsoft
+  {
+    window.attachEvent('onload', fixBox);
+  }
+  window.onresize = function () {
+    document.getElementsByTagName("footer")[0].className = "footer py-3 bg-light"
+    document.getElementById("gameiframe").style.height = (window.innerHeight - document.getElementsByTagName("main")[0].offsetTop - document.getElementsByTagName("footer")[0].scrollHeight).toString() + "px";
+    // (document.getElementsByTagName("footer")[0].offsetTop - document.getElementsByTagName("main")[0].offsetTop).toString() + "px";
+    document.getElementById("gameiframe").style.width = window.innerWidth.toString() + "px";
+  }
 </script>
 {% endblock %}
