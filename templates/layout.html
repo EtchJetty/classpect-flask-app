@@ -63,11 +63,13 @@
             <a class="nav-link {% if url_for(request.endpoint) == url_for('about') %}active{% endif %}" aria-current="page" href="{{url_for('about')}}">About/FAQ</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle {% if url_for(request.endpoint)[:11] == url_for('rclspect')[:11] %}active{% endif %}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Classpecting</a>
+            <a class="nav-link dropdown-toggle {% if url_for(request.endpoint)[:11] == url_for('rclspect')[:11] or url_for(request.endpoint) == url_for('api_page') %}active{% endif %}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Classpecting</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown01">
               <li>
-                <a class="dropdown-item {% if url_for(request.endpoint) == url_for('rclspect') %}active{% endif %}" href="{{url_for('home')}}">Classpect of the Day
-                  <span class="text-muted">(Home)</span></a>
+                <a class="dropdown-item" href="https://twitter.com/cotd_erijan?ref_src=twsrc%5Etfw">Classpect of the Day <span class="text-muted">(Twitter)</span>
+                  <i class="bi bi-box-arrow-up-right minisize"></i>
+                </a>
+                </a>
               </li>
               <li>
                 <a class="dropdown-item {% if url_for(request.endpoint) == url_for('lookupclspect') %}active{% endif %}" href="{{url_for('lookupclspect')}}">Search Classpect</a>
@@ -79,13 +81,7 @@
                 <a class="dropdown-item {% if url_for(request.endpoint) == url_for('api_page') %}active{% endif %}" href="{{url_for('api_page')}}">Classpect API <sup class="{% if url_for(request.endpoint) != url_for('api_page') %}text-muted{% endif %}">New!</sup></a>
               </li>
 
-              <li>
-                <a class="dropdown-item" href="https://classpectpokerap.tumblr.com/">Theories <span class="text-muted">(Tumblr)</span></a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="https://housetrapped-faq-archive.glitch.me/">Housetrapped FAQ (beta)
-                  <i class="bi bi-box-arrow-up-right minisize"></i></a>
-              </li>
+
 
             </ul>
           </li>
@@ -107,20 +103,36 @@
             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">READ ERIJAN</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown01">
               <li>
-                <a class="dropdown-item disabled" href="#">Tree</a>
+                <h6 class="dropdown-header">Linked Pages</h6>
               </li>
               <li>
-                <a class="dropdown-item disabled" href="#">Night</a>
+                <a class="dropdown-item" href="https://classpectpokerap.tumblr.com/">classpect-pokerap <span class="text-muted">(Tumblr)</span></a>
               </li>
               <li>
-                <a class="dropdown-item disabled" href="#">Death</a>
+                <a class="dropdown-item" href="https://housetrapped-faq-archive.glitch.me/">Housetrapped FAQ
+                  <i class="bi bi-box-arrow-up-right minisize"></i></a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <h6 class="dropdown-header">ERIJAN 1-3</h6>
+              </li>
+              <li>
+                <a class="dropdown-item disabled" href="#">Tree <sup>Coming 20XX!</sup></a>
+              </li>
+              <li>
+                <a class="dropdown-item disabled" href="#">Night <sup>Coming 20XY!</sup></a>
+              </li>
+              <li>
+                <a class="dropdown-item disabled" href="#">Death <sup>Coming 20XZ!</sup></a>
               </li>
 
               <li>
                 <hr class="dropdown-divider" />
               </li>
               <li>
-                <h6 class="dropdown-header">Smith</h6>
+                <h6 class="dropdown-header">ERIJAN 4 (Smith)</h6>
               </li>
               <li>
                 <a class="dropdown-item" href="https://mspfa.com/?s=44691&p=1">Invite Link
