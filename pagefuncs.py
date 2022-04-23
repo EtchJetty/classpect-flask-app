@@ -138,6 +138,8 @@ def makePrintable(formState, classpect_data):
     for i in classpect_data:
         if (dualClean(i) == ""):
             formState["singular"] = dualTypeInvTest(i)
+        else: 
+            formState["singular"] = False
                 
     printable_class = dualName(classpect_data[0])
     printable_aspect = dualName(classpect_data[1]) + emote(classpect_data[1])
