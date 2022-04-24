@@ -35,11 +35,10 @@ def dualName(unknown):  # compatibility function
         x = ""
         for i in unknown:
             try:
-                x = "<a href='#collapseOne' class='link-secondary' onclick='copycat(\"" + i.name + "\");' role='button'>" + x + "</a><span style='font-size:0.05px;'>&nbsp;</span>" + \
-                    "<span style='font-size:0.05px;'>&nbsp;</span><a href='#collapseOne' class='link-secondary' onclick='copycat(\"" + \
+                x = "<a href='#collapseOne' class='link-secondary' onclick='copycat(\"" + i.name + "\");' role='button'>" + x + "</a><a href='#collapseOne' class='link-secondary' onclick='copycat(\"" + \
                     i.name + "\");' role='button'>" + i.name + "</a>"
                 if len(unknown) > 1 and i != unknown[-1]:
-                    x = "<span style='font-size:0.05px;'>&nbsp;</span><a href='#collapseOne' class='link-secondary' onclick='copycat(\"" + i.name + \
+                    x = "<a href='#collapseOne' class='link-secondary' onclick='copycat(\"" + i.name + \
                         "\");' role='button'>" + x + "</a>"
             except:
                 pass
