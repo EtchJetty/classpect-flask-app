@@ -110,7 +110,11 @@ def magicant(form, results, formState):
                        "mathclass": form["mathclass"], "mathaspect": form["mathaspect"]}
             if formState["math"]:
                 print(i)
-                if (invalidCspect(ClasspectComponent(form["math"+i], i)) and (i == "math"+form[i].type)):
+                if i == "class":
+                    h = "aspect"
+                elif i == "aspect":
+                    h = "class"
+                if (invalidCspect(ClasspectComponent(form["math"+h], h))):
                     newForm["mathaspect"] = form["mathclass"]
                     newForm["mathclass"] = form["mathaspect"]
                     if i == "class" or i == "aspect":
