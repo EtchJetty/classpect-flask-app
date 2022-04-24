@@ -2,6 +2,7 @@
 from datetime import date, datetime
 import json
 import random
+from urllib import response
 
 from flask import render_template, request, url_for
 import requests
@@ -109,14 +110,17 @@ def magicant(form, results, formState):
                        "mathclass": form["mathclass"], "mathaspect": form["mathaspect"]}
             if formState["math"]:
                 print(i)
-                newForm["mathaspect"] = form["mathclass"]
-                newForm["mathclass"] = form["mathaspect"]
-                if i == "class" or i == "aspect":
-                    newForm["class"] = form["aspect"]
-                    newForm["aspect"] = form["class"]
-                else:
-                    newForm["class"] = form["class"]
-                    newForm["aspect"] = form["aspect"]
+                response = requests.get(request.root_url + url_for("api_func", func="/typeInverse"),
+                                        params={"type": i, "name": form[i]})
+                if (invalidCspect(ClasspectComponent(form["math"+str(json.loads(response.text))], str(json.loads(response.text)))) and (i == "math"+form[i].type)):
+                    newForm["mathaspect"] = form["mathclass"]
+                    newForm["mathclass"] = form["mathaspect"]
+                    if i == "class" or i == "aspect":
+                        newForm["class"] = form["aspect"]
+                        newForm["aspect"] = form["class"]
+                    else:
+                        newForm["class"] = form["class"]
+                        newForm["aspect"] = form["aspect"]
             for x in newForm:
                 results[x] = ClasspectComponent(
                     name=newForm[x].capitalize(), type=x.capitalize().replace("Math", ""))
