@@ -156,15 +156,17 @@ def makePrintable(formState, classpect_data):
     for i in classpect_data:
         if (dualClean(i) == ""):
             formState["singular"] = dualTypeInvTest(i)
-        else:
-            formState["singular"] = False
+        # else:
+        #     formState["singular"] = False
 
     printable_class = dualName(classpect_data[0])
     printable_aspect = dualName(classpect_data[1]) + emote(classpect_data[1])
 
     if formState["singular"] == "class":
+        formState["singular"] = False
         return [printable_class]
     elif formState["singular"] == "aspect":
+        formState["singular"] = False
         return [printable_aspect]
     elif not (printable_aspect == "" or printable_class == ""):
         of = " of "

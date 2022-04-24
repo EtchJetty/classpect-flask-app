@@ -8,24 +8,21 @@ block head %} {{ super() }} {% endblock %} {% block content %}
         <h1 class="pt-2">CLASSPECT OF THE DAY</h1>
         <h4>
           Classpect of the Day for
-          <span id="now"
-            ><div class="spinner-border spinner-border-sm" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div></span
-          >:
+          <span id="now"></span>
+          <div class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          </span>:
         </h4>
       </div>
       <div class="row">
         <div class="col">
-          <div
-            class="card card-cover h-100 overflow-hidden rounded-5 text-white bg-dark shadow-lg"
-            id="cardback"
-          >
+          <div class="card card-cover h-100 overflow-hidden rounded-5 text-white bg-dark shadow-lg" id="cardback">
             <!-- text-white bg-dark  -->
             <div class="d-flex flex-column h-100 p-5 pb-3 text-shadow-1">
               <h2 class="display-6 card-title lh-1 fw-bold">
-                <span id="rolledCspect"
-                  ><div class="spinner-border" role="status">
+                <span id="rolledCspect">
+                  <div class="spinner-border" role="status">
                     <span class="visually-hidden">Loading...</span>
                   </div>
                   Loading...
@@ -33,22 +30,12 @@ block head %} {{ super() }} {% endblock %} {% block content %}
               </h2>
               <em><span id="desc"></span></em>
               <p class="pt-4 text-center">
-                <a
-                  class="btn btn-outline-primary"
-                  data-bs-toggle="collapse"
-                  href="#collapseExample"
-                  role="button"
-                  aria-expanded="false"
-                  aria-controls="collapseExample"
-                >
+                <a class="btn btn-outline-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                   Show today's Dual Classpect!
                 </a><a href="/about#duals" class="btn btn-outline-primary btn-sm">What's a Dual?</a>
               </p>
               <div class="collapse" id="collapseExample">
-                <div
-                  id="rolledDualCspect"
-                  class="card text-white bg-secondary mb-3 card-body"
-                >
+                <div id="rolledDualCspect" class="card text-white bg-secondary mb-3 card-body">
                   Some placeholder content for the collapse component. This
                   panel is hidden by default but revealed when the user
                   activates the relevant trigger.
@@ -60,21 +47,44 @@ block head %} {{ super() }} {% endblock %} {% block content %}
       </div>
       <div class="alert alert-primary alert-dismissible fade show" role="alert">
         New Classpect in
-        <span id="cdown"
-          ><div class="spinner-border spinner-border-sm" role="status">
+        <span id="cdown">
+          <div class="spinner-border spinner-border-sm" role="status">
             <span class="visually-hidden">Loading...</span>
-          </div></span
-        >!
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-          aria-label="Close"
-        ></button>
+          </div>
+        </span>!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
       <div class="row">
         <h3 class="pt-2">Search Classpect:</h3>
-        <form
+        <form method="GET" action="{{url_for('lookupclspect')}}" id="formy" name="mathform" class="pt-2 needs-validation" novalidate>
+          <div class="form-group">
+            <div class="row g-3 align-items-center">
+              <div class="input-group has-validation pt-2 pb-4 px-3">
+                <input name="c" id="firstclass" form="formy" placeholder="Class" type="text" aria-label="Class" class="form-control" {% if results %}value="{{ results['class'].name | e }}" {% else %}{% endif %} required list="fullclasses" /><span class="input-group-text">of</span>
+                <input name="a" id="firstaspect" form="formy" placeholder="Aspect" type="text" aria-label="Aspect" class="form-control" {% if results %}value="{{ results['aspect'].name | e }}" {% else %}{% endif %} required list="fullaspects" />
+                <input type="hidden" name="mc" value="" />
+                <input type="hidden" name="ma" value="" />
+                <datalist id="fullclasses">
+                  {% for val in display.classpects["class"] %}
+                  <option value="{{val.name}}">{% endfor %}</option>
+                </datalist>
+
+                <datalist id="fullaspects">
+                  {% for val in display.classpects["aspect"] %}
+                  <option value="{{val.name}}">{% endfor %}</option>
+                </datalist>
+
+                <button type="submit" onclick="fixrequired()" class="btn btn-primary">
+                  Get info!
+                </button>
+                <div class="invalid-feedback">
+                  Please provide either a Class or an Aspect, then try again!
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- <form
           method="POST"
           id="formy"
           name="mathform"
@@ -129,7 +139,7 @@ block head %} {{ super() }} {% endblock %} {% block content %}
               </div>
             </div>
           </div>
-        </form>
+        </form> -->
       </div>
     </div>
     <div class="col-md-2"></div>
@@ -139,20 +149,11 @@ block head %} {{ super() }} {% endblock %} {% block content %}
   var exports = {};
 </script>
 
-<script
-  type="text/javascript"
-  src="{{ url_for('static', filename='node_modules/english-verbs-helper/dist/index.js') }}"
-></script>
+<script type="text/javascript" src="{{ url_for('static', filename='node_modules/english-verbs-helper/dist/index.js') }}"></script>
 
-<script
-  type="text/javascript"
-  src="{{ url_for('static', filename='node_modules/english-verbs-irregular/dist/verbs.json') }}"
-></script>
+<script type="text/javascript" src="{{ url_for('static', filename='node_modules/english-verbs-irregular/dist/verbs.json') }}"></script>
 
-<script
-  type="text/javascript"
-  src="{{ url_for('static', filename='node_modules/english-verbs-gerunds/dist/gerunds.json') }}"
-></script>
+<script type="text/javascript" src="{{ url_for('static', filename='node_modules/english-verbs-gerunds/dist/gerunds.json') }}"></script>
 
 <script>
   const EnglishVerbs = exports;
