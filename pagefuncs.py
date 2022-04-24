@@ -590,8 +590,8 @@ def testsearchpage():
     form = {"class": argargs["c"], "aspect": argargs["a"],
             "mathclass": argargs["mc"], "mathaspect": argargs["ma"]}
 
-    response = requests.get(request.root_url + url_for("api_cspect"),
-                            params={"type": "class", "name": form["class"]})
+    # response = requests.get(request.root_url + url_for("api_cspect"),
+    #                         params={"type": "class", "name": form["class"]})
 
     formState = {"dual": False, "math": False, "singular": False}
 
