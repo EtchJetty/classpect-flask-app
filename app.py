@@ -43,6 +43,7 @@ def home():
 
 
 @app.route("/search/")
+@app.route("/search/<custom>",methods=["GET"])
 @app.route("/classpects/search/<custom>", methods=['GET'])
 def searchfix(custom=None):
     if custom:
@@ -68,7 +69,13 @@ def searchfix(custom=None):
 def lookupclspect():
     return searchpage()
 
+@app.route("/test/search", methods=['GET', 'POST'])
+def testclasspect():
+    return testsearchpage()
 
+@app.route("/tumblr")
+def tumblrredir():
+    return redirect("https://classpectpokerap.tumblr.com/")
 
 @app.route('/embeds')
 @app.route('/embeds/')
