@@ -110,9 +110,7 @@ def magicant(form, results, formState):
                        "mathclass": form["mathclass"], "mathaspect": form["mathaspect"]}
             if formState["math"]:
                 print(i)
-                response = requests.get(request.root_url + url_for("api_func", func="/typeInverse"),
-                                        params={"type": i, "name": form[i]})
-                if (invalidCspect(ClasspectComponent(form["math"+str(json.loads(response.text))], str(json.loads(response.text)))) and (i == "math"+form[i].type)):
+                if (invalidCspect(ClasspectComponent(form["math"+i], i)) and (i == "math"+form[i].type)):
                     newForm["mathaspect"] = form["mathclass"]
                     newForm["mathclass"] = form["mathaspect"]
                     if i == "class" or i == "aspect":
