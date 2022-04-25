@@ -74,6 +74,8 @@ def dualTypeInvTest(unknown):  # ugly copy of dualName. can't figure out how to 
 
 def wrapLi(inputlist, text):
     return "<li>" + text + ": " + inputlist + "</li>"
+    return "<ul class='list-inline'><li class='list-inline-item'><span class='fw-bolder'>•</span>&nbsp;&nbsp;" + text + ": </li><li class='list-inline-item'>" + inputlist + "</li></ul>"
+
 
 
 def magicant(form, results, formState):
@@ -165,18 +167,24 @@ def makePrintable(formState, classpect_data):
         # else:
         #     formState["singular"] = False
 
+    fcs = "<div class='input-group display-inline-flex'><span class='form-control px-1' style='display: initial;'>"
+    fce = "</span><button type='submit' class='btn btn-primary'><i class='bi bi-search'></i></button></div>"
+
     printable_class = dualName(classpect_data[0])
     printable_aspect = dualName(classpect_data[1]) + emote(classpect_data[1])
 
     if formState["singular"] == "class":
         formState["singular"] = False
         return [printable_class]
+        return [fcs, printable_class, fce]
     elif formState["singular"] == "aspect":
         formState["singular"] = False
         return [printable_aspect]
+        return [fcs, printable_aspect, fce]
     elif not (printable_aspect == "" or printable_class == ""):
         of = " of "
         return [printable_class, of, printable_aspect]
+        return [fcs, printable_class, of, printable_aspect, fce]
 
 
 def dualFlavorText(formState, classpect_data):

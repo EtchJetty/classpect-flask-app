@@ -130,6 +130,14 @@ def api_cspects():
                               for kind in ["class", "aspect"]])
     return jsonify(cspectlist)
 
+@app.route('/tsk')
+def tsk():
+
+    return render_template(
+        "sleepingstuck2/sleeping.html", sitetitle="The Last House On Earth (Worm SI)")
+
+
+
 
 @app.route('/api/v1/classpects/classpect', methods=['GET'])
 @app.route('/api/v1/classpects/classpect/', methods=['GET'])

@@ -1,0 +1,1 @@
+!function(e,b){var f=b.documentElement.getAttribute("data-cookie-prefix")||"";try{a:{try{var a=e.localStorage.getItem(f+"svFontSizeChooserSettings");break a}catch(g){}a=null}if(a){var c=JSON.parse(a),d="font_size"in c?c.font_size:null;d&&(b.documentElement.style.fontSize=d)}}catch(g){}}(window,document);
