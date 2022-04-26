@@ -5790,13 +5790,13 @@ template {
  * License - https://fontawesome.com/license (Commercial License)
  */
 @font-face {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-style: normal;
   font-weight: 300;
   src: url("styles/fonts/fa/fa-light-300.woff2?_v=5.15.3") format("woff2"), url("styles/fonts/fa/fa-light-300.woff?_v=5.15.3") format("woff");
 }
 .fal {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   position: relative;
   font-weight: 300;
 } /*!
@@ -5804,13 +5804,13 @@ template {
  * License - https://fontawesome.com/license (Commercial License)
  */
 @font-face {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-style: normal;
   font-weight: 400;
   src: url("styles/fonts/fa/fa-regular-400.woff2?_v=5.15.3") format("woff2"), url("styles/fonts/fa/fa-regular-400.woff?_v=5.15.3") format("woff");
 }
 .far {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   position: relative;
   font-weight: 400;
 } /*!
@@ -5818,14 +5818,14 @@ template {
  * License - https://fontawesome.com/license (Commercial License)
  */
 @font-face {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-style: normal;
   font-weight: 900;
   src: url("styles/fonts/fa/fa-solid-900.woff2?_v=5.15.3") format("woff2"), url("styles/fonts/fa/fa-solid-900.woff?_v=5.15.3") format("woff");
 }
 .fa,
 .fas {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   position: relative;
   font-weight: 900;
 } /*!
@@ -13762,7 +13762,7 @@ img.u-imgContained {
   text-decoration: none;
 }
 .categoryList-toggler:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -13787,7 +13787,7 @@ img.u-imgContained {
   padding: 8px 8px;
 }
 .categoryList-togglerSpacer:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -14719,7 +14719,7 @@ img.u-imgContained {
 }
 .blockMessage--iconic:before,
 .block-rowMessage--iconic:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -14775,7 +14775,7 @@ img.u-imgContained {
   margin-top: 0;
 }
 .blockStatus-message:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -14876,7 +14876,7 @@ img.u-imgContained {
   text-decoration: none;
 }
 .blockLinkSplitToggle-toggle:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -14896,7 +14896,7 @@ img.u-imgContained {
   text-align: center;
 }
 .blockLink--iconic i:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -15039,7 +15039,7 @@ img.u-imgContained {
   color: inherit;
 }
 .fixedMessageBar-close:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -15357,7 +15357,7 @@ a.button.button--wrap {
 a.button.button--icon > .button-text:before,
 .button.button--icon .button-icon,
 a.button.button--icon .button-icon {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -16065,7 +16065,7 @@ a.button.button--splitTrigger > .button-menu {
 }
 .button.button--splitTrigger > .button-menu:after,
 a.button.button--splitTrigger > .button-menu:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -16436,7 +16436,7 @@ select.input[multiple],
 }
 .iconic > input + i:before,
 .iconic > input + i:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: inherit;
@@ -16736,7 +16736,7 @@ select.input[multiple],
 }
 .inputNumber-button {
   position: relative;
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -16791,7 +16791,7 @@ select.input[multiple],
 }
 .inputDate .inputDate-icon {
   position: relative;
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -16827,7 +16827,7 @@ select.input[multiple],
 }
 .inputUploadButton {
   position: relative;
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -17284,7 +17284,7 @@ select.input[multiple],
   font-weight: bold;
 }
 .formRow .formRow-error:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -17543,7 +17543,7 @@ select.input[multiple],
   cursor: pointer;
 }
 .collapseTrigger:not(.button):before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 900;
@@ -18075,7 +18075,7 @@ select.input[multiple],
   cursor: pointer;
 }
 .menuTrigger:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -18485,7 +18485,7 @@ select.input[multiple],
   text-decoration: none;
 }
 .offCanvasMenu .offCanvasMenu-closer:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -18611,7 +18611,7 @@ select.input[multiple],
   border-left: 1px solid currentColor;
 }
 .offCanvasMenu-link.offCanvasMenu-link--splitToggle:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -18984,7 +18984,7 @@ select.input[multiple],
   transition: all 0.15s ease;
 }
 .overlay-titleCloser:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -19732,7 +19732,7 @@ tbody:last-child .dataList-row:last-child .dataList-cell {
 }
 .dataList-cell.dataList-cell--iconic > a.iconic > i:before,
 .dataList-cell.dataList-cell--iconic > a.iconic > i:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: inherit;
@@ -20116,7 +20116,7 @@ tbody:last-child .dataList-row:last-child .dataList-cell {
   color: #a1a4ae;
 }
 .quickFilter .js-filterClear:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -20152,7 +20152,7 @@ tbody:last-child .dataList-row:last-child .dataList-cell {
   margin-right: 8px;
 }
 .filterBar-filterToggle:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -20199,7 +20199,7 @@ tbody:last-child .dataList-row:last-child .dataList-cell {
   padding: 1px 5px;
 }
 .filterBar-menuTrigger:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -20494,7 +20494,7 @@ tbody:last-child .dataList-row:last-child .dataList-cell {
 }
 .pageNav-jump.pageNav-jump--prev:before,
 .pageNav-jump.pageNav-jump--next:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 900;
@@ -20637,7 +20637,7 @@ tbody:last-child .dataList-row:last-child .dataList-cell {
 }
 .pageNavSimple-el.pageNavSimple-el--prev i:before,
 .pageNavSimple-el.pageNavSimple-el--next i:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 900;
@@ -20681,7 +20681,7 @@ tbody:last-child .dataList-row:last-child .dataList-cell {
 }
 .pageNavSimple-el.pageNavSimple-el--first i:before,
 .pageNavSimple-el.pageNavSimple-el--last i:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 900;
@@ -20769,7 +20769,7 @@ html:not(.has-touchevents) .hScroller.hScroller--scrollHidden:hover .hScroller-a
   align-items: center;
 }
 .hScroller-action:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -20948,7 +20948,7 @@ a.tagItem:hover {
   overflow-y: hidden;
 }
 .likeIcon:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -21077,7 +21077,7 @@ pre.sf-dump {
   z-index: 500;
 }
 .bookmarkLink:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   text-rendering: auto;
@@ -21106,7 +21106,7 @@ pre.sf-dump {
   touch-action: none;
 }
 .dragHandle:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -21148,7 +21148,7 @@ a.solutionIcon {
   text-decoration: none;
 }
 .solutionIcon:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   text-rendering: auto;
@@ -21197,7 +21197,7 @@ a.solutionIcon {
   margin-left: 5px;
 }
 .actionBar-action:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -21213,7 +21213,7 @@ a.solutionIcon {
   display: inline;
 }
 .actionBar-action.actionBar-action--menuTrigger:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -21503,7 +21503,7 @@ a:hover .label.label--error {
   display: none;
 }
 .reaction.reaction--imageHidden.reaction--1 i {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -22359,7 +22359,7 @@ span[data-s9e-mediaembed] > span > [data-s9e-mediaembed-iframe] {
   cursor: pointer;
 }
 .p-navEl-link.p-navEl-link--menuTrigger:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -22388,7 +22388,7 @@ span[data-s9e-mediaembed] > span > [data-s9e-mediaembed-iframe] {
   transition: all 0.15s ease;
 }
 .p-navEl-splitTrigger:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -22455,7 +22455,7 @@ span[data-s9e-mediaembed] > span > [data-s9e-mediaembed-iframe] {
   text-decoration: none;
 }
 .p-nav .p-nav-menuTrigger i:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -22699,7 +22699,7 @@ span[data-s9e-mediaembed] > span > [data-s9e-mediaembed-iframe] {
   opacity: 1;
 }
 .p-navgroup-link.p-navgroup-link--iconic i:after {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -23028,7 +23028,7 @@ span[data-s9e-mediaembed] > span > [data-s9e-mediaembed-iframe] {
     text-align: center;
   }
   .p-body-sideNavTrigger .button:before {
-    font-family: "Font Awesome 5 Pro";
+    font-family: "Font Awesome 6 Free";
     font-size: inherit;
     font-style: normal;
     font-weight: 300;
@@ -23163,7 +23163,7 @@ span[data-s9e-mediaembed] > span > [data-s9e-mediaembed-iframe] {
 }
 .p-breadcrumbs > li:after,
 .p-breadcrumbs > li:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -23358,7 +23358,7 @@ span[data-s9e-mediaembed] > span > [data-s9e-mediaembed-iframe] {
   position: relative;
 }
 .inlineModButton i:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
@@ -23748,7 +23748,7 @@ span[data-s9e-mediaembed] > span > [data-s9e-mediaembed-iframe] {
   text-decoration: none;
 }
 .contentVote-vote:before {
-  font-family: "Font Awesome 5 Pro";
+  font-family: "Font Awesome 6 Free";
   font-size: inherit;
   font-style: normal;
   font-weight: 300;
