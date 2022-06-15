@@ -169,7 +169,7 @@
 
 <body class="d-flex flex-column h-100">
   <main id="maincontent" class="flex-shrink-0">{% block content %}{% endblock %}</main>
-  <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  {% block toast %}<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
     <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
       <div class="toast-header">
         <img src="{{ url_for('static', filename='images/pesterchum.png') }}" style="image-rendering: crisp-edges" class="rounded me-2" alt="Google Forms logo" />
@@ -184,7 +184,7 @@
         can find me. &lt;3
       </div>
     </div>
-  </div>
+  </div>{% endblock %}
   {% block footer %}
   <footer class="footer mt-auto py-3 bg-light">
     <div class="container">
