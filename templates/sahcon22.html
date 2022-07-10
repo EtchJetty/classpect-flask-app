@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ sitetitle }}{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row col">
+    <h1 class="pt-3 pb-1">SAHCon Summer 2022 - Erijan Central</h1>
+    <hr>
+    <p>Thanks for visiting ERIJAN CENTRAL!</p>
+    <div class="ratio ratio-16x9 mx-md-5">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/u2ebcZ2whic" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <p class="pt-3">Below you'll find a list of projects featured in our video, in reverse order of their appearances.</p>
+  </div>
+</div>
+{% endblock %}

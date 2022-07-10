@@ -173,14 +173,14 @@
     <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
       <div class="toast-header">
         <img src="{{ url_for('static', filename='images/pesterchum.png') }}" style="image-rendering: crisp-edges" class="rounded me-2" alt="Google Forms logo" />
-        <strong class="me-auto">Feedback?</strong>
+        <strong class="me-auto">Welcome!</strong>
         <small>Don't show this again</small>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" onclick="storeClosed();"></button>
       </div>
       <div class="toast-body">
-        Hi homestuckers!!!! Happy 4/13! I'd love to get some feedback on this
-        site, because it's my first time doing anything like it. You can
-        <a href="https://forms.gle/Qo1RDbWDxjKqtoiz5">submit anonymous feedback</a>, or DM me on whatever platform you
+        Hi homestuckers!!!! Happy SAHCon '22! Visit the <a href="{{url_for('home')}}">SAHCon page</a> for links to all projects featured in our trailer. I'd also love to hear feedback on this
+        site. You can
+        <a href="https://forms.gle/Qo1RDbWDxjKqtoiz5">submit anonymous feedback</a>, leave an ask on the Tumblr, or DM me on whatever platform you
         can find me. &lt;3
       </div>
     </div>
@@ -224,7 +224,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
   <script>
-    const optedout = localStorage.getItem("closedit");
+    const optedout = localStorage.getItem("closeditNew");
     if (!optedout) {
       var toastTrigger = setTimeout(function () {
         var toastLiveExample = document.getElementById("liveToast");
@@ -233,7 +233,7 @@
       }, 5 * 1000);
     }
     function storeClosed() {
-      localStorage.setItem("closedit", true);
+      localStorage.setItem("closeditNew", true);
     }
     // Example starter JavaScript for disabling form submissions if there are invalid fields
     (function () {
