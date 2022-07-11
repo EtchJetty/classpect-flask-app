@@ -286,6 +286,11 @@ def about():
     return render_template(
         "about.html", sitetitle="About")
 
+@app.route("/archive/4132022/about")
+def about_fourthirteentwentytwo():
+    return render_template(
+        "archive/about4132022.html", sitetitle="About")
+
 
 @app.route("/404")
 def fourohfour():
