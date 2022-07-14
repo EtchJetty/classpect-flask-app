@@ -64,10 +64,15 @@ def searchfix(custom=None):
 
     return redirect(url_for('lookupclspect'))
 
-@app.route('/sahcon')
+@app.route('/sahcon22')
 def sahcon_render():
     return render_template(
         "sahcon22.html", sitetitle="SAHCon")
+
+
+@app.route('/sahcon')
+def sahcon_redir():
+    return redirect(url_for('sahcon_render'))
 
 
 @app.route("/classpects/search", methods=['GET', 'POST'])
