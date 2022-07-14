@@ -1,0 +1,73 @@
+{
+  "homestuck": {
+    "Rose Lalonde: In A Pickle": {
+      "ficSmall": "(fanfic, 902 words)<br>(silly one-shot with sincere Rosemary content, MSPFA preferred)",
+      "MSPFA": "https://mspfa.com/?s=40349&p=1",
+      "AO3": "https://archiveofourown.org/works/29321583"
+    },
+
+    "ATEM": {
+      "ficSmall": "(DELTARUNE.)",
+      "MSPFA": "https://mspfa.com/?s=46891&p=13"
+    },
+    "rose we dont have \"arcs\" we are just human beings": {
+      "ficSmall": "(fanfic, two pesterlogs, conversation on the meteor (and much, much later) co-written by Jan.)",
+      "MSPFA": "https://mspfa.com/?s=44651&p=1",
+      "AO3": "https://archiveofourown.org/works/28688718/"
+    },
+    "the north wind blows my DAVE": {
+      "ficSmall": "(MSPFA, 4 panels)<br>(a fun experiment in writing Dave Strider's voice as he explains Aesop's fable of the North Wind)",
+      "MSPFA": "https://mspfa.com/?s=44652&p=1"
+    },
+    "Housetrapped <span class=\"text-muted small\">(Reboot)</span>": {
+      "ficSmall": "(fanventure.)",
+      "MSPFA": "https://mspfa.com/?s=46896&p=1"
+    },
+    "BONESAW IS READY ": {
+      "ficSmall": "(fanventure, proof-of-concept Worm crossover.)",
+      "MSPFA": "https://mspfa.com/?s=46573&p=1",
+      "other": {"tumblr": "https://classpectpokerap.tumblr.com/post/685473143707566080/on-bonesaw-being-a-homestuck-enjoyer", "raw_code": "<a class=\"link-primary text-decoration-none\" href=\"https://classpectpokerap.tumblr.com/post/685473143707566080/on-bonesaw-being-a-homestuck-enjoyer\"><img src=\"https://cdn.discordapp.com/emojis/968649840789704714.webp?size=4096&quality=lossless\" alt=\"Tumblr Logo.\" width=\"36\" class=\"align-top my-1\"></a>"}
+    },
+    "imagine vriska with chest hair in the shape of the light symbol": {
+      "ficSmall": "(one pesterlog, TF2 crossover fusion. very silly)",
+      "AO3": "https://archiveofourown.org/works/28792872/chapters/70635045#workskin"
+    },
+    "MSPA Felt CSS/Pagination Styletest": {
+      "ficSmall": "(CSS extravaganza, proof that you can have multiple pages within one chapter on AO3)",
+      "AO3": "https://archiveofourown.org/works/36776284"
+    },
+    "Billie and Thea's Excellent Post-Scratch Adventure": {
+      "ficSmall": "(fanventure (no art), proof-of-concept Bill and Ted 3 crossover.)",
+      "other": {"SB": "https:/forums.spacebattles.com/threads/etchs-sketches-a-one-shot-collection.676939/post-70064613", "raw_code": " <a class=\"link-primary text-decoration-none\" href=\"https:/forums.spacebattles.com/threads/etchs-sketches-a-one-shot-collection.676939/post-70064613\"><img src=\"https://cdn.discordapp.com/emojis/969726163561873539.webp?size=4096&amp;quality=lossless\" alt=\"SB Logo.\" width=\"36\" class=\"align-top my-1\"></a>"}
+    },
+    "Omake: No Hope": {
+      "ficSmall": "(recursive fanfic, first Homestuck thing I ever did)",
+      "AO3": "https://archiveofourown.org/works/19178413/chapters/45587260",
+      "other": {
+        "raw_code": "<a style=\"margin-left: -10px\" class=\"link-primary text-decoration-none\" href=\"https://forums.sufficientvelocity.com/threads/70378/\"><img src=\"https://cdn.discordapp.com/emojis/622257936881680445.webp?size=4096&quality=lossless\" alt=\"SV Logo.\" width=\"36\" class=\"align-top my-1\"></a> <a class=\"link-primary text-decoration-none\" href=\"https://forums.spacebattles.com/threads/a-bed-of-roses-homestuck-harry-potter-girl-who-lived-au-character-inserts.870157/\"><img src=\"https://cdn.discordapp.com/emojis/969726163561873539.webp?size=4096&quality=lossless\" alt=\"SB Logo.\" width=\"36\" class=\"align-top my-1\"></a>"
+      }
+    },
+    "Housetrapped <span class=\"text-muted small\">(Original)</span> [S] Pages": {
+      "ficSmall": "(first link is to [S] Joan: Enter, second link is to [S] Katy: Open the door enough to talk to him.)",
+      "other": {
+        "raw_code": " <a style=\"margin-left: 5px\" class=\"link-primary text-decoration-none\" href=\"https://www.youtube.com/watch?v=sJXIl_GcWi4\"><img src=\"https://cdn.discordapp.com/attachments/783131384050876448/997214032555692164/image_-_2022-07-14T145223.646.png?size=4096\" alt=\"YouTube Logo.\" width=\"36\" class=\"align-top my-1\"></a> <a class=\"link-primary text-decoration-none\" href=\"https://www.youtube.com/watch?v=zasJtfz9sX0\"><img src=\"https://cdn.discordapp.com/attachments/783131384050876448/997214032555692164/image_-_2022-07-14T145223.646.png?size=4096\" alt=\"YouTube Logo.\" width=\"36\" class=\"align-top my-1\"></a>"
+      }
+    }
+  },
+  "not_homestuck": {
+    "Skirt": {
+      "ficSmall": "(transfem clone trooper story)",
+      "AO3": "https://archiveofourown.org/works/39145167/chapters/97933464",
+      "MSPFA": "https://mspfa.com/?s=46481&p=1"
+    },
+    "freedom so liberating that we call it magic": {
+      "ficSmall": "(transfem zelda oot + bonus tetra wind waker content)",
+      "MSPFA": "https://mspfa.com/?s=46526&p=1",
+      "AO3": "https://archiveofourown.org/works/22342582/"
+    },
+    "Rosalina's Storybook MSPFA Port": {
+      "ficSmall": "(CSS extravaganza)",
+      "MSPFA": "https://mspfa.com/?s=44791&p=1"
+    }
+  }
+}

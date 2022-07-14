@@ -59,13 +59,20 @@
                 >Home</a
               >
             </li> -->
-          <li class="nav-item">
-            <a class="nav-link {% if url_for(request.endpoint) == url_for('about') %}active{% endif %}" aria-current="page" href="{{url_for('about')}}">About/FAQ</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle {% if url_for(request.endpoint) == url_for('about') or url_for(request.endpoint) == url_for('sahcon_render') %}active{% endif %}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">About</a>
+            <ul class="dropdown-menu" aria-labelledby="dropdown01">
+              <li>
+                <a class="dropdown-item {% if url_for(request.endpoint) == url_for('about') %}active{% endif %}" href="{{url_for('about')}}">About/FAQ</a>
+              </li>
+              <li>
+                <a class="dropdown-item {% if url_for(request.endpoint) == url_for('sahcon_render') %}active{% endif %}" href="{{url_for('sahcon_render')}}">SAHCon '22</a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle {% if url_for(request.endpoint)[:11] == url_for('rclspect')[:11] or url_for(request.endpoint) == url_for('api_page') %}active{% endif %}" href="#" id="dropdown01" data-bs-toggle="dropdown" aria-expanded="false">Classpecting</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown01">
-
               <li>
                 <a class="dropdown-item {% if url_for(request.endpoint) == url_for('lookupclspect') %}active{% endif %}" href="{{url_for('lookupclspect')}}">Search Classpect</a>
               </li>

@@ -43,7 +43,7 @@ def home():
 
 
 @app.route("/search/")
-@app.route("/search/<custom>",methods=["GET"])
+@app.route("/search/<custom>", methods=["GET"])
 @app.route("/classpects/search/<custom>", methods=['GET'])
 def searchfix(custom=None):
     if custom:
@@ -64,10 +64,14 @@ def searchfix(custom=None):
 
     return redirect(url_for('lookupclspect'))
 
+
 @app.route('/sahcon22')
 def sahcon_render():
+    with open(os.path.join(THIS_FOLDER, "static/ficDict.json")) as ficDict:
+        bigHonkingDict = json.load(ficDict)
+    print(bigHonkingDict)
     return render_template(
-        "sahcon22.html", sitetitle="SAHCon")
+        "sahcon22.html", sitetitle="SAHCon", bigHonkingDict=bigHonkingDict)
 
 
 @app.route('/sahcon')
@@ -79,20 +83,22 @@ def sahcon_redir():
 def lookupclspect():
     return searchpage()
 
+
 @app.route("/test/search", methods=['GET', 'POST'])
 def testclasspect():
     return testsearchpage()
 
+
 @app.route("/tumblr")
 def tumblrredir():
     return redirect("https://classpectpokerap.tumblr.com/")
+
 
 @app.route('/embeds')
 @app.route('/embeds/')
 def embed_page():
     return render_template(
         "embeds/embedexplain.html", sitetitle="Embeds")
-
 
 
 @app.route('/embeds/cotd')
@@ -123,8 +129,6 @@ def api_cspects():
         requestdict["duals"] = request.args["duals"]
     except:
         requestdict["duals"] = ""
-        
-        
 
     if requestdict["duals"] == "true":
         if requestdict["type"] != "":
@@ -140,13 +144,12 @@ def api_cspects():
                               for kind in ["class", "aspect"]])
     return jsonify(cspectlist)
 
+
 @app.route('/tsk')
 def tsk():
 
     return render_template(
         "sleepingstuck2/sleeping.html", sitetitle="The Last House On Earth (Worm SI)")
-
-
 
 
 @app.route('/api/v1/classpects/classpect', methods=['GET'])
@@ -219,10 +222,10 @@ def api_cspect_calc(func=None):
             except:
                 if cspect.isDual and int(request.args["mval"]) == 2:
                     resultcspect = {"status": 400,
-                                "message": "You tried to add two dual classpects together!"}
+                                    "message": "You tried to add two dual classpects together!"}
                 else:
                     resultcspect = {"status": 400,
-                                "message": "You submitted a multiplication request for the calculator, but didn't include a number to multiply by."}
+                                    "message": "You submitted a multiplication request for the calculator, but didn't include a number to multiply by."}
         else:
 
             mathcspect = ClasspectComponent(
@@ -290,6 +293,7 @@ def homesturdle():
 def about():
     return render_template(
         "about.html", sitetitle="About")
+
 
 @app.route("/archive/4132022/about")
 def about_fourthirteentwentytwo():
