@@ -75,6 +75,8 @@ def sahcon_render():
 
 
 @app.route('/sahcon')
+@app.route('/SAHCon')
+@app.route('/SAHCON')
 def sahcon_redir():
     return redirect(url_for('sahcon_render'))
 
