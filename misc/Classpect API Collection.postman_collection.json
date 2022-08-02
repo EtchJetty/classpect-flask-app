@@ -15,11 +15,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/?name=Light&type=aspect",
+							"raw": "https://www.erijancentral.com/api/v1/classpects/classpect/?name=Light&type=aspect",
 							"protocol": "https",
 							"host": [
-								"aeich",
-								"pythonanywhere",
+								"www",
+								"erijancentral",
 								"com"
 							],
 							"path": [
@@ -48,11 +48,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/?name=Seer&type=class",
+									"raw": "https://www.erijancentral.com/api/v1/classpects/classpect/?name=Seer&type=class",
 									"protocol": "https",
 									"host": [
-										"aeich",
-										"pythonanywhere",
+										"www",
+										"erijancentral",
 										"com"
 									],
 									"path": [
@@ -112,11 +112,11 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/inverse/?name=Light&type=aspect",
+									"raw": "https://www.erijancentral.com/api/v1/classpects/classpect/inverse/?name=Light&type=aspect",
 									"protocol": "https",
 									"host": [
-										"aeich",
-										"pythonanywhere",
+										"www",
+										"erijancentral",
 										"com"
 									],
 									"path": [
@@ -179,11 +179,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/inverse/?name=Light&type=aspect",
+							"raw": "https://www.erijancentral.com/api/v1/classpects/classpect/inverse/?name=Light&type=aspect",
 							"protocol": "https",
 							"host": [
-								"aeich",
-								"pythonanywhere",
+								"www",
+								"erijancentral",
 								"com"
 							],
 							"path": [
@@ -214,11 +214,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/isDual/?name=Memes&type=aspect",
+							"raw": "https://www.erijancentral.com/api/v1/classpects/classpect/isDual/?name=Memes&type=aspect",
 							"protocol": "https",
 							"host": [
-								"aeich",
-								"pythonanywhere",
+								"www",
+								"erijancentral",
 								"com"
 							],
 							"path": [
@@ -249,11 +249,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/paired/?name=Seer&type=class",
+							"raw": "https://www.erijancentral.com/api/v1/classpects/classpect/paired/?name=Seer&type=class",
 							"protocol": "https",
 							"host": [
-								"aeich",
-								"pythonanywhere",
+								"www",
+								"erijancentral",
 								"com"
 							],
 							"path": [
@@ -284,11 +284,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/classdef/?name=Seer&type=class",
+							"raw": "https://www.erijancentral.com/api/v1/classpects/classpect/classdef/?name=Seer&type=class",
 							"protocol": "https",
 							"host": [
-								"aeich",
-								"pythonanywhere",
+								"www",
+								"erijancentral",
 								"com"
 							],
 							"path": [
@@ -319,11 +319,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/fullverbgroup/?name=Seer&type=class",
+							"raw": "https://www.erijancentral.com/api/v1/classpects/classpect/fullverbgroup/?name=Seer&type=class",
 							"protocol": "https",
 							"host": [
-								"aeich",
-								"pythonanywhere",
+								"www",
+								"erijancentral",
 								"com"
 							],
 							"path": [
@@ -354,11 +354,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/dualComponents/?name=Ranger&type=class",
+							"raw": "https://www.erijancentral.com/api/v1/classpects/classpect/dualComponents/?name=Ranger&type=class",
 							"protocol": "https",
 							"host": [
-								"aeich",
-								"pythonanywhere",
+								"www",
+								"erijancentral",
 								"com"
 							],
 							"path": [
@@ -389,11 +389,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/isCanon/?name=Light&type=aspect",
+							"raw": "https://www.erijancentral.com/api/v1/classpects/classpect/isCanon/?name=Light&type=aspect",
 							"protocol": "https",
 							"host": [
-								"aeich",
-								"pythonanywhere",
+								"www",
+								"erijancentral",
 								"com"
 							],
 							"path": [
@@ -424,11 +424,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/classpect/typeInverse/?name=Seer&type=class",
+							"raw": "https://www.erijancentral.com/api/v1/classpects/classpect/typeInverse/?name=Seer&type=class",
 							"protocol": "https",
 							"host": [
-								"aeich",
-								"pythonanywhere",
+								"www",
+								"erijancentral",
 								"com"
 							],
 							"path": [
@@ -464,11 +464,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/calc/mul?name=Seer&type=class&mval=-1",
+							"raw": "https://www.erijancentral.com/api/v1/classpects/calc/mul?name=Seer&type=class&mval=-1",
 							"protocol": "https",
 							"host": [
-								"aeich",
-								"pythonanywhere",
+								"www",
+								"erijancentral",
 								"com"
 							],
 							"path": [
@@ -503,11 +503,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/calc/add?name=Seer&type=class&mname=Mage&mtype=class",
+							"raw": "https://www.erijancentral.com/api/v1/classpects/calc/add?name=Seer&type=class&mname=Mage&mtype=class",
 							"protocol": "https",
 							"host": [
-								"aeich",
-								"pythonanywhere",
+								"www",
+								"erijancentral",
 								"com"
 							],
 							"path": [
@@ -545,11 +545,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/calc/sub?name=Librarian&type=class&mname=Mage&mtype=class",
+							"raw": "https://www.erijancentral.com/api/v1/classpects/calc/sub?name=Librarian&type=class&mname=Mage&mtype=class",
 							"protocol": "https",
 							"host": [
-								"aeich",
-								"pythonanywhere",
+								"www",
+								"erijancentral",
 								"com"
 							],
 							"path": [
@@ -589,11 +589,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/?type=class&duals=false",
+					"raw": "https://www.erijancentral.com/api/v1/classpects/?type=class&duals=false",
 					"protocol": "https",
 					"host": [
-						"aeich",
-						"pythonanywhere",
+						"www",
+						"erijancentral",
 						"com"
 					],
 					"path": [
@@ -622,11 +622,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://aeich.pythonanywhere.com/api/v1/classpects/cotd/",
+					"raw": "https://www.erijancentral.com/api/v1/classpects/cotd/",
 					"protocol": "https",
 					"host": [
-						"aeich",
-						"pythonanywhere",
+						"www",
+						"erijancentral",
 						"com"
 					],
 					"path": [
