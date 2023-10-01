@@ -1,4 +1,4 @@
-apsw==3.38.1.post1
+apsw==3.43.1.0
 Babel==2.10.3
 cachetools==4.2.4
 certifi==2023.7.22
