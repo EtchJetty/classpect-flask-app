@@ -10,7 +10,7 @@ Flask-Babel==2.0.0
 Flask-Cors==3.0.10
 google-auth==1.35.0
 greenlet==1.1.2
-idna==3.3
+idna==3.7
 itsdangerous==2.1.2
 Jinja2==3.1.4
 MarkupSafe==2.1.1
