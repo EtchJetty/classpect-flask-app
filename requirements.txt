@@ -25,4 +25,4 @@ six==1.16.0
 SQLAlchemy==1.4.37
 typing_extensions==4.2.0
 urllib3==1.26.9
-Werkzeug==2.2.3
+Werkzeug==3.0.3
